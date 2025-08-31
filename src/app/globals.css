@@ -5,22 +5,22 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-shop_light_blue: #00b8ff;
+  --color-shop_dark_blue: #00719c;
+  --color-shop_btn_blue: #009bd6;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+  }
+
+  .hoverEffect {
+    @apply transition-all duration-300 ease-in-out;
+  }
 }
