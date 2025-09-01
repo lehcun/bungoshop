@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import "../globals.css";
+import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import '../globals.css';
 
 export default function RootLayout({
   children,
@@ -8,7 +8,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col min-h-screen max-w-[1200px] mx-auto">
+    <div className="mx-auto flex min-h-screen flex-col">
       <Header />
       <main className="">{children}</main>
       <Footer />
