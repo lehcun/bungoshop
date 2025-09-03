@@ -8,7 +8,9 @@
 @theme {
   --color-shop_light_blue: #00b8ff;
   --color-shop_dark_blue: #00719c;
-  --color-shop_btn_blue: #009bd6;
+  --color-shop_btn_blue: #6495ed;
+
+  --color-shop-test: #4169e1;
 }
 
 body {

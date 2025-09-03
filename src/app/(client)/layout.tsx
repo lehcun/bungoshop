@@ -1,6 +1,8 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import '../globals.css';
+import TopBar from '@/components/TopBar';
+import NavBar from '@/components/NavBar';
 
 export default function RootLayout({
   children,
@@ -8,9 +10,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="mx-auto flex min-h-screen flex-col">
+    <div className="mx-auto flex flex-col">
+      <TopBar />
       <Header />
-      <main className="">{children}</main>
+      <NavBar />
+      <main className="h-screen">{children}</main>
       <Footer />
     </div>
   );
