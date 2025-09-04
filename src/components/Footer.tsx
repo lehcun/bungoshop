@@ -75,7 +75,7 @@ const Footer = () => {
           </div>
         </div>
         <div className="flex justify-center border-t-1 border-gray-700 py-4">
-          <p>© 2024 TechMart. Tất cả quyền được bảo lưu.</p>
+          <p>© 2025 BungoShop. Bản quyền của C .</p>
         </div>
       </div>
     </footer>
