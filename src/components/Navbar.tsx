@@ -23,9 +23,11 @@ const NavBar = () => {
               </Link>
             ))}
           </div>
-          <div className="right-0 flex gap-x-1 text-amber-400">
-            <StarIcon />
-            Hoàn tiền 100% với hàng lỗi
+          <div className="hidden lg:block">
+            <div className="right-0 mr-[10px] flex gap-x-1 text-amber-400">
+              <StarIcon />
+              Hoàn tiền 100% với hàng lỗi
+            </div>
           </div>
         </div>
       </div>
