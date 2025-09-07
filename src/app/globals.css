@@ -25,4 +25,19 @@ body {
   .hoverEffect {
     @apply transition-all duration-300 ease-in-out;
   }
+
+  .fashion-pattern {
+    background-image:
+      radial-gradient(
+        circle at 25% 25%,
+        rgba(255, 255, 255, 0.1) 2px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 75% 75%,
+        rgba(255, 255, 255, 0.1) 2px,
+        transparent 2px
+      );
+    background-size: 50px 50px;
+  }
 }

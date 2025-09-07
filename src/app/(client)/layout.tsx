@@ -2,7 +2,6 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import '../globals.css';
 import TopBar from '@/components/TopBar';
-import NavBar from '@/components/NavBar';
 
 export default function RootLayout({
   children,
@@ -13,7 +12,6 @@ export default function RootLayout({
     <div className="mx-auto flex flex-col">
       <TopBar />
       <Header />
-      <NavBar />
       <main className="h-screen">{children}</main>
       <Footer />
     </div>

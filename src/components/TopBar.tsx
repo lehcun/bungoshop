@@ -3,7 +3,7 @@ import React from 'react';
 
 const TopBar = () => {
   return (
-    <div className="bg-gray-900 py-2 text-white">
+    <div className="from-shop_light_blue to-shop_dark_blue bg-gradient-to-r py-2 text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 text-sm">
         <div className="flex gap-4">
           <span className="flex gap-x-2">

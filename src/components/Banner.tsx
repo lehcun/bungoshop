@@ -8,14 +8,19 @@ import Image from 'next/image';
 
 export default function BannerSlider() {
   return (
-    <div className="bg-linear-to-br from-red-400 to-blue-400">
+    <section className="fashion-pattern relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-100 py-16">
       <div className="mx-4">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 space-y-8 py-8 text-white lg:grid-cols-2">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-5xl">Công nghệ Tương lai</h1>
-            <p>
-              Khám phá những sản phẩm công nghệ tiên tiến nhất với giá cả cạnh
-              tranh nhất thị trường
+        <div className="mx-auto grid max-w-7xl grid-cols-1 space-y-8 py-8 text-gray-900 lg:grid-cols-2">
+          <div className="flex w-md flex-col gap-4">
+            <h1 className="flex flex-col space-x-2 text-6xl font-bold">
+              <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text py-2 text-transparent">
+                Thời trang
+              </span>{' '}
+              <span>Xu hướng</span>
+            </h1>
+            <p className="text-lg">
+              Khám phá bộ sưu tập thời trang mới nhất với phong cách độc đáo và
+              chất lượng cao cấp
             </p>
           </div>
           <Swiper
@@ -53,6 +58,6 @@ export default function BannerSlider() {
           </Swiper>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
