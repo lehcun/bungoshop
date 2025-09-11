@@ -5,28 +5,32 @@ import Link from 'next/link';
 
 const CatagoriesGrid = () => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="my-12 flex flex-col items-center">
-        <h2 className="text-2xl font-semibold">Danh mục thời trang</h2>
-        <span className="text-lg">Tìm kiếm phong cách hoàn hảo cho bạn</span>
-      </div>
-      <div className="flex space-x-12">
-        {mockApi.categories.map((item) => (
-          <motion.div
-            key={item.id}
-            className={`hover: cursor-pointer rounded-2xl px-4 py-2 ${item.bgColor} ${item.hoverBgColor}`}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link href={'/'}>
-              <div className="flex flex-col items-center">
-                <span className="my-4 text-4xl">{item.icon}</span>
-                <span>{item.name}</span>
-                <span>{item.count} sản phẩm</span>
-              </div>
-            </Link>
-          </motion.div>
-        ))}
+    <div className="mx-4 py-16 text-center">
+      <div className="mx-auto max-w-7xl">
+        <div className="flex flex-col gap-y-2">
+          <h2 className="text-3xl font-semibold">Danh mục thời trang</h2>
+          <span className="text-lg text-gray-600">
+            Tìm kiếm phong cách hoàn hảo cho bạn
+          </span>
+        </div>
+        <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
+          {mockApi.categories.map((item) => (
+            <motion.div
+              key={item.id}
+              className={`rounded-2xl px-4 py-4 hover:cursor-pointer ${item.bgColor} ${item.hoverBgColor}`}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link href={'/'}>
+                <div className="text-center">
+                  <h3 className="my-4 text-5xl">{item.icon}</h3>
+                  <p className="font-semibold">{item.name}</p>
+                  <span>{item.count} sản phẩm</span>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </div>
   );

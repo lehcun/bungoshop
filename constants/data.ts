@@ -151,6 +151,8 @@ export const mockApi = {
       reviews_count: 124,
       image: 'images/vay-maxi.png',
       variants: ['S', 'M', 'L'],
+      icon: '👗',
+      bgColor: 'bg-blue-100',
     },
     {
       id: 102,
@@ -164,11 +166,14 @@ export const mockApi = {
       reviews_count: 89,
       image: 'images/ao-so-mi.png',
       variants: ['M', 'L', 'XL'],
+      icon: '👔',
+      bgColor: 'bg-green-100',
     },
     {
       id: 103,
       name: 'Túi Xách Tote Da Thật',
-      description: 'Túi da cao cấp, thiết kế sang trọng',
+      description:
+        'Túi da cao cấp, thiết kế sang trọng Túi da cao cấp, thiết kế sang trọng Túi da cao cấp, thiết kế sang trọng',
       price: 1200000,
       original_price: 1600000,
       discount: '-25%',
@@ -177,6 +182,8 @@ export const mockApi = {
       reviews_count: 156,
       image: 'images/tui-xach.png',
       variants: ['Nâu', 'Đen', 'Đỏ'],
+      icon: '👜',
+      bgColor: 'bg-pink-100',
     },
     {
       id: 104,
@@ -190,6 +197,8 @@ export const mockApi = {
       reviews_count: 203,
       image: 'images/giay-cao-got.png',
       variants: ['36', '37', '38'],
+      icon: '👠',
+      bgColor: 'bg-red-100',
     },
   ],
 };

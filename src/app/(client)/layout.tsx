@@ -12,7 +12,7 @@ export default function RootLayout({
     <div className="mx-auto flex flex-col">
       <TopBar />
       <Header />
-      <main className="h-screen">{children}</main>
+      <main className="h-auto">{children}</main>
       <Footer />
     </div>
   );
