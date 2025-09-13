@@ -86,6 +86,33 @@ export const footerContacts = [
   },
 ];
 
+export const brandList = [
+  {
+    logo: '👑',
+    title: 'Luxury Brand',
+  },
+  {
+    logo: '✨',
+    title: 'Premium',
+  },
+  {
+    logo: '🌟',
+    title: 'Elite Fashion',
+  },
+  {
+    logo: '💎',
+    title: 'Diamond',
+  },
+  {
+    logo: '🏆',
+    title: 'Champion',
+  },
+  {
+    logo: '🎯',
+    title: 'Target Style',
+  },
+];
+
 // Dữ liệu giả (mock)
 export const mockApi = {
   categories: [
@@ -181,7 +208,8 @@ export const mockApi = {
       rating: 4.7,
       reviews_count: 156,
       image: 'images/tui-xach.png',
-      variants: ['Nâu', 'Đen', 'Đỏ'],
+      variants: ['brown', 'black', 'red'],
+      colorVariants: true,
       icon: '👜',
       bgColor: 'bg-pink-100',
     },

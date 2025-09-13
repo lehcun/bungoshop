@@ -1,24 +1,16 @@
-import { MailIcon, PhoneIcon, TruckIcon } from 'lucide-react';
 import React from 'react';
 
 const TopBar = () => {
   return (
     <div className="from-shop_light_blue to-shop_dark_blue bg-gradient-to-r py-2 text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-center px-4 text-sm">
-        <div className="flex gap-4">
-          <span className="flex gap-x-2">
-            <PhoneIcon size={20} />
-            Hotline: 1900-4321
-          </span>
+        <div className="text-md flex gap-4">
+          <span className="flex gap-x-2">✨ SALE 50% toàn bộ BST Thu Đông</span>
+          <span>|</span>
+          <span className="flex gap-x-2">🚚 Miễn phí ship đơn từ 299k</span>
           <span>|</span>
           <span className="flex gap-x-2">
-            <MailIcon size={20} />
-            Hotline: 1900-4321
-          </span>
-          <span>|</span>
-          <span className="flex gap-x-2">
-            <TruckIcon size={20} />
-            Miễn phí vận chuyển cho đơn từ 200k
+            💎 Đổi trả trong 30 ngày💎 Đổi trả trong 30 ngày
           </span>
         </div>
       </div>

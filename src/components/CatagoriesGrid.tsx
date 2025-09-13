@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const CatagoriesGrid = () => {
   return (
-    <div className="mx-4 py-16 text-center">
+    <div className="mx-4 py-24 text-center">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-y-2">
           <h2 className="text-3xl font-semibold">Danh mục thời trang</h2>
