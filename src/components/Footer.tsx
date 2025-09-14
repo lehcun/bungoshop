@@ -7,12 +7,13 @@ import {
   footerSupports,
   footerContacts,
 } from '../../constants/data';
+import Container from './Container';
 
 const Footer = () => {
   return (
     <footer className="bg-gray-800 text-gray-400">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-3 my-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+      <Container>
+        <div className="my-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div className="flex w-60 flex-col space-y-4">
             <Logo />
             <p>
@@ -77,7 +78,7 @@ const Footer = () => {
         <div className="flex justify-center border-t-1 border-gray-700 py-4">
           <p>© 2025 BungoShop. Bản quyền của C .</p>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

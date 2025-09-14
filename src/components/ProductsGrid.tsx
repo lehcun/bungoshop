@@ -4,8 +4,8 @@ import ProductCard from './ProductCard';
 
 const ProductsGrid = () => {
   return (
-    <section className="bg-gray-100 py-24">
-      <Container>
+    <section className="bg-gray-100">
+      <Container className="py-24">
         <div className="flex flex-col gap-y-2 text-center">
           <h2 className="text-3xl font-semibold">Sản phẩm nổi bật</h2>
           <span className="text-lg text-gray-600">
