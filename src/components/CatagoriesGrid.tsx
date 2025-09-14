@@ -2,11 +2,12 @@ import React from 'react';
 import { mockApi } from '../../constants/data';
 import * as motion from 'motion/react-client';
 import Link from 'next/link';
+import Container from './Container';
 
 const CatagoriesGrid = () => {
   return (
-    <div className="mx-4 py-24 text-center">
-      <div className="mx-auto max-w-7xl">
+    <section className="py-24 text-center">
+      <Container>
         <div className="flex flex-col gap-y-2">
           <h2 className="text-3xl font-semibold">Danh mục thời trang</h2>
           <span className="text-lg text-gray-600">
@@ -31,8 +32,8 @@ const CatagoriesGrid = () => {
             </motion.div>
           ))}
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
   );
 };
 

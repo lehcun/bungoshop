@@ -9,9 +9,7 @@ const TopBar = () => {
           <span>|</span>
           <span className="flex gap-x-2">🚚 Miễn phí ship đơn từ 299k</span>
           <span>|</span>
-          <span className="flex gap-x-2">
-            💎 Đổi trả trong 30 ngày💎 Đổi trả trong 30 ngày
-          </span>
+          <span className="flex gap-x-2">💎 Đổi trả trong 30 ngày</span>
         </div>
       </div>
     </div>

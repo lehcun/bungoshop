@@ -80,7 +80,7 @@ const ProductCard = ({ product }: { product: PropType }) => {
                     onClick={() => setSizeSelected(variant)}
                   >
                     <span
-                      className={`text-md hover:text-shop_dark_blue flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 ${
+                      className={`text-md hover:text-shop_dark_blue hover:border-shop_dark_blue flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 ${
                         sizeSelected === variant
                           ? 'from-shop_light_blue to-shop_dark_blue hover:text-shop_dark_blue bg-red-200 bg-gradient-to-br text-white'
                           : 'border-black text-black'

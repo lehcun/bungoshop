@@ -1,8 +1,14 @@
-import { HeartIcon, ShoppingCartIcon, UserCircleIcon } from 'lucide-react';
 import React from 'react';
-import Search from './Search';
+import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
+import { ClerkProvider, SignedIn, UserButton } from '@clerk/nextjs';
+import { currentUser } from '@clerk/nextjs/server';
 
-const UserActions = () => {
+import Search from './Search';
+import SignIn from './SignIn';
+
+const UserActions = async () => {
+  const user = await currentUser();
+
   return (
     <>
       <div className="flex gap-x-6 text-gray-600">
@@ -19,9 +25,12 @@ const UserActions = () => {
             10
           </div>
         </div>
-        <div className="hover:text-shop_dark_blue flex cursor-pointer flex-col items-center justify-center">
-          <UserCircleIcon strokeWidth={2} />
-        </div>
+        <ClerkProvider>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          {!user && <SignIn />}
+        </ClerkProvider>
       </div>
     </>
   );
