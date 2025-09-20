@@ -1,3 +1,6 @@
+import Header from '@/components/Header';
+import TopBar from '@/components/TopBar';
+import Footer from '@/components/Footer';
 import '../globals.css';
 
 export default function CartLayout({
@@ -5,5 +8,12 @@ export default function CartLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section>{children}</section>;
+  return (
+    <div className="mx-auto flex flex-col">
+      <TopBar />
+      <Header />
+      <main className="h-auto">{children}</main>
+      <Footer />
+    </div>
+  );
 }
