@@ -21,7 +21,7 @@ const CatagoriesGrid = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href={'/'}>
+            <Link href={'/shop'}>
               <div className="text-center">
                 <h3 className="my-4 text-5xl">{item.icon}</h3>
                 <p className="font-semibold">{item.name}</p>

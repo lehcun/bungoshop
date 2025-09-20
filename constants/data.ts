@@ -230,3 +230,29 @@ export const mockApi = {
     },
   ],
 };
+
+export const mockFilters = {
+  categories: [
+    { id: 1, name: 'Váy đầm', count: 245 },
+    { id: 2, name: 'Áo nữ', count: 189 },
+    { id: 3, name: 'Quần', count: 156 },
+    { id: 4, name: 'Áo nam', count: 134 },
+  ],
+  priceRanges: [
+    { id: 1, label: 'Dưới 500k', min: 0, max: 500000 },
+    { id: 2, label: '500k - 1tr', min: 500000, max: 1000000 },
+    { id: 3, label: '1tr - 2tr', min: 1000000, max: 2000000 },
+    { id: 4, label: 'Trên 2tr', min: 2000000, max: null },
+  ],
+  sizes: ['XS', 'S', 'M', 'L', 'XL'],
+  colors: [
+    { name: 'Black', code: '#000000' },
+    { name: 'White', code: '#FFFFFF' },
+    { name: 'Red', code: '#FF4D4F' },
+    { name: 'Blue', code: '#1677FF' },
+    { name: 'Green', code: '#52C41A' },
+    { name: 'Yellow', code: '#FAAD14' },
+    { name: 'Pink', code: '#EB2F96' },
+    { name: 'Purple', code: '#722ED1' },
+  ],
+};

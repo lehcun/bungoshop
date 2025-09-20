@@ -6,7 +6,7 @@ import Container from './Container';
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-50 bg-white/70">
+    <header className="sticky top-0 z-50 bg-white/70 shadow-lg shadow-black/10">
       <Container className="flex items-center justify-between py-5">
         <Logo />
         <NavBar />

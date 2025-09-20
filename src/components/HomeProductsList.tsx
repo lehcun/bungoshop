@@ -1,8 +1,7 @@
-import { mockApi } from '../../constants/data';
 import Container from './Container';
-import ProductCard from './ProductCard';
+import ProductGrid from './ProductGrid';
 
-const ProductsGrid = () => {
+const HomeProductsList = () => {
   return (
     <section className="bg-gray-100">
       <Container className="py-24">
@@ -12,14 +11,12 @@ const ProductsGrid = () => {
             Những món đồ được yêu thích nhất
           </span>
         </div>
-        <div className="mt-16 grid grid-cols-1 gap-x-8 md:grid-cols-2 lg:grid-cols-4">
-          {mockApi.featuredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+        <div className="">
+          <ProductGrid />
         </div>
       </Container>
     </section>
   );
 };
 
-export default ProductsGrid;
+export default HomeProductsList;
