@@ -60,12 +60,10 @@ const ProductCard = ({ product }: { product: PropType }) => {
               <span className="text-shop_dark_blue text-2xl font-bold">
                 {`${product.price}₫`}
               </span>
-              {product.original_price ? (
+              {product.original_price && (
                 <span className="text-gray-500 line-through">
-                  {`${product.original_price}₫`}
+                  {product.original_price}₫
                 </span>
-              ) : (
-                ''
               )}
             </div>
             {/* Size */}

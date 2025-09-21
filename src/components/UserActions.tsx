@@ -1,10 +1,11 @@
 import React from 'react';
 import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
-import { ClerkProvider, SignedIn, UserButton } from '@clerk/nextjs';
+import { SignedIn, UserButton } from '@clerk/nextjs';
 import { currentUser } from '@clerk/nextjs/server';
 
 import Search from './Search';
 import SignIn from './SignIn';
+import Link from 'next/link';
 
 const UserActions = async () => {
   const user = await currentUser();
@@ -19,18 +20,21 @@ const UserActions = async () => {
             10
           </div>
         </div>
-        <div className="hover:text-shop_dark_blue relative flex cursor-pointer items-center">
+        <Link
+          href={'/cart'}
+          className="hover:text-shop_dark_blue relative flex cursor-pointer items-center"
+        >
           <ShoppingCartIcon strokeWidth={2} />
           <div className="bg-shop_dark_blue absolute -top-0.5 left-3 flex h-5 w-5 flex-col items-center rounded-full text-white">
             10
           </div>
-        </div>
-        <ClerkProvider>
+        </Link>
+        <>
           <SignedIn>
             <UserButton />
           </SignedIn>
           {!user && <SignIn />}
-        </ClerkProvider>
+        </>
       </div>
     </>
   );

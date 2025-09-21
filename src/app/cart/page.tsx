@@ -5,11 +5,11 @@ import CartSummary from '@/components/product/CartSummary';
 
 export default async function CartPage() {
   return (
-    <div className="bg-red-500">
+    <div className="bg-gray-50">
       <NavPath path="Giỏ hàng" />
-      <Container className="mt-8">
-        <span className="text-3xl font-semibold">🛒 Giỏ hàng của bạn</span>
-        <section className="flex">
+      <Container className="pb-8">
+        <div className="my-8 text-3xl font-semibold">🛒 Giỏ hàng của bạn</div>
+        <section className="flex gap-8">
           <CartItemList />
           <CartSummary />
         </section>
