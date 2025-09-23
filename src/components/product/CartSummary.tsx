@@ -1,7 +1,18 @@
-import React from 'react';
+'use client';
+
+import React, { useContext } from 'react';
 import * as motion from 'motion/react-client';
+import { CartContext } from '@/contexts/CartContext';
 
 const CartSummary = () => {
+  const { cart } = useContext(CartContext);
+  const totalDiscount = cart.reduce(
+    (sum, item) =>
+      sum +
+      (item.original_price != null ? item.original_price - item.price : 0),
+    0
+  );
+  const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
   return (
     <div className="lg:w-1/3">
       <div className="rounded-2xl bg-white p-4 shadow-lg shadow-black/10">
@@ -25,11 +36,11 @@ const CartSummary = () => {
           <div className="flex flex-col border-b-1 border-gray-300 py-2">
             <div className="my-1 flex justify-between">
               <span>Tạm tính:</span>
-              <span>Miễn phí</span>
+              <span>{totalPrice}₫</span>
             </div>
             <div className="my-1 flex justify-between">
               <span>Giảm giá:</span>
-              <span className="text-red-600">-820.000₫</span>
+              <span className="text-red-600">-${totalDiscount}₫</span>
             </div>
             <div className="my-1 flex justify-between">
               <span>Phí vận chuyển:</span>
@@ -39,7 +50,9 @@ const CartSummary = () => {
           <div className="">
             <div className="flex justify-between py-4 font-semibold">
               <span>Tổng cộng:</span>
-              <span className="text-shop_dark_blue text-xl">2.830.000₫</span>
+              <span className="text-shop_dark_blue text-xl">
+                {totalPrice - totalDiscount}₫
+              </span>
             </div>
           </div>
         </div>

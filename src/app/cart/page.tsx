@@ -1,7 +1,6 @@
 import Container from '@/components/Container';
 import NavPath from '@/components/NavPath';
-import CartItemList from '@/components/product/CartItemList';
-import CartSummary from '@/components/product/CartSummary';
+import CartModel from '@/components/product/CartModel';
 
 export default async function CartPage() {
   return (
@@ -10,8 +9,7 @@ export default async function CartPage() {
       <Container className="pb-8">
         <div className="my-8 text-3xl font-semibold">🛒 Giỏ hàng của bạn</div>
         <section className="flex gap-8">
-          <CartItemList />
-          <CartSummary />
+          <CartModel />
         </section>
       </Container>
     </div>

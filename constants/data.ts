@@ -180,6 +180,7 @@ export const mockApi = {
       variants: ['S', 'M', 'L'],
       icon: '👗',
       bgColor: 'bg-blue-100',
+      quantity: 1,
     },
     {
       id: 102,
@@ -195,6 +196,7 @@ export const mockApi = {
       variants: ['M', 'L', 'XL'],
       icon: '👔',
       bgColor: 'bg-green-100',
+      quantity: 1,
     },
     {
       id: 103,
@@ -212,6 +214,7 @@ export const mockApi = {
       colorVariants: true,
       icon: '👜',
       bgColor: 'bg-pink-100',
+      quantity: 1,
     },
     {
       id: 104,
@@ -227,6 +230,7 @@ export const mockApi = {
       variants: ['36', '37', '38'],
       icon: '👠',
       bgColor: 'bg-red-100',
+      quantity: 1,
     },
   ],
 };

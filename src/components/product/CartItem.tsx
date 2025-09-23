@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import { CartContext } from '@/contexts/CartContext';
+import React, { useContext } from 'react';
 
 interface PropType {
   id: string | number;
@@ -14,10 +15,19 @@ interface PropType {
   price: number;
   original_price?: number | null;
   variants: string[];
+  quantity: number;
 }
 
 const CartItem = ({ item }: { item: PropType }) => {
-  const [numberItem, setNumberItem] = useState(1);
+  const { increaseQty, decreaseQty, removeCart } = useContext(CartContext);
+  const decrease = (id: string | number) => {
+    if (item.quantity === 1) {
+      removeCart(Number(id));
+    } else {
+      decreaseQty(Number(id));
+    }
+  };
+
   return (
     <>
       <div className="flex">
@@ -33,11 +43,11 @@ const CartItem = ({ item }: { item: PropType }) => {
           </div>
           <div className="flex gap-x-2">
             <span className="text-shop_dark_blue text-xl font-bold">
-              {`${item.price}₫`}
+              {`${item.price * item.quantity}₫`}
             </span>
             {item.original_price && (
               <span className="text-gray-500 line-through">
-                {item.original_price}₫
+                {item.original_price * item.quantity}₫
               </span>
             )}
           </div>
@@ -47,19 +57,26 @@ const CartItem = ({ item }: { item: PropType }) => {
         <div className="flex items-center rounded-xl border-2 border-gray-400">
           <button
             className="cursor-pointer px-4 py-2 hover:bg-gray-300"
-            onClick={() => setNumberItem(numberItem - 1)}
+            onClick={() => decrease(Number(item.id))}
           >
             -
           </button>
-          <span className="px-4 py-2">{numberItem}</span>
+          <span className="px-4 py-2">{item.quantity}</span>
           <button
             className="cursor-pointer px-4 py-2 hover:bg-gray-300"
-            onClick={() => setNumberItem(numberItem + 1)}
+            onClick={() => {
+              increaseQty(Number(item.id));
+            }}
           >
             +
           </button>
         </div>
-        <button className="mx-4 cursor-pointer">🗑️</button>
+        <button
+          className="mx-4 cursor-pointer"
+          onClick={() => removeCart(Number(item.id))}
+        >
+          🗑️
+        </button>
       </div>
     </>
   );
