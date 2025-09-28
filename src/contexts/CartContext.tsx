@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useState } from 'react';
-import { mockApi } from '../../constants/data';
+import { mockApi } from '../constants/data';
 
 interface PropType {
   id: string | number;

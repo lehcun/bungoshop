@@ -1,5 +1,5 @@
 import React from 'react';
-import { mockApi } from '../../constants/data';
+import { mockApi } from '../constants/data';
 import * as motion from 'motion/react-client';
 import Link from 'next/link';
 import Container from './Container';

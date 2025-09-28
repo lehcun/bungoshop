@@ -1,5 +1,5 @@
 import React from 'react';
-import { brandList } from '../../constants/data';
+import { brandList } from '../constants/data';
 import Container from './Container';
 
 const BrandGrid = () => {

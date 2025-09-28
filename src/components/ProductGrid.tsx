@@ -1,5 +1,5 @@
 import React from 'react';
-import { mockApi } from '../../constants/data';
+import { mockApi } from '../constants/data';
 import ProductCard from './ProductCard';
 import { cn } from '@/lib/utils';
 

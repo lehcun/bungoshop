@@ -1,15 +1,11 @@
 import React from 'react';
 import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
-import { SignedIn, UserButton } from '@clerk/nextjs';
-import { currentUser } from '@clerk/nextjs/server';
 
 import Search from './Search';
-import SignIn from './SignIn';
+import Login from './login/Login';
 import Link from 'next/link';
 
 const UserActions = async () => {
-  const user = await currentUser();
-
   return (
     <>
       <div className="flex gap-x-6 text-gray-600">
@@ -29,12 +25,7 @@ const UserActions = async () => {
             10
           </div>
         </Link>
-        <>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-          {!user && <SignIn />}
-        </>
+        <Login />
       </div>
     </>
   );

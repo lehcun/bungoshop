@@ -9,10 +9,14 @@ const CartSummary = () => {
   const totalDiscount = cart.reduce(
     (sum, item) =>
       sum +
-      (item.original_price != null ? item.original_price - item.price : 0),
+      (item.original_price != null ? item.original_price - item.price : 0) *
+        item.quantity,
     0
   );
-  const totalPrice = cart.reduce((sum, item) => sum + item.price, 0);
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   return (
     <div className="lg:w-1/3">
       <div className="rounded-2xl bg-white p-4 shadow-lg shadow-black/10">

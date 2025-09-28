@@ -6,7 +6,7 @@ import {
   footerProducts,
   footerSupports,
   footerContacts,
-} from '../../constants/data';
+} from '../constants/data';
 import Container from './Container';
 
 const Footer = () => {

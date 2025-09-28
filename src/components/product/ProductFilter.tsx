@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import * as motion from 'motion/react-client';
 
-import { mockFilters } from '../../../constants/data';
+import { mockFilters } from '../../constants/data';
 
 const ProductFilter = () => {
   const [sizeSelected, setSizeSelected] = useState<string[]>([]);
