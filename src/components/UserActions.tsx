@@ -4,8 +4,11 @@ import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 import Search from './Search';
 import Login from './login/Login';
 import Link from 'next/link';
+import UserMenu from './UserMenu';
 
 const UserActions = async () => {
+  const user = true; // = user da dang nhap
+
   return (
     <>
       <div className="flex gap-x-6 text-gray-600">
@@ -25,7 +28,7 @@ const UserActions = async () => {
             10
           </div>
         </Link>
-        <Login />
+        {!user ? <Login /> : <UserMenu />}
       </div>
     </>
   );
