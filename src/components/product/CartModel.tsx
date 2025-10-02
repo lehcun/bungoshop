@@ -1,5 +1,3 @@
-'use client';
-
 import CartItemList from '@/components/product/CartItemList';
 import CartSummary from '@/components/product/CartSummary';
 import { CartProvider } from '@/contexts/CartContext';

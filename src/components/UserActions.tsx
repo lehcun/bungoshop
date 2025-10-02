@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 
@@ -5,9 +7,10 @@ import Search from './Search';
 import Login from './login/Login';
 import Link from 'next/link';
 import UserMenu from './UserMenu';
+import { useAuth } from '@/contexts/AuthContext';
 
-const UserActions = async () => {
-  const user = true; // = user da dang nhap
+const UserActions = () => {
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -28,7 +31,7 @@ const UserActions = async () => {
             10
           </div>
         </Link>
-        {!user ? <Login /> : <UserMenu />}
+        {!user ? <Login /> : <UserMenu handleLogout={logout} />}
       </div>
     </>
   );

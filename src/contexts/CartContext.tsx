@@ -21,9 +21,9 @@ interface PropType {
 export const CartContext = createContext<{
   cart: PropType[];
   addToCart: (product: PropType) => void;
-  increaseQty: (id: number) => void;
-  decreaseQty: (id: number) => void;
-  removeCart: (id: number) => void;
+  increaseQty: (id: string) => void;
+  decreaseQty: (id: string) => void;
+  removeCart: (id: string) => void;
 }>({
   cart: [],
   addToCart: () => {},
@@ -41,7 +41,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   //Tang san pham
-  const increaseQty = (id: string | number) => {
+  const increaseQty = (id: string) => {
     setCart((prev: PropType[]) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -49,7 +49,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  const decreaseQty = (id: string | number) => {
+  const decreaseQty = (id: string) => {
     setCart((prev: PropType[]) => {
       return prev.map((item) =>
         item.id === id && item.quantity > 1
@@ -59,7 +59,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const removeCart = (id: string | number) => {
+  const removeCart = (id: string) => {
     setCart((prev: PropType[]) => prev.filter((item) => item.id !== id));
   };
 

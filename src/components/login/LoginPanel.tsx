@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuth } from '@/contexts/AuthContext';
 import { FacebookIcon, GoogleIcon } from '@/images';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,27 +10,14 @@ const LoginPanel = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { login } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const res = await fetch('http://localhost:3001/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        alert('Login thanh cong');
-        localStorage.setItem('token', data.access_token);
-      } else {
-        alert(data.message || 'Sai email hoặc mật khẩu');
-      }
+      login(email, password);
     } catch (err) {
       console.log(err);
-      alert('Lỗi');
     }
   };
 

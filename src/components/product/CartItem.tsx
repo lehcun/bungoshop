@@ -4,7 +4,7 @@ import { CartContext } from '@/contexts/CartContext';
 import React, { useContext } from 'react';
 
 interface PropType {
-  id: string | number;
+  id: string;
   bgColor: string | null;
   icon: React.ReactNode;
   discount?: string | null;
@@ -20,11 +20,11 @@ interface PropType {
 
 const CartItem = ({ item }: { item: PropType }) => {
   const { increaseQty, decreaseQty, removeCart } = useContext(CartContext);
-  const decrease = (id: string | number) => {
+  const decrease = (id: string) => {
     if (item.quantity === 1) {
-      removeCart(Number(id));
+      removeCart(id);
     } else {
-      decreaseQty(Number(id));
+      decreaseQty(id);
     }
   };
 
@@ -57,7 +57,7 @@ const CartItem = ({ item }: { item: PropType }) => {
         <div className="flex items-center rounded-xl border-2 border-gray-400">
           <button
             className="cursor-pointer px-4 py-2 hover:bg-gray-300"
-            onClick={() => decrease(Number(item.id))}
+            onClick={() => decrease(item.id)}
           >
             -
           </button>
@@ -65,7 +65,7 @@ const CartItem = ({ item }: { item: PropType }) => {
           <button
             className="cursor-pointer px-4 py-2 hover:bg-gray-300"
             onClick={() => {
-              increaseQty(Number(item.id));
+              increaseQty(item.id);
             }}
           >
             +
@@ -73,7 +73,7 @@ const CartItem = ({ item }: { item: PropType }) => {
         </div>
         <button
           className="mx-4 cursor-pointer"
-          onClick={() => removeCart(Number(item.id))}
+          onClick={() => removeCart(item.id)}
         >
           🗑️
         </button>

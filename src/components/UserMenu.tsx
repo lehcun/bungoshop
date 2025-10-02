@@ -3,7 +3,7 @@ import React from 'react';
 import { DefaultAvatar } from '@/images';
 import Link from 'next/link';
 
-const UserMenu = () => {
+const UserMenu = ({ handleLogout }: { handleLogout: () => void }) => {
   return (
     <div className="group relative my-auto cursor-pointer">
       <Image src={DefaultAvatar} alt="user" width={28} />
@@ -22,9 +22,9 @@ const UserMenu = () => {
           </Link>
         </li>
         <li className="py-2 hover:rounded-b-md hover:bg-gray-500">
-          <Link href={'/'} className="px-2">
+          <button onClick={handleLogout} className="px-2">
             Đăng Xuất
-          </Link>
+          </button>
         </li>
       </ul>
     </div>

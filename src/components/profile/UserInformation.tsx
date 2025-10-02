@@ -1,8 +1,12 @@
+'use client';
+
+import { useAuth } from '@/contexts/AuthContext';
 import { DefaultAvatar } from '@/images';
 import Image from 'next/image';
 import React from 'react';
 
 const UserInformation = () => {
+  const { user } = useAuth();
   return (
     <div className="w-5/6 bg-white px-8 shadow-sm">
       <section className="border-b-1 border-gray-300 py-4">
@@ -22,10 +26,13 @@ const UserInformation = () => {
         </div>
         <div className="w-5/10">
           <ul className="flex flex-col space-y-8">
-            <li>lehcun</li>
+            <li>{user?.username}</li>
             <li>Cunnn</li>
-            <li className="text-shop_dark_blue underline">Thêm</li>
-            <li>*******233</li>
+            <li>
+              {user?.email}
+              <span className="text-shop_dark_blue underline">Thêm</span>
+            </li>
+            <li>{user?.sdt}</li>
             <li>Nam</li>
             <li>29/07/2005</li>
           </ul>
