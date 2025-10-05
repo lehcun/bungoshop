@@ -1,9 +1,11 @@
 'use client';
 
-import { CartContext } from '@/contexts/CartContext';
 import React, { useContext } from 'react';
 
-interface PropType {
+import { CartContext } from '@/contexts/CartContext';
+import { formatCurrency } from '@/lib/utils';
+
+interface CartPropType {
   id: string;
   bgColor: string | null;
   icon: React.ReactNode;
@@ -18,7 +20,7 @@ interface PropType {
   quantity: number;
 }
 
-const CartItem = ({ item }: { item: PropType }) => {
+const CartItem = ({ item }: { item: CartPropType }) => {
   const { increaseQty, decreaseQty, removeCart } = useContext(CartContext);
   const decrease = (id: string) => {
     if (item.quantity === 1) {
@@ -43,11 +45,11 @@ const CartItem = ({ item }: { item: PropType }) => {
           </div>
           <div className="flex gap-x-2">
             <span className="text-shop_dark_blue text-xl font-bold">
-              {`${item.price * item.quantity}₫`}
+              {formatCurrency(item.price * item.quantity)}
             </span>
             {item.original_price && (
               <span className="text-gray-500 line-through">
-                {item.original_price * item.quantity}₫
+                {formatCurrency(item.original_price * item.quantity)}
               </span>
             )}
           </div>

@@ -32,7 +32,7 @@ const UserInformation = () => {
               {user?.email}
               <span className="text-shop_dark_blue underline">Thêm</span>
             </li>
-            <li>{user?.sdt}</li>
+            <li>{user?.phone}</li>
             <li>Nam</li>
             <li>29/07/2005</li>
           </ul>

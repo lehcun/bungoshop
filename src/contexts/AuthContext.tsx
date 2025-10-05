@@ -7,7 +7,7 @@ interface User {
   id: string;
   username: string;
   email: string;
-  sdt?: string;
+  phone?: string;
 }
 
 interface AuthContextType {

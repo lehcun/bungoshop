@@ -3,6 +3,7 @@
 import React, { useContext } from 'react';
 import * as motion from 'motion/react-client';
 import { CartContext } from '@/contexts/CartContext';
+import { formatCurrency } from '@/lib/utils';
 
 const CartSummary = () => {
   const { cart } = useContext(CartContext);
@@ -40,11 +41,13 @@ const CartSummary = () => {
           <div className="flex flex-col border-b-1 border-gray-300 py-2">
             <div className="my-1 flex justify-between">
               <span>Tạm tính:</span>
-              <span>{totalPrice}₫</span>
+              <span>{formatCurrency(totalPrice)}</span>
             </div>
             <div className="my-1 flex justify-between">
               <span>Giảm giá:</span>
-              <span className="text-red-600">-${totalDiscount}₫</span>
+              <span className="text-red-600">
+                -${formatCurrency(totalDiscount)}
+              </span>
             </div>
             <div className="my-1 flex justify-between">
               <span>Phí vận chuyển:</span>
@@ -55,7 +58,7 @@ const CartSummary = () => {
             <div className="flex justify-between py-4 font-semibold">
               <span>Tổng cộng:</span>
               <span className="text-shop_dark_blue text-xl">
-                {totalPrice - totalDiscount}₫
+                {formatCurrency(totalPrice - totalDiscount)}
               </span>
             </div>
           </div>
