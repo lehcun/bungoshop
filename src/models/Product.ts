@@ -1,3 +1,5 @@
+import { User } from './User';
+
 export interface Category {
   id: number;
   name: string;
@@ -33,6 +35,19 @@ export interface Variant {
   updatedAt: string;
 }
 
+export interface Review {
+  id: number;
+  rating: number;
+  createdAt: string;
+  updatedAt: string;
+  comment: string;
+  productId: string;
+  userId: string;
+
+  user: User;
+  variant: Variant;
+}
+
 export interface Product {
   id: string;
   name: string;
@@ -50,4 +65,5 @@ export interface Product {
   brand: Brand | null;
   images: ProductImage[];
   variants: Variant[];
+  reviews: Review[];
 }

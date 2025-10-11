@@ -1,26 +1,43 @@
 'use client';
 
+import { formatCurrency } from '@/lib/utils';
+import { Product } from '@/models/Product';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const ProductDisplay = () => {
+const ProductDisplay = ({ productId }: { productId: string }) => {
   const [colorSelected, setColorSelected] = useState<string | null>(null);
   const [sizeSelected, setSizeSelected] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
+  const [product, setProduct] = useState<Product | null>(null);
 
-  const colors = ['Màu Đen', 'Màu Trắng', 'Màu Xanh'];
-  const sizes = ['S', 'M', 'L', 'XL'];
+  // Khởi tạo 2 mảng chứa size và color của product ko trùng
+  const colorsVar = product?.variants.map((varient) => varient.color);
+  const uniqueColorArr = [...new Set(colorsVar)];
+  // console.log(uniqueColorArr);
+
+  const sizeVar = product?.variants.map((varient) => varient.size);
+  const uniqueSizeArr = [...new Set(sizeVar)];
+  // console.log(uniqueSizeArr);
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/products/${productId}`)
+      .then((res) => res.json())
+      .then((data) => setProduct(data));
+  }, [productId]);
+
+  //Làm Loading sau
+  if (!product) return <div>Loading...</div>;
+
   return (
     <section className="w-full bg-white">
       <div className="flex space-x-8 p-4">
         {/* Image */}
         <div>
           <Image
-            src={
-              'https://res.cloudinary.com/dbvlsf9bi/image/upload/v1759557232/Uniqlo_T-Shirt_Basic_vdfb43.avif'
-            }
+            src={product?.images[0].url}
             alt="tets"
-            width={700}
+            width={600}
             height={255}
             className="object-cover"
           />
@@ -28,10 +45,7 @@ const ProductDisplay = () => {
         {/* Detail */}
         <div>
           <div>
-            <h2 className="text-xl">
-              Bộ Đồ Nam Cộc Tay Mặc Hè Chất Liệu Cotton Thêu Logo Ngựa Ngực Phối
-              Chữ Bông Xù Sau Lưng Đơn Giản Basic
-            </h2>
+            <h2 className="text-xl">{product?.name}</h2>
             <div className="my-2 flex">
               <p>
                 3.9 <span>⭐⭐⭐⭐⭐</span>
@@ -45,10 +59,16 @@ const ProductDisplay = () => {
           {/* Price Discount... */}
           <div>
             <div className="flex items-center space-x-2 bg-gray-50 px-4 py-2">
-              <span className="text-shop_dark_blue text-4xl">120.000$</span>
-              <span className="text-gray-400 line-through">150.000$</span>
+              <span className="text-shop_dark_blue text-4xl">
+                {formatCurrency(
+                  (product?.price * (100 - product.discount)) / 100
+                )}
+              </span>
+              <span className="text-gray-400 line-through">
+                {formatCurrency(product?.price)}
+              </span>
               <span className="text-shop_dark_blue rounded-sm bg-blue-300 px-1 text-sm font-semibold">
-                -20%
+                -{product.discount}%
               </span>
             </div>
             <div className="flex flex-col space-y-4">
@@ -60,7 +80,7 @@ const ProductDisplay = () => {
               <section className="flex items-center gap-x-4 px-4 py-2">
                 <label className="w-25 text-gray-400">Màu sắc</label>
                 <div className="flex space-x-2">
-                  {colors.map((color) => (
+                  {uniqueColorArr.map((color) => (
                     <button
                       key={color}
                       className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${
@@ -83,7 +103,7 @@ const ProductDisplay = () => {
               <section className="flex items-center gap-x-4 px-4 py-2">
                 <label className="w-25 text-gray-400">Size</label>
                 <div className="flex space-x-2">
-                  {sizes.map((size) => (
+                  {uniqueSizeArr.map((size) => (
                     <button
                       key={size}
                       className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${

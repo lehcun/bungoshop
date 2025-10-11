@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Product } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
 import Decimal from 'decimal.js';
+import Link from 'next/link';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const zeroDicount = new Decimal('0.00');
@@ -14,8 +15,11 @@ const ProductCard = ({ product }: { product: Product }) => {
     <>
       <div key={product.id}>
         <div className="rounded-3xl shadow-lg shadow-black/20">
-          <div className="relative">
-            <div className="flex h-80 items-center justify-center">
+          <Link
+            href={`/product/${product.id}`}
+            className="relative cursor-pointer"
+          >
+            <div className="flex h-70 items-center justify-center">
               <Image
                 src={product.images[0].url}
                 alt="product-img"
@@ -40,11 +44,11 @@ const ProductCard = ({ product }: { product: Product }) => {
                 </div>
               )}
             </div>
-          </div>
+          </Link>
 
           <div className="flex flex-col gap-y-4 rounded-b-2xl bg-white p-6">
             <h3 className="truncate text-xl font-semibold">{product.name}</h3>
-            <p className="line-clamp-2">{product.description}</p>
+            {/* <p className="line-clamp-2">{product.description}</p> */}
             <div className="flex">
               {/* <span>{product.rating}</span> */}
               <span>⭐⭐⭐⭐⭐</span>
