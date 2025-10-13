@@ -10,74 +10,83 @@ import Link from 'next/link';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const zeroDicount = new Decimal('0.00');
+  const ratings = product.reviews.map((r) => r.rating);
+  const avgRating = ratings.length
+    ? ratings.reduce((a, b) => a + b, 0) / ratings.length
+    : 0;
 
   return (
     <>
-      <div key={product.id}>
-        <div className="rounded-3xl shadow-lg shadow-black/20">
-          <Link
-            href={`/product/${product.id}`}
-            className="relative cursor-pointer"
-          >
-            <div className="flex h-70 items-center justify-center">
-              <Image
-                src={product.images[0].url}
-                alt="product-img"
-                className="rounded-t-2xl object-cover"
-                fill
-                sizes="100%"
-              />
-            </div>
-            <div className="absolute inset-1 top-3 mx-3 flex justify-between">
-              {product.discount?.toString() !== zeroDicount.toString() ? (
-                <div className="flex h-8 w-16 items-center justify-center rounded-2xl bg-red-600 font-semibold text-white">
-                  {`-${product.discount}%`}
-                </div>
-              ) : (
-                <></>
-              )}
-              {product.status && (
-                <div
-                  className={`flex h-8 w-16 items-center justify-center rounded-2xl font-semibold ${product.status.includes('HOT') || product.status.includes('BEST') ? 'bg-yellow-400 text-black' : 'bg-green-400 text-white'}`}
-                >
-                  {product.status}
-                </div>
-              )}
-            </div>
-          </Link>
+      <motion.div
+        className=""
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.95 }}
+      >
+        <div key={product.id}>
+          <div className="rounded-3xl shadow-lg shadow-black/20">
+            <Link
+              href={`/product/${product.id}`}
+              className="relative cursor-pointer"
+            >
+              <div className="flex h-70 items-center justify-center">
+                <Image
+                  src={product.images[0].url}
+                  alt="product-img"
+                  className="rounded-t-2xl object-cover"
+                  fill
+                  sizes="100%"
+                />
+              </div>
+              <div className="absolute inset-1 top-3 mx-3 flex justify-between">
+                {product.discount?.toString() !== zeroDicount.toString() ? (
+                  <div className="flex h-8 w-16 items-center justify-center rounded-2xl bg-red-600 font-semibold text-white">
+                    {`-${product.discount}%`}
+                  </div>
+                ) : (
+                  <></>
+                )}
+                {product.status && (
+                  <div
+                    className={`flex h-8 w-16 items-center justify-center rounded-2xl font-semibold ${product.status.includes('HOT') || product.status.includes('BEST') ? 'bg-yellow-400 text-black' : 'bg-green-400 text-white'}`}
+                  >
+                    {product.status}
+                  </div>
+                )}
+              </div>
+            </Link>
 
-          <div className="flex flex-col gap-y-4 rounded-b-2xl bg-white p-6">
-            <h3 className="truncate text-xl font-semibold">{product.name}</h3>
-            {/* <p className="line-clamp-2">{product.description}</p> */}
-            <div className="flex">
-              {/* <span>{product.rating}</span> */}
-              <span>⭐⭐⭐⭐⭐</span>
-              {/* <span className="text-gray-700">{`(${product.reviews_count} đánh giá)`}</span> */}
-            </div>
-            <div className="flex gap-x-2">
-              {product.discount === null ? (
-                <span className="text-shop_dark_blue text-2xl font-bold">
-                  {formatCurrency(product.price)}
-                </span>
-              ) : (
-                <>
+            <div className="flex flex-col gap-y-4 rounded-b-2xl bg-white p-6">
+              <h3 className="truncate text-xl font-semibold">{product.name}</h3>
+              {/* <p className="line-clamp-2">{product.description}</p> */}
+              <div className="flex gap-x-2">
+                {product.discount === null ? (
                   <span className="text-shop_dark_blue text-2xl font-bold">
-                    {formatCurrency(
-                      (product.price * (100 - product.discount)) / 100
-                    )}
-                  </span>
-                  <span className="text-gray-500 line-through">
                     {formatCurrency(product.price)}
                   </span>
-                </>
-              )}
-            </div>
+                ) : (
+                  <>
+                    <span className="text-shop_dark_blue text-2xl font-bold">
+                      {formatCurrency(
+                        (product.price * (100 - product.discount)) / 100
+                      )}
+                    </span>
+                    <span className="text-gray-500 line-through">
+                      {formatCurrency(product.price)}
+                    </span>
+                  </>
+                )}
+              </div>
+              <div className="flex">
+                {/* <span>{product.rating}</span> */}
+                <span>⭐{avgRating.toFixed(1)}</span>
+                {/* <span className="text-gray-700">{`(${product.reviews_count} đánh giá)`}</span> */}
+              </div>
 
-            {/* Cái này sẽ đưa vào ProductDetail */}
-            {/* Size */}
-            <div className="flex items-center justify-between">
-              {/* <span>Size:</span> */}
-              {/* <div className="flex space-x-2">
+              {/* Cái này sẽ đưa vào ProductDetail */}
+              {/* Size */}
+              <div className="flex items-center justify-between">
+                {/* <span>Size:</span> */}
+                {/* <div className="flex space-x-2">
                 {.map((variant, index) => (
                   <motion.div
                     key={index}
@@ -97,17 +106,18 @@ const ProductCard = ({ product }: { product: Product }) => {
                   </motion.div>
                 ))}
               </div> */}
+              </div>
+              <motion.div
+                className="from-shop_light_blue/70 to-shop_light_blue cursor-pointer rounded-2xl bg-gradient-to-r py-4 text-center"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <button>🛒 Thêm vào giỏ</button>
+              </motion.div>
             </div>
-            <motion.div
-              className="from-shop_light_blue/70 to-shop_light_blue cursor-pointer rounded-2xl bg-gradient-to-r py-4 text-center"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <button>🛒 Thêm vào giỏ</button>
-            </motion.div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

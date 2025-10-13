@@ -1,17 +1,43 @@
+'use client';
+
 import React from 'react';
 import ProductGrid from '../ProductGrid';
+import { useProductListContext } from '@/contexts/ProductListContext';
 
 const ShopProductsList = () => {
+  const { setSort } = useProductListContext();
+
   return (
     <div className="lg:w-3/4">
       <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-6 shadow-lg shadow-black/10">
         <h2 className="text-xl font-semibold">Toàn bộ sản phẩm</h2>
         <span className="flex space-x-4">
-          <select className="rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500">
-            <option>Sắp xếp theo</option>
-            <option>Giá: Thấp đến cao</option>
-            <option>Giá: Cao đến thấp</option>
-            <option>Mới nhất</option>
+          <select
+            className="rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => {
+              const value = e.target.value;
+              switch (value) {
+                case 'date_newest':
+                  setSort('newest');
+                  break;
+                case 'date_oldest':
+                  setSort('oldest');
+                  break;
+                case 'price_asc':
+                  setSort('priceAsc');
+                  break;
+                case 'price_desc':
+                  setSort('priceDesc');
+                  break;
+                default:
+                  break;
+              }
+            }}
+          >
+            <option value="date_newest">Mới nhất</option>
+            <option value="date_oldest">Cũ nhất</option>
+            <option value="price_asc">Giá: Thấp đến cao</option>
+            <option value="price_desc">Giá: Cao đến thấp</option>
             <option>Bán chạy nhất</option>
           </select>
           <div className="flex rounded-xl border-1 border-gray-300">

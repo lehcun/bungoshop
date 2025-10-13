@@ -1,20 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { Review } from '@/models/Product';
+import React from 'react';
 import StarRating from '../common/StarRating';
+import { useProductContext } from '@/contexts/ProductContext';
 
-const ReviewProduct = ({ productId }: { productId: string }) => {
-  const [reviews, setReviews] = useState<Review[]>([]);
-  useEffect(() => {
-    fetch(`http://localhost:3001/reviews/${productId}`).then((res) =>
-      res.json().then((data) => setReviews(data))
-    );
-  });
+const ReviewProduct = () => {
+  const { reviews, loading } = useProductContext();
 
-  const star = reviews.map((review) => review.rating);
-  const starAvg = star.reduce((acc, curr) => acc + curr, 0) / star.length;
+  if (loading) return <div>Loading reviews...</div>;
+
+  const starAvg =
+    reviews.length > 0
+      ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+      : 0;
 
   return (
     <div className="w-full bg-white p-4">

@@ -4,15 +4,26 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
 import { cn } from '@/lib/utils';
 import { Product } from '@/models/Product';
+import { useSearchParams } from 'next/navigation';
 
 const ProductGrid = ({ className }: { className?: string }) => {
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('categories');
+
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/products')
+    const params = new URLSearchParams(searchParams.toString());
+    const url = categoryParam
+      ? `http://localhost:3001/products?${params.toString()}`
+      : 'http://localhost:3001/products/all';
+
+    console.log(url);
+    fetch(url)
       .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, [searchParams, categoryParam]);
 
   return (
     <div
