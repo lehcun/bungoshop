@@ -1,7 +1,7 @@
 'use client';
 
 import { Product } from '@/models/Product';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
   useContext,
   createContext,
@@ -16,15 +16,17 @@ interface ProductListContextType {
   loading: boolean;
   filters: {
     categories: string[] | undefined;
-    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest';
+    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
   };
   setFilters: (filters: {
     categories: undefined | string[];
     priceRange: string;
-    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest';
+    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
   }) => void;
   setCategories: (categories: string[]) => void;
-  setSort: (sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest') => void;
+  setSort: (
+    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default'
+  ) => void;
   refetch: () => void;
 }
 
@@ -32,6 +34,9 @@ const ProductListContext = createContext<ProductListContextType | null>(null);
 
 export const ProductListProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('categories')?.toString();
+  const sortParam = searchParams.get('sort');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,11 +44,18 @@ export const ProductListProvider = ({ children }: { children: ReactNode }) => {
   const [filters, setFilters] = useState<{
     categories: undefined | string[];
     priceRange: string;
-    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest';
+    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
   }>({
-    categories: [],
+    categories: categoryParam ? categoryParam.split(',') : undefined,
     priceRange: '',
-    sort: 'newest',
+    sort:
+      sortParam === 'priceAsc' ||
+      sortParam === 'priceDesc' ||
+      sortParam === 'newest' ||
+      sortParam === 'oldest' ||
+      sortParam === 'default'
+        ? sortParam
+        : 'default',
   });
 
   const fetchProducts = useCallback(async () => {
@@ -78,7 +90,9 @@ export const ProductListProvider = ({ children }: { children: ReactNode }) => {
     setFilters((prev) => ({ ...prev, categories }));
   };
 
-  const setSort = (sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest') => {
+  const setSort = (
+    sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default'
+  ) => {
     setFilters((prev) => ({ ...prev, sort }));
   };
 

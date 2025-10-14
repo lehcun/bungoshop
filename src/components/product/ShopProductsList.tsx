@@ -5,7 +5,7 @@ import ProductGrid from '../ProductGrid';
 import { useProductListContext } from '@/contexts/ProductListContext';
 
 const ShopProductsList = () => {
-  const { setSort } = useProductListContext();
+  const { filters, setSort } = useProductListContext();
 
   return (
     <div className="lg:w-3/4">
@@ -14,6 +14,17 @@ const ShopProductsList = () => {
         <span className="flex space-x-4">
           <select
             className="rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500"
+            value={
+              filters.sort === 'newest'
+                ? 'date_newest'
+                : filters.sort === 'oldest'
+                  ? 'date_oldest'
+                  : filters.sort === 'priceAsc'
+                    ? 'price_asc'
+                    : filters.sort === 'priceDesc'
+                      ? 'price_desc'
+                      : 'default'
+            }
             onChange={(e) => {
               const value = e.target.value;
               switch (value) {
@@ -30,10 +41,12 @@ const ShopProductsList = () => {
                   setSort('priceDesc');
                   break;
                 default:
+                  setSort('default');
                   break;
               }
             }}
           >
+            <option value="default">Sắp xếp theo</option>
             <option value="date_newest">Mới nhất</option>
             <option value="date_oldest">Cũ nhất</option>
             <option value="price_asc">Giá: Thấp đến cao</option>
