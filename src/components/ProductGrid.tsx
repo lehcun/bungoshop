@@ -6,24 +6,29 @@ import { cn } from '@/lib/utils';
 import { Product } from '@/models/Product';
 import { useSearchParams } from 'next/navigation';
 
-const ProductGrid = ({ className }: { className?: string }) => {
+const ProductGrid = ({
+  className,
+  displayCount,
+}: {
+  className?: string;
+  displayCount?: number;
+}) => {
   const searchParams = useSearchParams();
-  const categoryParam = searchParams.get('categories');
-  const sortParam = searchParams.get('sort');
-  console.log();
 
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams.toString());
-    const url = `http://localhost:3001/products?${params.toString()}`;
+    const url = displayCount
+      ? `http://localhost:3001/products/display/${displayCount}`
+      : `http://localhost:3001/products?${params.toString()}`;
 
     // console.log(url);
     fetch(url)
       .then((res) => res.json())
       .then((data) => setProducts(data))
       .catch((err) => console.log(err));
-  }, [searchParams, categoryParam, sortParam]);
+  }, [searchParams, displayCount]);
 
   return (
     <div

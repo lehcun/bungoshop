@@ -1,8 +1,18 @@
-import React from 'react';
-import { brandList } from '../constants/data';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import Container from './Container';
+import { Brand } from '@/models/Brand';
+import Image from 'next/image';
 
 const BrandGrid = () => {
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/brands')
+      .then((res) => res.json())
+      .then((data) => setBrands(data));
+  });
   return (
     <Container className="py-24">
       <div className="flex flex-col gap-y-2 text-center">
@@ -11,14 +21,23 @@ const BrandGrid = () => {
           Hợp tác cùng những thương hiệu hàng đầu
         </span>
       </div>
-      <div className="mt-16 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-        {brandList.map((brand, index) => (
+      <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
+        {brands.map((brand) => (
           <div
-            key={index}
+            key={brand.id}
             className="cursor-pointer py-8 text-center hover:bg-gray-100"
           >
-            <div className="mb-3 text-5xl">{brand.logo}</div>
-            <h2 className="font-semibold text-gray-600">{brand.title}</h2>
+            <div className="relative h-24 w-full">
+              {/* Chiều cao cố định, điều chỉnh theo logo */}
+              <Image
+                src={brand.logoUrl}
+                alt={`Brand image ${brand.name}`}
+                layout="fill" // Điền đầy container
+                objectFit="contain" // Giữ tỷ lệ gốc, không bóp méo
+                loading="lazy"
+                quality={75}
+              />
+            </div>
           </div>
         ))}
       </div>

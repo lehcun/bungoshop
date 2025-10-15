@@ -6,6 +6,7 @@ import 'swiper/css/pagination';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
 import Container from './Container';
+import Button from './common/Button';
 
 export default function BannerSlider() {
   return (
@@ -23,6 +24,11 @@ export default function BannerSlider() {
               Khám phá bộ sưu tập thời trang mới nhất với phong cách độc đáo và
               chất lượng cao cấp
             </p>
+            <section>
+              <Button href="/shop" size="lg">
+                Mua sắm ngay
+              </Button>
+            </section>
           </div>
           <Swiper
             modules={[Autoplay, Pagination, Navigation]}

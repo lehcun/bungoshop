@@ -12,7 +12,7 @@ const HomeProductsList = () => {
           </span>
         </div>
         <div className="">
-          <ProductGrid />
+          <ProductGrid displayCount={8} />
         </div>
       </Container>
     </section>
