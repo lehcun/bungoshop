@@ -1,31 +1,16 @@
 'use client';
 
-import { createContext, useState } from 'react';
-import { mockApi } from '../constants/data';
-
-interface PropType {
-  id: string | number;
-  bgColor: string | null;
-  icon: React.ReactNode;
-  discount?: string | null;
-  badges: string[];
-  name: string;
-  description: string;
-  reviews_count: number;
-  price: number;
-  original_price?: number | null;
-  variants: string[];
-  quantity: number;
-}
+import { createContext, useEffect, useState } from 'react';
+import { CartItem } from '@/models/Product';
 
 export const CartContext = createContext<{
-  cart: PropType[];
-  addToCart: (product: PropType) => void;
+  carts: CartItem[];
+  addToCart: (product: CartItem) => void;
   increaseQty: (id: string) => void;
   decreaseQty: (id: string) => void;
   removeCart: (id: string) => void;
 }>({
-  cart: [],
+  carts: [],
   addToCart: () => {},
   increaseQty: () => {},
   decreaseQty: () => {},
@@ -33,16 +18,31 @@ export const CartContext = createContext<{
 }); // Mảng lưu các sản phẩm
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<PropType[]>(mockApi.featuredProducts);
+  const [carts, setCarts] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    fetch('http://localhost:3001/cart/me', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setCarts(data))
+      .catch((err) => console.error('Error:', err));
+  }, []);
+  console.log(carts);
 
   //Add new product to cart
-  const addToCart = (product: PropType) => {
-    setCart((prev: PropType[]) => [...prev, { ...product, quantity: 1 }]);
+  const addToCart = (product: CartItem) => {
+    setCarts((prev: CartItem[]) => [...prev, { ...product, quantity: 1 }]);
   };
 
   //Tang san pham
   const increaseQty = (id: string) => {
-    setCart((prev: PropType[]) =>
+    setCarts((prev: CartItem[]) =>
       prev.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity + 1 } : item
       )
@@ -50,7 +50,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const decreaseQty = (id: string) => {
-    setCart((prev: PropType[]) => {
+    setCarts((prev: CartItem[]) => {
       return prev.map((item) =>
         item.id === id && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
@@ -60,12 +60,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const removeCart = (id: string) => {
-    setCart((prev: PropType[]) => prev.filter((item) => item.id !== id));
+    setCarts((prev: CartItem[]) => prev.filter((item) => item.id !== id));
   };
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, increaseQty, decreaseQty, removeCart }}
+      value={{ carts, addToCart, increaseQty, decreaseQty, removeCart }}
     >
       {children}
     </CartContext.Provider>

@@ -1,34 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ProductCard from './ProductCard';
 import { cn } from '@/lib/utils';
-import { Product } from '@/models/Product';
-import { useSearchParams } from 'next/navigation';
+import { useProductListContext } from '@/contexts/ProductListContext';
 
-const ProductGrid = ({
-  className,
-  displayCount,
-}: {
-  className?: string;
-  displayCount?: number;
-}) => {
-  const searchParams = useSearchParams();
-
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    const url = displayCount
-      ? `http://localhost:3001/products/display/${displayCount}`
-      : `http://localhost:3001/products?${params.toString()}`;
-
-    // console.log(url);
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
-      .catch((err) => console.log(err));
-  }, [searchParams, displayCount]);
+const ProductGrid = ({ className }: { className?: string }) => {
+  const { products } = useProductListContext();
 
   return (
     <div

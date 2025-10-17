@@ -6,16 +6,15 @@ import { CartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 
 const CartSummary = () => {
-  const { cart } = useContext(CartContext);
-  const totalDiscount = cart.reduce(
+  const { carts } = useContext(CartContext);
+  const totalDiscount = carts.reduce(
     (sum, item) =>
       sum +
-      (item.original_price != null ? item.original_price - item.price : 0) *
-        item.quantity,
+      (item.product.price != null ? item.product.price : 0) * item.quantity,
     0
   );
-  const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+  const totalPrice = carts.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
     0
   );
   return (

@@ -1,14 +1,8 @@
 'use client';
 
+import { User } from '@/models/User';
 import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-
-interface User {
-  id: string;
-  username: string;
-  email: string;
-  phone?: string;
-}
 
 interface AuthContextType {
   user: User | null;
@@ -21,6 +15,8 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
+  // console.log('User: ', user?.cart);
+  // console.log('User: ', user);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -50,12 +46,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     console.log('Data sau login:', data);
 
     if (res.ok) {
+      console.log('hello');
       localStorage.setItem('token', data.access_token);
       // fetch user ngay lập tức
       const profileRes = await fetch('http://localhost:3001/users/me', {
         headers: { Authorization: `Bearer ${data.access_token}` },
       });
       const profile = await profileRes.json();
+      //debug
+      console.log(profile.user);
+      //debug
       setUser(profile.user);
       alert('dang nhap thanh cong');
       router.push('/');

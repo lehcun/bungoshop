@@ -3,6 +3,8 @@ import { User } from './User';
 export interface Category {
   id: number;
   name: string;
+  description: string | null;
+  iconUrl: string;
   createdAt: string;
   updatedAt: string;
 
@@ -33,6 +35,7 @@ export interface Variant {
   size: string | null;
   color: string | null;
   stock: number;
+  priceDelta?: number;
   createdAt: string;
   updatedAt: string;
 }
@@ -68,4 +71,31 @@ export interface Product {
   images: ProductImage[];
   variants: Variant[];
   reviews: Review[];
+}
+
+export interface Favorite {
+  id: number;
+  userId: string;
+  user: User;
+  productId: string;
+  product: Product;
+  variantId?: number | null;
+  variant?: Variant | null;
+  createdAt: string;
+  deletedAt?: string | null;
+}
+
+export interface CartItem {
+  id: string;
+  userId: string;
+  user: User;
+  productId: string;
+  product: Product;
+  variantId?: number;
+  variant?: Variant;
+  quantity: number;
+  unitPrice?: number;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null;
 }

@@ -1,12 +1,17 @@
 'use client';
 
 import { useContext } from 'react';
-import CartItem from './CartItem';
 import { CartContext } from '@/contexts/CartContext';
+import CartItemDetail from './CartItemDetail';
+import { useAuth } from '@/contexts/AuthContext';
 
 const CartItemList = () => {
-  const { cart } = useContext(CartContext);
-  const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const { user } = useAuth();
+  const { carts } = useContext(CartContext);
+  if (!user) {
+    return <h1>Loading</h1>;
+  }
+  const totalQuantity = carts.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="lg:w-2/3">
@@ -19,13 +24,13 @@ const CartItemList = () => {
           </span>
         </div>
         {/* List Item */}
-        {cart.map((item) => {
+        {carts.map((item) => {
           return (
             <div
               key={item.id}
               className="flex justify-between border-t-1 border-gray-300 p-8"
             >
-              <CartItem item={item} />
+              <CartItemDetail item={item} />
             </div>
           );
         })}

@@ -4,23 +4,9 @@ import React, { useContext } from 'react';
 
 import { CartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
+import { CartItem } from '@/models/Product';
 
-interface CartPropType {
-  id: string;
-  bgColor: string | null;
-  icon: React.ReactNode;
-  discount?: string | null;
-  badges: string[];
-  name: string;
-  description: string;
-  reviews_count: number;
-  price: number;
-  original_price?: number | null;
-  variants: string[];
-  quantity: number;
-}
-
-const CartItem = ({ item }: { item: CartPropType }) => {
+const CartItemDetail = ({ item }: { item: CartItem }) => {
   const { increaseQty, decreaseQty, removeCart } = useContext(CartContext);
   const decrease = (id: string) => {
     if (item.quantity === 1) {
@@ -33,23 +19,34 @@ const CartItem = ({ item }: { item: CartPropType }) => {
   return (
     <>
       <div className="flex">
-        <div className={`mr-4 rounded-2xl p-8 text-3xl ${item.bgColor}`}>
-          {item.icon}
+        <div className={`mr-4 rounded-2xl p-8 text-3xl`}>
+          {/* {item.product.images[0].url} */}
         </div>
         <div className="flex flex-col justify-between">
           <div>
-            <h3 className="text-lg font-semibold">{item.name}</h3>
+            <h3 className="text-lg font-semibold">{item.product.name}</h3>
             <div className="text-gray-500">
-              Size: {item.variants[0]} | {'Màu: j đó'}
+              Size: {item.variant?.size} | {item.variant?.color}
             </div>
           </div>
           <div className="flex gap-x-2">
             <span className="text-shop_dark_blue text-xl font-bold">
-              {formatCurrency(item.price * item.quantity)}
+              {formatCurrency(
+                item.unitPrice
+                  ? (item.unitPrice *
+                      item.quantity *
+                      (100 - item.product.discount)) /
+                      100
+                  : 0
+              )}
             </span>
-            {item.original_price && (
+            {item.product.discount > 0 && (
               <span className="text-gray-500 line-through">
-                {formatCurrency(item.original_price * item.quantity)}
+                {formatCurrency(
+                  item.variant?.priceDelta
+                    ? item.variant?.priceDelta * item.quantity
+                    : item.product.price * item.quantity
+                )}
               </span>
             )}
           </div>
@@ -84,4 +81,4 @@ const CartItem = ({ item }: { item: CartPropType }) => {
   );
 };
 
-export default CartItem;
+export default CartItemDetail;

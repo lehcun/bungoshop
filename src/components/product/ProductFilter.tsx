@@ -5,16 +5,24 @@ import React, { useEffect, useState } from 'react';
 import { mockFilters } from '../../constants/data';
 import { Category } from '@/models/Product';
 import { useProductListContext } from '@/contexts/ProductListContext';
+import { Brand } from '@/models/Brand';
 
 const ProductFilter = () => {
   const { filters, setFilters } = useProductListContext();
   const [categories, setCategories] = useState<Category[]>([]);
+  const [brands, setBrands] = useState<Brand[]>([]);
 
   //fetch Danh muc tu backend
   useEffect(() => {
     fetch('http://localhost:3001/categories')
       .then((res) => res.json())
       .then((data) => setCategories(data));
+  }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/brands')
+      .then((res) => res.json())
+      .then((data) => setBrands(data));
   }, []);
 
   //Toggle danh muc
@@ -30,28 +38,41 @@ const ProductFilter = () => {
     });
   };
 
+  //Toggle Hang
+  const toggleBrand = (name: string) => {
+    const exists: boolean = filters.brands?.includes(name) ?? false;
+    const newCats: string[] = exists
+      ? (filters.brands?.filter((c: string) => c !== name) ?? [])
+      : [...(filters.brands ?? []), name];
+    setFilters({
+      ...filters,
+      brands: newCats,
+      priceRange: '',
+    });
+  };
+
   return (
     <div className="lg:w-1/4">
       <div className="top-24 lg:sticky">
         <section className="rounded-2xl bg-white px-4 py-8 shadow-lg shadow-black/10">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl font-semibold">Bộ lọc</h2>{' '}
-            <div>
+            <section>
               <h3 className="my-2 text-lg font-semibold">Danh mục</h3>
               <div className="flex flex-col gap-y-1.5">
-                {categories.map((item) => (
-                  <span key={item.id} className="flex">
+                {categories.map((category) => (
+                  <span key={category.id} className="flex">
                     <input
                       type="checkbox"
-                      checked={filters.categories?.includes(item.name)}
-                      onChange={() => toggleCategory(item.name)}
+                      checked={filters.categories?.includes(category.name)}
+                      onChange={() => toggleCategory(category.name)}
                     />
-                    <span className="ml-2 text-center">{item.name}</span>
+                    <span className="ml-2 text-center">{category.name}</span>
                   </span>
                 ))}
               </div>
-            </div>
-            <div>
+            </section>
+            <section>
               <h3 className="my-2 text-lg font-semibold">Khoảng giá</h3>
               <div className="flex flex-col gap-y-1.5">
                 {mockFilters.priceRanges.map((item) => (
@@ -61,7 +82,22 @@ const ProductFilter = () => {
                   </label>
                 ))}
               </div>
-            </div>
+            </section>
+            <section>
+              <h3 className="my-2 text-lg font-semibold">Hãng</h3>
+              <div className="flex flex-col gap-y-1.5">
+                {brands.map((brand) => (
+                  <span key={brand.id} className="flex">
+                    <input
+                      type="checkbox"
+                      checked={filters.brands?.includes(brand.name)}
+                      onChange={() => toggleBrand(brand.name)}
+                    />
+                    <span className="ml-2 text-center">{brand.name}</span>
+                  </span>
+                ))}
+              </div>
+            </section>
             {/* <div>
               <h3 className="my-2 text-lg font-semibold">Size</h3>
               <div className="flex flex-wrap gap-x-2">

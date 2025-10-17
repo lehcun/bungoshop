@@ -15,11 +15,13 @@ interface ProductListContextType {
   products: Product[];
   loading: boolean;
   filters: {
-    categories: string[] | undefined;
+    categories: string[];
+    brands: string[];
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
   };
   setFilters: (filters: {
-    categories: undefined | string[];
+    categories: string[];
+    brands: string[];
     priceRange: string;
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
   }) => void;
@@ -32,21 +34,30 @@ interface ProductListContextType {
 
 const ProductListContext = createContext<ProductListContextType | null>(null);
 
-export const ProductListProvider = ({ children }: { children: ReactNode }) => {
+export const ProductListProvider = ({
+  children,
+  displayCount,
+}: {
+  children: ReactNode;
+  displayCount?: number;
+}) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('categories')?.toString();
+  const brandParam = searchParams.get('brands')?.toString();
   const sortParam = searchParams.get('sort');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [filters, setFilters] = useState<{
-    categories: undefined | string[];
+    categories: string[];
+    brands: string[];
     priceRange: string;
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
   }>({
-    categories: categoryParam ? categoryParam.split(',') : undefined,
+    categories: categoryParam ? categoryParam.split(',') : [],
+    brands: brandParam ? brandParam.split(',') : [],
     priceRange: '',
     sort:
       sortParam === 'priceAsc' ||
@@ -58,33 +69,46 @@ export const ProductListProvider = ({ children }: { children: ReactNode }) => {
         : 'default',
   });
 
-  const fetchProducts = useCallback(async () => {
-    try {
-      setLoading(true);
+  const fetchProducts = useCallback(
+    async (displayCount?: number) => {
+      try {
+        setLoading(true);
 
-      const params = new URLSearchParams();
+        const params = new URLSearchParams();
 
-      if (filters.categories?.length) {
-        params.append('categories', filters.categories.join(','));
+        if (filters.categories?.length) {
+          params.append('categories', filters.categories.join(','));
+        }
+
+        if (filters.brands?.length) {
+          params.append('brands', filters.brands.join(','));
+        }
+
+        if (filters.sort) params.append('sort', filters.sort);
+
+        const url = displayCount
+          ? `http://localhost:3001/products/display/${displayCount}`
+          : `http://localhost:3001/products?${params}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+        setProducts(data);
+
+        if (!displayCount) {
+          router.push(`/shop?${params.toString()}`, { scroll: false });
+        }
+      } catch (error) {
+        console.error('Fetch error:', error);
+      } finally {
+        setLoading(false);
       }
-
-      if (filters.sort) params.append('sort', filters.sort);
-
-      const res = await fetch(`http://localhost:3001/products?${params}`);
-      const data = await res.json();
-      setProducts(data);
-
-      router.push(`/shop?${params.toString()}`, { scroll: false });
-    } catch (error) {
-      console.error('Fetch error:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [filters, router]);
+    },
+    [filters, router]
+  );
 
   useEffect(() => {
-    fetchProducts();
-  }, [fetchProducts]);
+    fetchProducts(displayCount);
+  }, [fetchProducts, displayCount]);
 
   const setCategories = (categories: string[]) => {
     setFilters((prev) => ({ ...prev, categories }));

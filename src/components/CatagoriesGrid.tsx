@@ -5,6 +5,7 @@ import * as motion from 'motion/react-client';
 import Link from 'next/link';
 import Container from './Container';
 import { Category } from '@/models/Product';
+import Image from 'next/image';
 
 const CatagoriesGrid = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -26,13 +27,23 @@ const CatagoriesGrid = () => {
         {categories.map((category) => (
           <motion.div
             key={category.id}
-            className={`rounded-2xl px-4 py-4 hover:cursor-pointer`}
+            className={`rounded-2xl bg-gradient-to-br from-blue-100 to-blue-300 px-4 py-4 hover:cursor-pointer`}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Link href={'/shop'}>
+            <Link href={`/shop?categories=${category.name}&sort=default`}>
               <div className="text-center">
-                {/* <h3 className="my-4 text-5xl">{category.icon}</h3> */}
+                <div className="relative h-16 w-full">
+                  {/* Chiều cao cố định, điều chỉnh theo logo */}
+                  <Image
+                    src={category.iconUrl}
+                    alt={`Brand image ${category.name}`}
+                    layout="fill" // Điền đầy container
+                    objectFit="contain" // Giữ tỷ lệ gốc, không bóp méo
+                    loading="lazy"
+                    quality={75}
+                  />
+                </div>
                 <p className="font-semibold">{category.name}</p>
                 <span>{category.products.length} sản phẩm</span>
               </div>

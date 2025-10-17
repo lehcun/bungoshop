@@ -1,5 +1,6 @@
 import Container from './Container';
 import ProductGrid from './ProductGrid';
+import { ProductListProvider } from '@/contexts/ProductListContext';
 
 const HomeProductsList = () => {
   return (
@@ -12,7 +13,9 @@ const HomeProductsList = () => {
           </span>
         </div>
         <div className="">
-          <ProductGrid displayCount={8} />
+          <ProductListProvider displayCount={8}>
+            <ProductGrid />
+          </ProductListProvider>
         </div>
       </Container>
     </section>

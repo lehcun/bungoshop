@@ -1,14 +1,16 @@
 import CartItemList from '@/components/product/CartItemList';
-import CartSummary from '@/components/product/CartSummary';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { CartProvider } from '@/contexts/CartContext';
 
 const CartModel = () => {
   return (
     <>
-      <CartProvider>
-        <CartItemList />
-        <CartSummary />
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <CartItemList />
+          {/* <CartSummary /> */}
+        </CartProvider>
+      </AuthProvider>
     </>
   );
 };

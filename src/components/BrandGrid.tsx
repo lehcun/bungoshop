@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Container from './Container';
 import { Brand } from '@/models/Brand';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const BrandGrid = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -27,17 +28,19 @@ const BrandGrid = () => {
             key={brand.id}
             className="cursor-pointer py-8 text-center hover:bg-gray-100"
           >
-            <div className="relative h-24 w-full">
-              {/* Chiều cao cố định, điều chỉnh theo logo */}
-              <Image
-                src={brand.logoUrl}
-                alt={`Brand image ${brand.name}`}
-                layout="fill" // Điền đầy container
-                objectFit="contain" // Giữ tỷ lệ gốc, không bóp méo
-                loading="lazy"
-                quality={75}
-              />
-            </div>
+            <Link href={`/shop?brands =${brand.name}&sort=default`}>
+              <div className="relative h-24 w-full">
+                {/* Chiều cao cố định, điều chỉnh theo logo */}
+                <Image
+                  src={brand.logoUrl}
+                  alt={`Brand image ${brand.name}`}
+                  layout="fill" // Điền đầy container
+                  objectFit="contain" // Giữ tỷ lệ gốc, không bóp méo
+                  loading="lazy"
+                  quality={75}
+                />
+              </div>
+            </Link>
           </div>
         ))}
       </div>
