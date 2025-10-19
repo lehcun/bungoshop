@@ -8,9 +8,7 @@ import { formatCurrency } from '@/lib/utils';
 const CartSummary = () => {
   const { carts } = useContext(CartContext);
   const totalDiscount = carts.reduce(
-    (sum, item) =>
-      sum +
-      (item.product.price != null ? item.product.price : 0) * item.quantity,
+    (sum, item) => sum + (item.product.price - item.priceAtAdd) * item.quantity,
     0
   );
   const totalPrice = carts.reduce(

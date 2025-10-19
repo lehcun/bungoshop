@@ -1,6 +1,7 @@
 import CartItemList from '@/components/product/CartItemList';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CartProvider } from '@/contexts/CartContext';
+import CartSummary from './CartSummary';
 
 const CartModel = () => {
   return (
@@ -8,7 +9,7 @@ const CartModel = () => {
       <AuthProvider>
         <CartProvider>
           <CartItemList />
-          {/* <CartSummary /> */}
+          <CartSummary />
         </CartProvider>
       </AuthProvider>
     </>

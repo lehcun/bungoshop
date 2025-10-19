@@ -58,12 +58,13 @@ export interface Product {
   name: string;
   description: string | null;
   price: number;
-  discount: number;
   status: 'NEW' | 'HOT' | 'BEST' | null;
   brandId: number | null;
   categoryId: number;
   createdAt: string;
   updatedAt: string;
+  salePrice?: number;
+  discountPercent?: number;
 
   // relations
   category: Category;
@@ -94,7 +95,7 @@ export interface CartItem {
   variantId?: number;
   variant?: Variant;
   quantity: number;
-  unitPrice?: number;
+  priceAtAdd: number;
   createdAt: string;
   updatedAt: string;
   deletedAt?: string | null;

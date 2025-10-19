@@ -5,11 +5,9 @@ import * as motion from 'motion/react-client';
 import Image from 'next/image';
 import { Product } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
-import Decimal from 'decimal.js';
 import Link from 'next/link';
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const zeroDicount = new Decimal('0.00');
   const ratings = product.reviews.map((r) => r.rating);
   const avgRating = ratings.length
     ? ratings.reduce((a, b) => a + b, 0) / ratings.length
@@ -38,9 +36,10 @@ const ProductCard = ({ product }: { product: Product }) => {
                 />
               </div>
               <div className="absolute inset-1 top-3 mx-3 flex justify-between">
-                {product.discount?.toString() !== zeroDicount.toString() ? (
+                {product.discountPercent !== 0 &&
+                product.discountPercent != undefined ? (
                   <div className="flex h-8 w-16 items-center justify-center rounded-2xl bg-red-600 font-semibold text-white">
-                    {`-${product.discount}%`}
+                    {`-${product.discountPercent}%`}
                   </div>
                 ) : (
                   <></>
@@ -59,7 +58,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               <h3 className="truncate text-xl font-semibold">{product.name}</h3>
               {/* <p className="line-clamp-2">{product.description}</p> */}
               <div className="flex gap-x-2">
-                {product.discount === null ? (
+                {product.discountPercent === 0 ? (
                   <span className="text-shop_dark_blue text-2xl font-bold">
                     {formatCurrency(product.price)}
                   </span>
@@ -67,7 +66,7 @@ const ProductCard = ({ product }: { product: Product }) => {
                   <>
                     <span className="text-shop_dark_blue text-2xl font-bold">
                       {formatCurrency(
-                        (product.price * (100 - product.discount)) / 100
+                        product.salePrice ? product.salePrice : product.price
                       )}
                     </span>
                     <span className="text-gray-500 line-through">

@@ -5,6 +5,7 @@ import React, { useContext } from 'react';
 import { CartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import { CartItem } from '@/models/Product';
+import Image from 'next/image';
 
 const CartItemDetail = ({ item }: { item: CartItem }) => {
   const { increaseQty, decreaseQty, removeCart } = useContext(CartContext);
@@ -19,8 +20,15 @@ const CartItemDetail = ({ item }: { item: CartItem }) => {
   return (
     <>
       <div className="flex">
-        <div className={`mr-4 rounded-2xl p-8 text-3xl`}>
-          {/* {item.product.images[0].url} */}
+        <div className={`relative mr-4 h-24 w-24 rounded-2xl p-2`}>
+          <Image
+            src={item.product.images[0].url}
+            alt={`Brand image ${item.product.name}`}
+            layout="fill"
+            objectFit="contain"
+            loading="lazy"
+            quality={75}
+          />
         </div>
         <div className="flex flex-col justify-between">
           <div>
@@ -32,21 +40,17 @@ const CartItemDetail = ({ item }: { item: CartItem }) => {
           <div className="flex gap-x-2">
             <span className="text-shop_dark_blue text-xl font-bold">
               {formatCurrency(
-                item.unitPrice
-                  ? (item.unitPrice *
-                      item.quantity *
-                      (100 - item.product.discount)) /
-                      100
-                  : 0
+                // (item.product.discountPercent
+                //   ? item.priceAtAdd
+                //   : item.product.price) * item.quantity
+                item.priceAtAdd * item.quantity
               )}
             </span>
-            {item.product.discount > 0 && (
+            {item.product.price <= item.priceAtAdd ? (
+              <></>
+            ) : (
               <span className="text-gray-500 line-through">
-                {formatCurrency(
-                  item.variant?.priceDelta
-                    ? item.variant?.priceDelta * item.quantity
-                    : item.product.price * item.quantity
-                )}
+                {formatCurrency(item.product.price * item.quantity)}
               </span>
             )}
           </div>
