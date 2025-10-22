@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 
 import Search from './Search';
@@ -8,9 +8,17 @@ import Login from './login/Login';
 import Link from 'next/link';
 import UserMenu from './UserMenu';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCartContext } from '@/contexts/CartContext';
 
 const UserActions = () => {
   const { user, logout } = useAuth();
+  const { carts } = useCartContext();
+  const [cartFavoriteCount, setCartFavoriteCount] = useState<number>(0);
+  const [cartItemCount, setCartItemCount] = useState<number>(0);
+
+  useEffect(() => {
+    setCartItemCount(carts.length);
+  }, [carts.length]);
 
   return (
     <>
@@ -19,7 +27,7 @@ const UserActions = () => {
         <div className="hover:text-shop_dark_blue relative flex cursor-pointer items-center justify-center">
           <HeartIcon strokeWidth={2} />
           <div className="bg-shop_dark_blue absolute -top-0.5 left-3 flex h-5 w-5 flex-col items-center rounded-full text-white">
-            {user ? user.cart?.length : 0}
+            {cartFavoriteCount}
           </div>
         </div>
         <Link
@@ -28,7 +36,7 @@ const UserActions = () => {
         >
           <ShoppingCartIcon strokeWidth={2} />
           <div className="bg-shop_dark_blue absolute -top-0.5 left-3 flex h-5 w-5 flex-col items-center rounded-full text-white">
-            {user ? user.favorites?.length : 0}
+            {cartItemCount}
           </div>
         </Link>
         {!user ? <Login /> : <UserMenu handleLogout={logout} />}

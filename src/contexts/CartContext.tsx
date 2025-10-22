@@ -1,11 +1,11 @@
 'use client';
 
-import { createContext, useEffect, useState } from 'react';
-import { CartItem } from '@/models/Product';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { CartItem, Product, Variant } from '@/models/Product';
 
 export const CartContext = createContext<{
   carts: CartItem[];
-  addToCart: (product: CartItem) => void;
+  addToCart: (product: Product, varient: Variant, quantity: number) => void;
   increaseQty: (id: string) => void;
   decreaseQty: (id: string) => void;
   removeCart: (id: string) => void;
@@ -36,8 +36,35 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   console.log(carts);
 
   //Add new product to cart
-  const addToCart = (product: CartItem) => {
-    setCarts((prev: CartItem[]) => [...prev, { ...product, quantity: 1 }]);
+  const addToCart = async (
+    product: Product,
+    variant: Variant,
+    quantity: number
+  ) => {
+    try {
+      const token = localStorage.getItem('token');
+      console.log(token);
+      const res = await fetch('http://localhost:3001/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          productId: product.id,
+          variantId: variant.id,
+          quantity,
+        }),
+      });
+      if (!res.ok) throw new Error('Thêm giỏ hành thất bại');
+      const data = await res.json();
+      console.log(data);
+
+      // setCarts((prev: CartItem[]) => [...prev, { ...product, quantity: 1 }]);
+    } catch (err) {
+      console.log(err);
+      console.log(product.id, variant.id, quantity);
+    }
   };
 
   //Tang san pham
@@ -70,4 +97,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </CartContext.Provider>
   );
+};
+
+export const useCartContext = () => {
+  const context = useContext(CartContext);
+  if (!context)
+    throw new Error('useProductContext must be used inside ProductProvider');
+  return context;
 };

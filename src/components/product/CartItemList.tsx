@@ -1,13 +1,12 @@
 'use client';
 
-import { useContext } from 'react';
-import { CartContext } from '@/contexts/CartContext';
+import { useCartContext } from '@/contexts/CartContext';
 import CartItemDetail from './CartItemDetail';
 import { useAuth } from '@/contexts/AuthContext';
 
 const CartItemList = () => {
   const { user } = useAuth();
-  const { carts } = useContext(CartContext);
+  const { carts } = useCartContext();
   if (!user) {
     return <h1>Loading</h1>;
   }

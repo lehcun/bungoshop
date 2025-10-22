@@ -1,7 +1,7 @@
 import { User } from './User';
 
 export interface Category {
-  id: number;
+  id: string;
   name: string;
   description: string | null;
   iconUrl: string;
@@ -12,7 +12,7 @@ export interface Category {
 }
 
 export interface Brand {
-  id: number;
+  id: string;
   name: string;
   logoUrl: string | null;
   description: string | null;
@@ -22,7 +22,7 @@ export interface Brand {
 }
 
 export interface ProductImage {
-  id: number;
+  id: string;
   url: string;
   productId: string;
   createdAt: string;
@@ -30,7 +30,7 @@ export interface ProductImage {
 }
 
 export interface Variant {
-  id: number;
+  id: string;
   productId: string;
   size: string | null;
   color: string | null;
@@ -41,7 +41,7 @@ export interface Variant {
 }
 
 export interface Review {
-  id: number;
+  id: string;
   rating: number;
   createdAt: string;
   updatedAt: string;
@@ -75,7 +75,7 @@ export interface Product {
 }
 
 export interface Favorite {
-  id: number;
+  id: string;
   userId: string;
   user: User;
   productId: string;

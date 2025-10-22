@@ -46,7 +46,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     console.log('Data sau login:', data);
 
     if (res.ok) {
-      console.log('hello');
       localStorage.setItem('token', data.access_token);
       // fetch user ngay lập tức
       const profileRes = await fetch('http://localhost:3001/users/me', {

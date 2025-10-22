@@ -16,12 +16,12 @@ const ProductCard = ({ product }: { product: Product }) => {
   return (
     <>
       <motion.div
-        className=""
+        className="border-shop_dark_blue rounded-2xl hover:border-1"
         whileHover={{ scale: 1.03 }}
         whileTap={{ scale: 0.95 }}
       >
         <div key={product.id}>
-          <div className="rounded-3xl shadow-lg shadow-black/20">
+          <div className="rounded-2xl shadow-md shadow-black/10 hover:shadow-lg">
             <Link
               href={`/product/${product.id}`}
               className="relative cursor-pointer"
@@ -106,13 +106,6 @@ const ProductCard = ({ product }: { product: Product }) => {
                 ))}
               </div> */}
               </div>
-              <motion.div
-                className="from-shop_light_blue/70 to-shop_light_blue cursor-pointer rounded-2xl bg-gradient-to-r py-4 text-center"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <button>🛒 Thêm vào giỏ</button>
-              </motion.div>
             </div>
           </div>
         </div>
