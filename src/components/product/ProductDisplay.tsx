@@ -11,7 +11,6 @@ import { useCartContext } from '@/contexts/CartContext';
 import { Variant } from '@/models/Product';
 
 const ProductDisplay = ({ productId }: { productId: string }) => {
-  const { user } = useAuth();
   const { product, loading, setProductId, reviews } = useProductContext();
   const { addToCart } = useCartContext();
 
@@ -19,6 +18,8 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
   const [sizeSelected, setSizeSelected] = useState<string | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [variant, setVariant] = useState<Variant | null>(null);
+
+  const isDisabled = !colorSelected || !sizeSelected || !variant?.stock;
 
   useEffect(() => {
     setProductId(productId);
@@ -43,12 +44,6 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
   }, [product, sizeSelected, colorSelected]);
 
   const handleAdd = () => {
-    console.log({
-      user,
-      product,
-      variant,
-      quantity,
-    });
     if (product && variant) addToCart(product, variant, quantity);
   };
 
@@ -158,28 +153,35 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
                 <label className="w-25 text-gray-400">Số lượng</label>
                 <div>
                   <button
-                    className="h-8 w-8 border-1 border-gray-400"
+                    className="h-8 w-8 border-1 border-gray-400 disabled:opacity-40"
                     onClick={() => setQuantity(quantity - 1)}
+                    disabled={isDisabled || quantity === 1}
                   >
                     -
                   </button>
                   <input
                     type="text"
-                    className="text-shop_dark_blue h-8 w-10 border-y-1 border-gray-400 text-center"
+                    className="text-shop_light_blue h-8 w-10 border-y-1 border-gray-400 text-center disabled:opacity-40"
                     value={quantity}
+                    disabled={isDisabled}
                     onChange={(e) => setQuantity(Number(e.target.value))}
                   />
                   <button
-                    className="h-8 w-8 border-1 border-gray-400"
+                    className="h-8 w-8 border-1 border-gray-400 disabled:opacity-40"
                     onClick={() => setQuantity(quantity + 1)}
+                    disabled={isDisabled || quantity === variant.stock}
                   >
                     +
                   </button>
                 </div>
-                {variant ? (
-                  <span>Còn {variant.stock} sản phẩm</span>
+                {sizeSelected && colorSelected ? (
+                  variant ? (
+                    <span>Còn {variant.stock} sản phẩm</span>
+                  ) : (
+                    <span>Hết hàng</span>
+                  )
                 ) : (
-                  <span>Hết hàng</span>
+                  <span></span>
                 )}
               </section>
               <section className="flex space-x-4">
