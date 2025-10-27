@@ -1,11 +1,11 @@
-export default function ProductDetailLayout({
+export default function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <div className="mx-auto flex flex-col">
-      <main className="h-screen">{children}</main>
+      <main className="h-auto">{children}</main>
     </div>
   );
 }

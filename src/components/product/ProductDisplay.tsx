@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 import StarRating from '../common/StarRating';
 import Button from '../common/Button';
 import { useProductContext } from '@/contexts/ProductContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { useCartContext } from '@/contexts/CartContext';
 import { Variant } from '@/models/Product';
 
