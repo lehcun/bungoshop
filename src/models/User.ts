@@ -1,4 +1,4 @@
-import { Favorite, Product, Review, Variant } from './Product';
+import { CartItem, Favorite, Review } from './Product';
 
 export interface User {
   id: string;
@@ -6,6 +6,7 @@ export interface User {
   email: string;
   phone?: string;
   password: string;
+  role: string;
   avatarUrl: string;
   bio?: string;
   createdAt: string;

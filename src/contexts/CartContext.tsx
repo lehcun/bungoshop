@@ -33,7 +33,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       .then((data) => setCarts(data))
       .catch((err) => console.error('Error:', err));
   }, []);
-  console.log(carts);
 
   //Add new product to cart
   const addToCart = async (
@@ -57,7 +56,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       });
       if (!res.ok) throw new Error('Thêm giỏ hành thất bại');
       const data = await res.json();
-      console.log(data);
 
       setCarts((prev: CartItem[]) => {
         const existing = prev.find((item) => item.variantId === data.variantId);

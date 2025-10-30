@@ -3,12 +3,18 @@
 import { useCartContext } from '@/contexts/CartContext';
 import CartItemDetail from './CartItemDetail';
 import { useAuth } from '@/contexts/AuthContext';
+import Button from '../common/Button';
 
 const CartItemList = () => {
   const { user } = useAuth();
   const { carts } = useCartContext();
   if (!user) {
-    return <h1>Loading</h1>;
+    return (
+      <div>
+        <h1>Vui lòng đăng nhập</h1>
+        <Button href="/login">Đăng nhập</Button>
+      </div>
+    );
   }
   const totalQuantity = carts.reduce((sum, item) => sum + item.quantity, 0);
 
