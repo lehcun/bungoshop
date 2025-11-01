@@ -17,14 +17,13 @@ export interface User {
   orders: Order[];
   reviews: Review[];
   favorites: Favorite[];
-  // addresses: Address[];
+  addresses: Address[];
   // payments: Payment[];
 }
 
 export interface Order {
   id: string;
   userId?: string | null;
-  user?: User | null;
   status:
     | 'PENDING'
     | 'PAID'
@@ -33,14 +32,32 @@ export interface Order {
     | 'CANCELED'
     | 'REFUNDED'
     | null;
-  subtotal: number;
-  shippingFee: number;
-  discountAmount?: number | null;
-  total: number;
+  discountPrice?: number | null;
+  shippingFeePrice: number;
+  subtotalPrice: number;
+  totalPrice: number;
   promotionCode?: string | null;
   shippingAddressId?: number | null;
   // shippingAddress?: Address | null;
   // paymentMethod?: PaymentMethod | null;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Address {
+  id: string;
+  userId: string;
+  label?: string;
+  recipient: string;
+  phone: string;
+  line1: string;
+  line2?: string | null;
+  city: string;
+  state?: string;
+  postalCode?: string;
+  country: string;
+  isDefault: boolean;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt?: string | null;
 }

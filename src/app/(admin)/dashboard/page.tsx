@@ -1,4 +1,61 @@
+'use client';
+
+import { formatCurrency } from '@/lib/utils';
+import { Order } from '@/models/User';
+import { useEffect, useMemo, useState } from 'react';
+
 export default function DashboardOverview() {
+  const [currentMonthOrders, setCurrentMonthOrders] = useState<Order[]>([]);
+  const [previousMonthOrders, setPreviousMonthOrders] = useState<Order[]>([]);
+
+  const fetchMonthlyRevenues = async (month: number) => {
+    const previousMonth = month === 12 ? 1 : month - 1;
+    try {
+      //Fetch lấy dữ liệu cho tháng vùa rồi
+      const currentMonthRes = await fetch(
+        `http://localhost:3001/orders/month/${month}`
+      );
+      if (!currentMonthRes.ok) throw new Error('Can not call orders/month');
+      const currentData: Order[] = await currentMonthRes.json();
+      setCurrentMonthOrders(currentData);
+
+      //Fetch lấy dữ liệu cho tháng trước nữa
+      const previousMonthRes = await fetch(
+        `http://localhost:3001/orders/month/${previousMonth}`
+      );
+      if (!previousMonthRes.ok) throw new Error('Can not call orders/month');
+      const previousData: Order[] = await previousMonthRes.json();
+      setPreviousMonthOrders(previousData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    const currMonth = new Date().getMonth() + 1;
+    fetchMonthlyRevenues(currMonth);
+  }, []);
+
+  const currMonthlyRevenue = useMemo(() => {
+    return currentMonthOrders.reduce((acc, curr) => acc + curr.totalPrice, 0);
+  }, [currentMonthOrders]);
+
+  const preMonthlyRevenue = useMemo(() => {
+    return previousMonthOrders.reduce((acc, curr) => acc + curr.totalPrice, 0);
+  }, [previousMonthOrders]);
+
+  const momGrowth = useMemo(() => {
+    if (currentMonthOrders === null || previousMonthOrders === null) {
+      return 0;
+    }
+    return ((currMonthlyRevenue - preMonthlyRevenue) / preMonthlyRevenue) * 100;
+  }, [
+    currMonthlyRevenue,
+    preMonthlyRevenue,
+    currentMonthOrders,
+    previousMonthOrders,
+  ]);
+
   return (
     <>
       <header className="flex justify-between px-8 py-4">
@@ -13,11 +70,17 @@ export default function DashboardOverview() {
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Tổng doanh thu</span>
               <span className="text-shop_dark_blue text-3xl font-bold">
-                2.4 triệu đ
+                {formatCurrency(currMonthlyRevenue)}
               </span>
-              <span className="text-sm text-green-500">
-                ↗ +12.5% so với tháng trước
-              </span>
+              {momGrowth > 0 ? (
+                <span className="text-sm text-green-500">
+                  ↗ {momGrowth.toFixed(1)}% so với tháng trước
+                </span>
+              ) : (
+                <span className="text-sm text-red-500">
+                  ↗ {momGrowth.toFixed(1)}% so với tháng trước
+                </span>
+              )}
             </div>
             <span className="text-4xl">💰</span>
           </div>
