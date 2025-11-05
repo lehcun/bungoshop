@@ -67,9 +67,12 @@ const LoginPanel = () => {
       </div>
       <div className="flex justify-center">
         <p>Bạn chưa có tài khoản?</p>
-        <span className="text-shop_dark_blue cursor-pointer hover:opacity-90">
+        <Link
+          href={'/buyer/signup'}
+          className="text-shop_dark_blue cursor-pointer hover:opacity-90"
+        >
           Đăng ký
-        </span>
+        </Link>
       </div>
     </div>
   );

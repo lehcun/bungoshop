@@ -6,7 +6,9 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface AuthContextType {
   user: User | null;
+  serverError: 'username' | 'email' | 'password' | null;
   login: (email: string, password: string) => Promise<void>;
+  signup: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -14,6 +16,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [serverError, setServerError] = useState<
+    'username' | 'email' | 'password' | null
+  >(null);
   const router = useRouter();
   // console.log('User: ', user?.cart);
   // console.log('User: ', user);
@@ -33,34 +38,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const res = await fetch('http://localhost:3001/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-
-    //Debug
-    console.log('Email:', email);
-    console.log('password:', password);
-    console.log('Data sau login:', data);
-
-    if (res.ok) {
-      localStorage.setItem('token', data.access_token);
-      // fetch user ngay lập tức
-      const profileRes = await fetch('http://localhost:3001/users/me', {
-        headers: { Authorization: `Bearer ${data.access_token}` },
+    try {
+      const res = await fetch('http://localhost:3001/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
       });
-      const profile = await profileRes.json();
-      //debug
-      console.log(profile.user);
-      //debug
-      setUser(profile.user);
-      alert('dang nhap thanh cong');
-      router.push('/');
-    } else {
-      alert(data.message);
-      throw new Error('Login failed');
+      const data = await res.json();
+
+      //Debug
+      console.log('Email:', email);
+      console.log('password:', password);
+      console.log('Data sau login:', data);
+
+      if (res.ok) {
+        localStorage.setItem('token', data.access_token);
+        // fetch user ngay lập tức
+        const profileRes = await fetch('http://localhost:3001/users/me', {
+          headers: { Authorization: `Bearer ${data.access_token}` },
+        });
+        const profile = await profileRes.json();
+        //debug
+        console.log(profile.user);
+        //debug
+        setUser(profile.user);
+        alert('dang nhap thanh cong');
+        router.push('/');
+      } else {
+        alert(data.message);
+        throw new Error('Login failed');
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -70,8 +79,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     router.push('/');
   };
 
+  const signup = async (name: string, email: string, password: string) => {
+    try {
+      const res = await fetch('http://localhost:3001/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      });
+
+      if (!res.ok) {
+        if (res.status === 409) {
+          setServerError('email');
+        } else if (res.status === 494) {
+          setServerError('password');
+        }
+        const error = await res.json();
+        throw new Error(error.message || 'Đăng ký thất bại');
+      }
+
+      const data = await res.json();
+      localStorage.setItem('token', data.token);
+
+      const profileRes = await fetch('http://localhost:3001/users/me', {
+        headers: { Authorization: `Bearer ${data.access_token}` },
+      });
+
+      const profile = await profileRes.json();
+      setUser(profile);
+      router.push('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, serverError, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   );

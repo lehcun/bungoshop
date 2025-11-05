@@ -66,6 +66,27 @@ const CartSummary = () => {
     }
   };
 
+  const handlePayment = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+    try {
+      const res = await fetch('http://localhost:3001/orders/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          paymentMethod: 'COD',
+          shippingAddressId: selected,
+        }),
+      });
+      if (!res.ok) throw new Error('can not POST payment');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const totalDiscount = carts.reduce(
     (sum, item) => sum + (item.product.price - item.priceAtAdd) * item.quantity,
     0
@@ -78,7 +99,6 @@ const CartSummary = () => {
   const toggleForm = () => {
     setIsOpenForm(!isOpenForm);
   };
-  const handlePayment = () => {};
 
   return (
     <div className="space-y-8 lg:w-1/3">
@@ -115,8 +135,9 @@ const CartSummary = () => {
           className="from-shop_light_blue/70 to-shop_light_blue w-full cursor-pointer rounded-2xl bg-gradient-to-r py-4 text-center text-xl text-white"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={handlePayment}
         >
-          <button onClick={handlePayment}>💳 Thanh toán</button>
+          <>💳 Thanh toán</>
         </motion.div>
         {/* payment method */}
         {/* <div className="py-4 text-center text-gray-500">

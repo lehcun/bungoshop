@@ -39,12 +39,7 @@ const CartItemDetail = ({ item }: { item: CartItem }) => {
           </div>
           <div className="flex gap-x-2">
             <span className="text-shop_dark_blue text-xl font-bold">
-              {formatCurrency(
-                // (item.product.discountPercent
-                //   ? item.priceAtAdd
-                //   : item.product.price) * item.quantity
-                item.priceAtAdd * item.quantity
-              )}
+              {formatCurrency(item.priceAtAdd * item.quantity)}
             </span>
             {item.product.price <= item.priceAtAdd ? (
               <></>

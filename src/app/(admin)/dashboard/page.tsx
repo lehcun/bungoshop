@@ -21,7 +21,7 @@ export default function DashboardOverview() {
 
       //Fetch lấy dữ liệu cho tháng trước nữa
       const previousMonthRes = await fetch(
-        `http://localhost:3001/orders/month/${previousMonth}`
+        ` /${previousMonth}`
       );
       if (!previousMonthRes.ok) throw new Error('Can not call orders/month');
       const previousData: Order[] = await previousMonthRes.json();

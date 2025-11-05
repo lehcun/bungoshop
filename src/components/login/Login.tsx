@@ -4,7 +4,7 @@ import React from 'react';
 const Login = () => {
   return (
     <Link
-      href={'/login'}
+      href={'/buyer/login'}
       className="hover:text-shop_dark_blue m-auto text-gray-600"
     >
       Login
