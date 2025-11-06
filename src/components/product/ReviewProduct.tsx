@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React from 'react';
 import StarRating from '../common/StarRating';
 import { useProductContext } from '@/contexts/ProductContext';
+import { defaultAvatar } from '@/images';
 
 const ReviewProduct = () => {
   const { reviews, loading } = useProductContext();
@@ -29,7 +30,7 @@ const ReviewProduct = () => {
         <section key={review.id} className="flex space-x-4 p-4">
           <label>
             <Image
-              src={review.user.avatarUrl}
+              src={review.user.avatarUrl && defaultAvatar}
               width={48}
               height={48}
               alt="user-avt"

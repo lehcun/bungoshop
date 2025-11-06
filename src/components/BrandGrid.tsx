@@ -34,10 +34,11 @@ const BrandGrid = () => {
                 <Image
                   src={brand.logoUrl}
                   alt={`Brand image ${brand.name}`}
-                  layout="fill" // Điền đầy container
-                  objectFit="contain" // Giữ tỷ lệ gốc, không bóp méo
+                  fill
                   loading="lazy"
                   quality={75}
+                  className="object-contain"
+                  sizes="100%"
                 />
               </div>
             </Link>

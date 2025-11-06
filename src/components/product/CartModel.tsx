@@ -1,17 +1,26 @@
+'use client';
+
 import CartItemList from '@/components/product/CartItemList';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { CartProvider } from '@/contexts/CartContext';
 import CartSummary from './CartSummary';
+import { useAuth } from '@/contexts/AuthContext';
+import LoginRequired from '../LoginRequired';
 
 const CartModel = () => {
+  const { user } = useAuth();
+  if (!user) {
+    return (
+      <div className="mx-auto w-120">
+        <LoginRequired />
+      </div>
+    );
+  }
   return (
     <>
-      <AuthProvider>
-        <CartProvider>
-          <CartItemList />
-          <CartSummary />
-        </CartProvider>
-      </AuthProvider>
+      <div className="my-8 text-3xl font-semibold">🛒 Giỏ hàng của bạn</div>
+      <section className="flex gap-8">
+        <CartItemList />
+        <CartSummary />
+      </section>
     </>
   );
 };

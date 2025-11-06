@@ -57,12 +57,16 @@ const Search = () => {
         onFocus={() => setIsFocused(true)}
       />
       <SearchIcon className="absolute top-1/2 left-2.5 -translate-y-1/2 text-gray-500" />
-      <X
-        className="absolute top-1/2 right-2.5 -translate-y-1/2 cursor-pointer text-gray-500"
-        onClick={() => {
-          setSearchParams('');
-        }}
-      />
+      {searchParams.length > 0 ? (
+        <X
+          className="absolute top-1/2 right-2.5 -translate-y-1/2 cursor-pointer text-gray-500"
+          onClick={() => {
+            setSearchParams('');
+          }}
+        />
+      ) : (
+        <></>
+      )}
       {isFocused && (
         <div className="absolute top-full left-0 z-50 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-md">
           <div>

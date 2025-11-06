@@ -46,30 +46,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       });
       const data = await res.json();
 
-      //Debug
-      console.log('Email:', email);
-      console.log('password:', password);
-      console.log('Data sau login:', data);
-
-      if (res.ok) {
-        localStorage.setItem('token', data.access_token);
-        // fetch user ngay lập tức
-        const profileRes = await fetch('http://localhost:3001/users/me', {
-          headers: { Authorization: `Bearer ${data.access_token}` },
-        });
-        const profile = await profileRes.json();
-        //debug
-        console.log(profile.user);
-        //debug
-        setUser(profile.user);
-        alert('dang nhap thanh cong');
-        router.push('/');
-      } else {
-        alert(data.message);
+      if (!res.ok) {
         throw new Error('Login failed');
       }
+
+      console.log(data.access_token);
+
+      localStorage.setItem('token', data.access_token);
+
+      // fetch user ngay lập tức
+      const profileRes = await fetch('http://localhost:3001/users/me', {
+        headers: {
+          Authorization: `Bearer ${data.access_token}`,
+        },
+      });
+      const profile = await profileRes.json();
+
+      //debug
+      console.log(profile.user);
+      //debug
+      setUser(profile.user);
+      alert('dang nhap thanh cong');
+      router.push('/');
     } catch (err) {
-      console.log(err);
+      console.error('Login error:', err);
+      alert(err);
     }
   };
 
@@ -102,7 +103,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await res.json();
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.access_token);
 
       const profileRes = await fetch('http://localhost:3001/users/me', {
         headers: { Authorization: `Bearer ${data.access_token}` },

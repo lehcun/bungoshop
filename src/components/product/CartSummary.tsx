@@ -1,14 +1,8 @@
 'use client';
 
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import * as motion from 'motion/react-client';
-import { CartContext } from '@/contexts/CartContext';
+import { useCartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import Button from '../common/Button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -23,7 +17,7 @@ interface AddressFormData {
 
 const CartSummary = () => {
   const { user } = useAuth();
-  const { carts } = useContext(CartContext);
+  const { carts } = useCartContext();
   const [formData, setFormData] = useState<AddressFormData>({
     recipient: '',
     city: '',

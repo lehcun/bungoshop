@@ -26,7 +26,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               href={`/product/${product.id}`}
               className="relative cursor-pointer"
             >
-              <div className="flex h-70 items-center justify-center">
+              <div className="relative flex h-70 items-center justify-center">
                 <Image
                   src={product.images[0].url}
                   alt="product-img"

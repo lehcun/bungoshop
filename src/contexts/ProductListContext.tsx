@@ -100,6 +100,8 @@ export const ProductListProvider = ({
       } catch (error) {
         console.error('Fetch error:', error);
       } finally {
+        //test loading
+        // await new Promise((resolve) => setTimeout(resolve, 5000));
         setLoading(false);
       }
     },

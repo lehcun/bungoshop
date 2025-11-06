@@ -38,10 +38,11 @@ const CatagoriesGrid = () => {
                   <Image
                     src={category.iconUrl}
                     alt={`Brand image ${category.name}`}
-                    layout="fill" // Điền đầy container
-                    objectFit="contain" // Giữ tỷ lệ gốc, không bóp méo
+                    fill
                     loading="lazy"
                     quality={75}
+                    className="object-contain"
+                    sizes="100%"
                   />
                 </div>
                 <p className="font-semibold">{category.name}</p>

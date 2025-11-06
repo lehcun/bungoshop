@@ -44,6 +44,8 @@ export default function BannerSlider() {
                 fill
                 alt="banner2"
                 className="object-cover"
+                sizes="100%"
+                priority={true}
               />
             </SwiperSlide>
             <SwiperSlide>
@@ -52,6 +54,7 @@ export default function BannerSlider() {
                 fill
                 alt="banner3"
                 className="object-cover"
+                sizes="100%"
               />
             </SwiperSlide>
           </Swiper>

@@ -1,3 +1,5 @@
+import { CartProvider } from '@/contexts/CartContext';
+
 export default function CartLayout({
   children,
 }: {
@@ -5,7 +7,9 @@ export default function CartLayout({
 }) {
   return (
     <div className="mx-auto flex flex-col">
-      <main className="h-auto">{children}</main>
+      <main className="h-auto">
+        <CartProvider>{children}</CartProvider>
+      </main>
     </div>
   );
 }

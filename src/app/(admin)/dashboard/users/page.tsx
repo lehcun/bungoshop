@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { User } from '@/models/User';
 import Button from '@/components/common/Button';
+import { defaultAvatar } from '@/images';
 
 export default function Users() {
   const [users, setUsers] = useState<User[]>([]);
@@ -116,7 +117,7 @@ export default function Users() {
                     <div className="flex items-center space-x-2">
                       <div className="relative h-10 w-10 items-center justify-center overflow-hidden rounded-full">
                         <Image
-                          src={user.avatarUrl}
+                          src={user.avatarUrl && defaultAvatar}
                           alt={`Brand image ${user.name}`}
                           layout="fill"
                           objectFit="contain"

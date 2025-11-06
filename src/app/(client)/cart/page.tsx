@@ -7,10 +7,7 @@ export default async function CartPage() {
     <div className="bg-gray-50">
       <NavPath path="Giỏ hàng" />
       <Container className="pb-8">
-        <div className="my-8 text-3xl font-semibold">🛒 Giỏ hàng của bạn</div>
-        <section className="flex gap-8">
-          <CartModel />
-        </section>
+        <CartModel />
       </Container>
     </div>
   );
