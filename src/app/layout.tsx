@@ -4,6 +4,7 @@ import './globals.css';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CartProvider } from '@/contexts/CartContext';
 import { ProductProvider } from '@/contexts/ProductContext';
+import ReactQueryProvider from '@/providers/ReactQueryProvider';
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -25,7 +26,9 @@ export default function RootLayout({
       <body className={poppins.className}>
         <AuthProvider>
           <CartProvider>
-            <ProductProvider>{children}</ProductProvider>
+            <ProductProvider>
+              <ReactQueryProvider>{children}</ReactQueryProvider>
+            </ProductProvider>
           </CartProvider>
         </AuthProvider>
       </body>

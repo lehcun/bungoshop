@@ -13,7 +13,9 @@ const UserActions = () => {
   const { user, logout } = useAuth();
   const { carts } = useCartContext();
   const [cartFavoriteCount, setFavoriteCount] = useState<number>(0);
-  const [cartItemCount, setCartItemCount] = useState<number>(carts.length);
+  const [cartItemCount, setCartItemCount] = useState<number | undefined>(
+    carts.length
+  );
 
   useEffect(() => {
     setCartItemCount(carts.length);
@@ -34,7 +36,7 @@ const UserActions = () => {
         >
           <ShoppingCartIcon strokeWidth={2} />
           <div className="bg-shop_dark_blue absolute -top-0.5 left-3 flex h-5 w-5 flex-col items-center rounded-full text-white">
-            {cartItemCount}
+            {cartItemCount && 0}
           </div>
         </Link>
         {!user ? <Login /> : <UserMenu handleLogout={logout} />}

@@ -6,6 +6,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface AuthContextType {
   user: User | null;
+  token: string | null;
   serverError: 'username' | 'email' | 'password' | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const [serverError, setServerError] = useState<
     'username' | 'email' | 'password' | null
   >(null);
@@ -24,8 +26,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // console.log('User: ', user);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
+    const savedToken = localStorage.getItem('token');
+    if (!savedToken) return;
+    setToken(savedToken);
 
     fetch('http://localhost:3001/users/me', {
       headers: {
@@ -35,7 +38,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .then((res) => res.json())
       .then((data) => setUser(data.user))
       .catch((err) => console.error('Error:', err));
-  }, []);
+  }, [token]);
 
   const login = async (email: string, password: string) => {
     try {
@@ -118,7 +121,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, serverError, login, logout, signup }}>
+    <AuthContext.Provider
+      value={{ user, token, serverError, login, logout, signup }}
+    >
       {children}
     </AuthContext.Provider>
   );

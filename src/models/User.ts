@@ -42,6 +42,23 @@ export interface Order {
   // paymentMethod?: PaymentMethod | null;
   createdAt: string;
   updatedAt: string;
+  items: FormattedOrderItem[];
+}
+
+export interface OrderItem {
+  id: string; // id của OrderItem
+  orderId: string; // Liên kết với Order cha
+  productId: string;
+
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+  discountPrice: number;
+
+  // Thời gian
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }
 
 export interface Address {
@@ -60,4 +77,12 @@ export interface Address {
   createdAt: string;
   updatedAt: string;
   deletedAt?: string | null;
+}
+
+export interface FormattedOrderItem {
+  productName: string;
+  varient: { size: string; color: string } | null;
+  price: number;
+  quantity: number;
+  imageUrl: string;
 }

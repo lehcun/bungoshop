@@ -1,10 +1,10 @@
-export default function AboutLayout({
+export default function TermLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="mx-auto">
+    <div className="mx-auto flex flex-col">
       <main className="h-auto">{children}</main>
     </div>
   );
