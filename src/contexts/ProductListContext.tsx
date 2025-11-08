@@ -14,18 +14,21 @@ import {
 interface ProductListContextType {
   products: Product[];
   loading: boolean;
+  page: number;
+  totalPages: number;
+  setPage: (page: number) => void;
   filters: {
     categories: string[];
     brands: string[];
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
+    priceRange: string;
   };
   setFilters: (filters: {
     categories: string[];
     brands: string[];
-    priceRange: string;
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
+    priceRange: string;
   }) => void;
-  setCategories: (categories: string[]) => void;
   setSort: (
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default'
   ) => void;
@@ -43,22 +46,27 @@ export const ProductListProvider = ({
 }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const pageParam = Number(searchParams.get('page')) || 1;
   const categoryParam = searchParams.get('categories')?.toString();
   const brandParam = searchParams.get('brands')?.toString();
   const sortParam = searchParams.get('sort');
+  const priceRangeParam = searchParams.get('priceRange');
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(pageParam);
+  const [totalPages, setTotalPages] = useState<number>(1);
 
   const [filters, setFilters] = useState<{
     categories: string[];
     brands: string[];
-    priceRange: string;
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default';
+    priceRange: string;
   }>({
     categories: categoryParam ? categoryParam.split(',') : [],
     brands: brandParam ? brandParam.split(',') : [],
-    priceRange: '',
+    priceRange: priceRangeParam || '',
     sort:
       sortParam === 'priceAsc' ||
       sortParam === 'priceDesc' ||
@@ -86,14 +94,24 @@ export const ProductListProvider = ({
 
         if (filters.sort) params.append('sort', filters.sort);
 
+        if (filters.priceRange) params.append('priceRange', filters.priceRange);
+
+        params.append('page', page.toString());
+        params.append('limit', '12');
+
         const url = displayCount
           ? `http://localhost:3001/products/display/${displayCount}`
           : `http://localhost:3001/products?${params}`;
 
         const res = await fetch(url);
         const data = await res.json();
-        setProducts(data);
 
+        // Giả sử backend trả { data, meta }
+        setProducts(data.data || data);
+
+        if (data.meta?.totalPages) setTotalPages(data.meta.totalPages);
+
+        //Cap nhat url
         if (!displayCount) {
           router.push(`/shop?${params.toString()}`, { scroll: false });
         }
@@ -105,16 +123,12 @@ export const ProductListProvider = ({
         setLoading(false);
       }
     },
-    [filters, router]
+    [filters, router, page]
   );
 
   useEffect(() => {
     fetchProducts(displayCount);
   }, [fetchProducts, displayCount]);
-
-  const setCategories = (categories: string[]) => {
-    setFilters((prev) => ({ ...prev, categories }));
-  };
 
   const setSort = (
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default'
@@ -131,9 +145,11 @@ export const ProductListProvider = ({
         loading,
         filters,
         setFilters,
-        setCategories,
         setSort,
         refetch,
+        page,
+        setPage,
+        totalPages,
       }}
     >
       {children}

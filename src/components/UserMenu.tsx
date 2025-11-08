@@ -10,10 +10,11 @@ const UserMenu = ({ handleLogout }: { handleLogout: () => void }) => {
         <Image
           src={defaultAvatar}
           alt="Default Avt user"
-          layout="fill"
-          objectFit="contain"
+          fill
           loading="lazy"
-          quality={80}
+          quality={75}
+          className="object-contain"
+          sizes="100%"
         />
       </div>
       {/* <div className="bg-shop_dark_blue invisible absolute top-8 right-1.5 h-4 w-4 rotate-45 opacity-0 shadow-xl shadow-black/10 transition-all duration-200 group-hover:visible group-hover:opacity-100"></div> */}

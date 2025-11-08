@@ -3,6 +3,7 @@
 import React from 'react';
 import ProductGrid from '../ProductGrid';
 import { useProductListContext } from '@/contexts/ProductListContext';
+import Pagination from './Pagination';
 
 const ShopProductsList = () => {
   const { filters, setSort } = useProductListContext();
@@ -60,6 +61,7 @@ const ShopProductsList = () => {
         </span>
       </div>
       <ProductGrid className="mt-8 lg:grid-cols-3" />
+      <Pagination />
     </div>
   );
 };

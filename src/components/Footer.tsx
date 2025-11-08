@@ -1,12 +1,16 @@
+'use client';
+
 import React from 'react';
 import Logo from './Logo';
 import Link from 'next/link';
 import { FacebookIcon, GithubIcon, YoutubeIcon } from 'lucide-react';
-import { footerSupports, footerContacts } from '../constants/data';
+import { footerContacts } from '../constants/data';
 import Container from './Container';
+import { useCategories } from '@/hook/UseCategories';
+import { Category } from '@/models/Product';
 
 const Footer = () => {
-  const categories = [''];
+  const { data: categories } = useCategories();
   const quickLink = [
     { name: 'About us', href: '/about' },
     { name: 'Contact us', href: '/contact' },
@@ -48,15 +52,15 @@ const Footer = () => {
           </div>
           <div className="flex w-60 flex-col space-y-4">
             <h2 className="text-xl text-white">Sản phẩm</h2>
-            {/* {categories.map((product) => (
+            {categories?.map((category: Category) => (
               <Link
-                key={product.name}
-                href={product.href}
+                href={`/shop?categories=${category.name}&sort=default`}
+                key={category.name}
                 className="hover:text-gray-100"
               >
-                {product.name}
+                {category.name}
               </Link>
-            ))} */}
+            ))}
           </div>
           <div className="flex w-60 flex-col space-y-4">
             <h2 className="text-xl text-white">Hỗ trợ</h2>

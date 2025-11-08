@@ -32,13 +32,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     fetch('http://localhost:3001/users/me', {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${savedToken}`,
       },
     })
       .then((res) => res.json())
       .then((data) => setUser(data.user))
       .catch((err) => console.error('Error:', err));
-  }, [token]);
+  }, []);
 
   const login = async (email: string, password: string) => {
     try {

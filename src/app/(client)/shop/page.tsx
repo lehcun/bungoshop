@@ -9,7 +9,7 @@ export default async function ShopPage() {
     <div className="bg-gray-50">
       <NavPath path="Sản phẩm" />
       <ProductListProvider>
-        <Container className="my-8 flex flex-col gap-8 lg:flex-row">
+        <Container className="flex flex-col gap-8 py-8 lg:flex-row">
           <ProductFilter />
           <ShopProductsList />
         </Container>

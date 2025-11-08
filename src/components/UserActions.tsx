@@ -36,7 +36,7 @@ const UserActions = () => {
         >
           <ShoppingCartIcon strokeWidth={2} />
           <div className="bg-shop_dark_blue absolute -top-0.5 left-3 flex h-5 w-5 flex-col items-center rounded-full text-white">
-            {cartItemCount && 0}
+            {cartItemCount || 0}
           </div>
         </Link>
         {!user ? <Login /> : <UserMenu handleLogout={logout} />}

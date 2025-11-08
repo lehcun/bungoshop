@@ -1,20 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import * as motion from 'motion/react-client';
 import Link from 'next/link';
 import Container from './Container';
 import { Category } from '@/models/Product';
 import Image from 'next/image';
+import { useCategories } from '@/hook/UseCategories';
 
 const CatagoriesGrid = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const { data: categories } = useCategories();
 
-  useEffect(() => {
-    fetch('http://localhost:3001/categories')
-      .then((res) => res.json())
-      .then((data) => setCategories(data));
-  });
   return (
     <Container className="py-24 text-center">
       <div className="flex flex-col gap-y-2">
@@ -24,7 +20,7 @@ const CatagoriesGrid = () => {
         </span>
       </div>
       <div className="mt-16 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
-        {categories.map((category) => (
+        {categories?.map((category: Category) => (
           <motion.div
             key={category.id}
             className={`rounded-2xl bg-gradient-to-br from-blue-100 to-blue-300 px-4 py-4 hover:cursor-pointer`}
