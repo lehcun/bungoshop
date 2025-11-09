@@ -72,25 +72,27 @@ const Search = () => {
           <div>
             {/* Trending section */}
             <section className="border-b-2 border-gray-300 px-4 pb-4">
-              <h2 className="my-4 text-lg font-semibold">🔥 Trending </h2>
+              <h2 className="my-4 text-lg font-semibold">🔥 Trending</h2>
               <div className="flex flex-wrap gap-x-4 gap-y-2">
-                {tredingCategories.map((item) => (
-                  <button
-                    key={item.id}
+                {tredingCategories.map((category) => (
+                  <Link
+                    href={`/shop?categories=${category.name}&sort=default`}
+                    key={category.id}
                     className="flex gap-x-2 rounded-xl border-1 border-blue-300 bg-blue-100 p-2 hover:bg-blue-200"
+                    onClick={() => setIsFocused(false)}
                   >
                     <div className="relative h-6 w-6">
                       <Image
-                        src={item.iconUrl}
-                        alt={`Category image ${item.name}`}
+                        src={category.iconUrl}
+                        alt={`Category image ${category.name}`}
                         layout="fill"
                         objectFit="contain"
                         loading="lazy"
                         quality={75}
                       />
                     </div>
-                    <p>{item.name}</p>
-                  </button>
+                    <p>{category.name}</p>
+                  </Link>
                 ))}
               </div>
             </section>
@@ -115,6 +117,7 @@ const Search = () => {
                         href={`/product/${item.id}`}
                         key={item.id}
                         className="my-4 flex cursor-pointer rounded-2xl px-2 duration-200 ease-out hover:-translate-y-2 hover:shadow-md hover:shadow-black/20"
+                        onClick={() => setIsFocused(false)}
                       >
                         <div className="relative my-2 mr-4 h-18 w-18 rounded-2xl p-2">
                           <Image

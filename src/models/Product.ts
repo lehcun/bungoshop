@@ -74,7 +74,7 @@ export interface Product {
   reviews: Review[];
 }
 
-export interface Favorite {
+export interface Favourite {
   id: string;
   userId: string;
   user: User;

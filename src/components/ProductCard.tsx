@@ -1,17 +1,42 @@
 'use client';
 
 import React from 'react';
-import * as motion from 'motion/react-client';
 import Image from 'next/image';
+import Link from 'next/link';
+import * as motion from 'motion/react-client';
 import { Product } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
-import Link from 'next/link';
+import { Heart } from 'lucide-react';
+import { useCreateFavourite } from '@/hook/useCreateFavourite';
+import { useAuth } from '@/contexts/AuthContext';
+import toast from 'react-hot-toast';
+import { useDeleteFavourite } from '@/hook/useDeleteFavourite';
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const { user } = useAuth();
+  const { mutate } = useCreateFavourite();
+  const { deleteFavourite } = useDeleteFavourite();
+
+  const isLiked = user?.favourites.find((f) => f.productId === product.id);
+
   const ratings = product.reviews.map((r) => r.rating);
   const avgRating = ratings.length
     ? ratings.reduce((a, b) => a + b, 0) / ratings.length
     : 0;
+
+  const handleAddFavourite = () => {
+    if (user) {
+      mutate({ userId: user.id, productId: product.id });
+    } else {
+      toast.error('Phải đăng nhập trước');
+    }
+  };
+
+  const handleRemove = (id: string, itemName: string) => {
+    if (confirm(`Bạn chắc chắn muốn xoá "${itemName}"?`) && isLiked) {
+      deleteFavourite(isLiked.id);
+    }
+  };
 
   return (
     <>
@@ -77,8 +102,23 @@ const ProductCard = ({ product }: { product: Product }) => {
               </div>
               <div className="flex">
                 {/* <span>{product.rating}</span> */}
-                <span>⭐{avgRating.toFixed(1)}</span>
+                <span className="flex-1">⭐{avgRating.toFixed(1)}</span>
                 {/* <span className="text-gray-700">{`(${product.reviews_count} đánh giá)`}</span> */}
+                {isLiked ? (
+                  <button
+                    onClick={() => handleRemove(product.id, product.name)}
+                    className="cursor-pointer rounded-full p-2 hover:bg-red-300"
+                  >
+                    <Heart fill="red" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleAddFavourite()}
+                    className="cursor-pointer rounded-full p-2 hover:bg-gray-300"
+                  >
+                    <Heart />
+                  </button>
+                )}
               </div>
 
               {/* Cái này sẽ đưa vào ProductDetail */}

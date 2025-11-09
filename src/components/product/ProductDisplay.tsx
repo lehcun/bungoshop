@@ -1,10 +1,11 @@
 'use client';
 
-import { formatCurrency } from '@/lib/utils';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+
 import StarRating from '../common/StarRating';
 import Button from '../common/Button';
+import { formatCurrency } from '@/lib/utils';
 import { useProductContext } from '@/contexts/ProductContext';
 import { useCartContext } from '@/contexts/CartContext';
 import { Variant } from '@/models/Product';
@@ -20,12 +21,18 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
 
   const isDisabled = !colorSelected || !sizeSelected || !variant?.stock;
 
+  //Hàm này ngăn ngừa việc thiếu hụt size màu trong varient của 1 sản phẩm
+  //Hàm lấy size theo màu tồn tại trong dữ liệu
+  const availableSizes = product?.variants
+    .filter((v) => v.color === colorSelected)
+    .map((v) => v.size);
+
   useEffect(() => {
     setProductId(productId);
   });
 
   const colors = [...new Set(product?.variants.map((v) => v.color))];
-  const sizes = [...new Set(product?.variants.map((v) => v.size))];
+  // const sizes = [...new Set(product?.variants.map((v) => v.size))];
 
   const ratings = reviews.map((r) => r.rating);
   const avgRating = ratings.length
@@ -37,10 +44,11 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
       const varient = product?.variants.find(
         (v) => v.color === colorSelected && v.size === sizeSelected
       );
-      if (varient) setVariant(varient);
-      else setVariant(null);
+      if (varient) {
+        setVariant(varient);
+      } else setVariant(null);
     }
-  }, [product, sizeSelected, colorSelected]);
+  }, [product, variant, sizeSelected, colorSelected]);
 
   const handleAdd = () => {
     if (product && variant) addToCart(product, variant, quantity);
@@ -131,21 +139,27 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
               <section className="flex items-center gap-x-4 px-4 py-2">
                 <label className="w-25 text-gray-400">Size</label>
                 <div className="flex space-x-2">
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${
-                        size === sizeSelected
-                          ? 'border-shop_dark_blue text-shop_dark_blue'
-                          : ''
-                      }`}
-                      onClick={() =>
-                        setSizeSelected((prev) => (prev === size ? null : size))
-                      }
-                    >
-                      {size}
-                    </button>
-                  ))}
+                  {availableSizes && availableSizes?.length !== 0 ? (
+                    availableSizes?.map((size) => (
+                      <button
+                        key={size}
+                        className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${
+                          size === sizeSelected
+                            ? 'border-shop_dark_blue text-shop_dark_blue'
+                            : ''
+                        }`}
+                        onClick={() =>
+                          setSizeSelected((prev) =>
+                            prev === size ? null : size
+                          )
+                        }
+                      >
+                        {size}
+                      </button>
+                    ))
+                  ) : (
+                    <p className="py-2.5">Vui lòng chọn Màu sản phẩm trước</p>
+                  )}
                 </div>
               </section>
               <section className="flex items-center gap-x-4 px-4 py-2">

@@ -5,6 +5,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { CartProvider } from '@/contexts/CartContext';
 import { ProductProvider } from '@/contexts/ProductContext';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
+import { Toaster } from 'react-hot-toast';
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -27,7 +28,16 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <ProductProvider>
-              <ReactQueryProvider>{children}</ReactQueryProvider>
+              <ReactQueryProvider>
+                {children}
+                <Toaster
+                  position="top-right"
+                  toastOptions={{
+                    duration: 2000,
+                    style: { fontSize: '14px' },
+                  }}
+                />
+              </ReactQueryProvider>
             </ProductProvider>
           </CartProvider>
         </AuthProvider>

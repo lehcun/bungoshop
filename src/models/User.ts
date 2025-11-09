@@ -1,4 +1,4 @@
-import { CartItem, Favorite, Review } from './Product';
+import { CartItem, Favourite, Review } from './Product';
 
 export interface User {
   id: string;
@@ -16,7 +16,7 @@ export interface User {
   cart: CartItem[];
   orders: Order[];
   reviews: Review[];
-  favorites: Favorite[];
+  favourites: Favourite[];
   addresses: Address[];
   // payments: Payment[];
 }
