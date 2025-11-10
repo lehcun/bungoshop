@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Category } from '@/models/Product';
 import { useProductListContext } from '@/contexts/ProductListContext';
 import { Brand } from '@/models/Brand';
-import { useCategories } from '@/hook/UseCategories';
+import { useCategories } from '@/hook/useCategories';
 
 const ProductFilter = () => {
   const priceRanges = [

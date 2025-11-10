@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { FacebookIcon, GithubIcon, YoutubeIcon } from 'lucide-react';
 import { footerContacts } from '../constants/data';
 import Container from './Container';
-import { useCategories } from '@/hook/UseCategories';
 import { Category } from '@/models/Product';
+import { useCategories } from '@/hook/useCategories';
 
 const Footer = () => {
   const { data: categories } = useCategories();

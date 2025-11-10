@@ -3,17 +3,18 @@
 import Image from 'next/image';
 import React from 'react';
 import StarRating from '../common/StarRating';
-import { useProductContext } from '@/contexts/ProductContext';
 import { defaultAvatar } from '@/images';
+import { useReviews } from '@/hook/useReviews';
+import { Review } from '@/models/Product';
 
-const ReviewProduct = () => {
-  const { reviews, loading } = useProductContext();
-
-  if (loading) return <div>Loading reviews...</div>;
+const ReviewProduct = ({ productId }: { productId: string }) => {
+  const { reviews, loading } = useReviews(productId);
+  if (loading) return <p>Loading</p>;
 
   const starAvg =
     reviews.length > 0
-      ? reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length
+      ? reviews.reduce((acc: number, r: Review) => acc + r.rating, 0) /
+        reviews.length
       : 0;
 
   return (
@@ -26,7 +27,7 @@ const ReviewProduct = () => {
         <span className="text-2xl">⭐⭐⭐⭐⭐</span>
       </div>
       {/* Review */}
-      {reviews.map((review) => (
+      {reviews.map((review: Review) => (
         <section key={review.id} className="flex space-x-4 p-4">
           <label>
             <Image

@@ -6,12 +6,14 @@ import Image from 'next/image';
 import StarRating from '../common/StarRating';
 import Button from '../common/Button';
 import { formatCurrency } from '@/lib/utils';
-import { useProductContext } from '@/contexts/ProductContext';
 import { useCartContext } from '@/contexts/CartContext';
-import { Variant } from '@/models/Product';
+import { Review, Variant } from '@/models/Product';
+import { useReviews } from '@/hook/useReviews';
+import { useProduct } from '@/hook/useProduct';
 
 const ProductDisplay = ({ productId }: { productId: string }) => {
-  const { product, loading, setProductId, reviews } = useProductContext();
+  const { product, loading } = useProduct(productId);
+  const { reviews } = useReviews(productId);
   const { addToCart } = useCartContext();
 
   const [colorSelected, setColorSelected] = useState<string | null>(null);
@@ -19,36 +21,35 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [variant, setVariant] = useState<Variant | null>(null);
 
+  useEffect(() => {
+    if (sizeSelected && colorSelected) {
+      const matched = product?.variants.find(
+        (v: Variant) => v.color === colorSelected && v.size === sizeSelected
+      );
+      setVariant(matched ?? null);
+    } else setVariant(null);
+  }, [product, sizeSelected, colorSelected]);
+
+  if (loading || !product) return <p>Loading...</p>;
+
   const isDisabled = !colorSelected || !sizeSelected || !variant?.stock;
 
   //Hàm này ngăn ngừa việc thiếu hụt size màu trong varient của 1 sản phẩm
   //Hàm lấy size theo màu tồn tại trong dữ liệu
   const availableSizes = product?.variants
-    .filter((v) => v.color === colorSelected)
-    .map((v) => v.size);
+    .filter((v: Variant) => v.color === colorSelected)
+    .map((v: Variant) => v.size);
 
-  useEffect(() => {
-    setProductId(productId);
-  });
+  // useEffect(() => {
+  //   setProductId(productId);
+  // });
 
-  const colors = [...new Set(product?.variants.map((v) => v.color))];
-  // const sizes = [...new Set(product?.variants.map((v) => v.size))];
+  const colors = [...new Set(product?.variants.map((v: Variant) => v.color))];
 
-  const ratings = reviews.map((r) => r.rating);
+  const ratings = reviews.map((r: Review) => r.rating);
   const avgRating = ratings.length
-    ? ratings.reduce((a, b) => a + b, 0) / ratings.length
+    ? ratings.reduce((a: number, b: number) => a + b, 0) / ratings.length
     : 0;
-
-  useEffect(() => {
-    if (sizeSelected && colorSelected) {
-      const varient = product?.variants.find(
-        (v) => v.color === colorSelected && v.size === sizeSelected
-      );
-      if (varient) {
-        setVariant(varient);
-      } else setVariant(null);
-    }
-  }, [product, variant, sizeSelected, colorSelected]);
 
   const handleAdd = () => {
     if (product && variant) addToCart(product, variant, quantity);
@@ -118,19 +119,21 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
                 <div className="flex space-x-2">
                   {colors.map((color) => (
                     <button
-                      key={color}
+                      key={String(color)}
                       className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${
                         color === colorSelected
                           ? 'border-shop_dark_blue text-shop_dark_blue'
                           : ''
                       }`}
                       onClick={() =>
-                        setColorSelected((prev) =>
-                          prev === color ? null : color
+                        setColorSelected(
+                          String((prev: string) =>
+                            prev === color ? null : color
+                          )
                         )
                       }
                     >
-                      {color}
+                      {String(color)}
                     </button>
                   ))}
                 </div>
@@ -140,7 +143,7 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
                 <label className="w-25 text-gray-400">Size</label>
                 <div className="flex space-x-2">
                   {availableSizes && availableSizes?.length !== 0 ? (
-                    availableSizes?.map((size) => (
+                    availableSizes?.map((size: string) => (
                       <button
                         key={size}
                         className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${

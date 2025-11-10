@@ -5,10 +5,10 @@ import BrandGrid from '@/components/BrandGrid';
 import CatagoriesGrid from '@/components/CatagoriesGrid';
 import HomeProductsList from '@/components/HomeProductsList';
 import HomeSkeleton from '@/components/skeleton/HomeSkeleton';
-import { useProductContext } from '@/contexts/ProductContext';
+import { useProduct } from '@/hook/useProduct';
 
 export default function HomePage() {
-  const { loading } = useProductContext();
+  const { loading } = useProduct();
   if (loading) return <HomeSkeleton />;
   return (
     <>
