@@ -26,7 +26,7 @@ export const useCreateFavourite = () => {
     },
 
     onSuccess: (newFavourite) => {
-      queryClient.invalidateQueries({ queryKey: ['favourite'] });
+      queryClient.invalidateQueries({ queryKey: ['favourites'] });
       toast.success(`Đã thêm ${newFavourite.product.name} vào yêu thích"!`);
     },
 

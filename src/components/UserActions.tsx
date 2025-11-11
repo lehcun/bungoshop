@@ -8,12 +8,15 @@ import Link from 'next/link';
 import UserMenu from './UserMenu';
 import { useAuth } from '@/contexts/AuthContext';
 import { useCartContext } from '@/contexts/CartContext';
+import { useFavourite } from '@/hook/UseFavourite';
 
 const UserActions = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const { carts } = useCartContext();
+  const { favourites } = useFavourite(token);
+
   const [cartFavoriteCount, setFavoriteCount] = useState<number | undefined>(
-    user?.favourites.length
+    favourites.length
   );
   const [cartItemCount, setCartItemCount] = useState<number | undefined>(
     carts.length
@@ -24,8 +27,8 @@ const UserActions = () => {
   }, [carts.length]);
 
   useEffect(() => {
-    setFavoriteCount(user?.favourites.length);
-  }, [user?.favourites]);
+    setFavoriteCount(favourites.length);
+  }, [favourites]);
 
   return (
     <>

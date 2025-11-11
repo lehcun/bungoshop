@@ -10,14 +10,15 @@ export default async function ProductDetailPage({
 }) {
   //Lay slug tu params
   const { slug } = await params;
+  const productId = slug[0];
 
   return (
     <>
       <NavPath path="productDetail" />
       <div className="h-auto bg-gray-100">
         <Container className="flex flex-col gap-8 pb-8">
-          <ProductDisplay productId={slug} />
-          <ReviewProduct productId={slug} />
+          <ProductDisplay productId={productId} />
+          <ReviewProduct productId={productId} />
         </Container>
       </div>
     </>

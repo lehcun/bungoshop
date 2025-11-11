@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { Heart } from 'lucide-react';
 
 import StarRating from '../common/StarRating';
 import Button from '../common/Button';
@@ -10,10 +11,12 @@ import { useCartContext } from '@/contexts/CartContext';
 import { Review, Variant } from '@/models/Product';
 import { useReviews } from '@/hook/useReviews';
 import { useProduct } from '@/hook/useProduct';
+import { useFavouriteToggle } from '@/hook/useFavouriteToggle';
 
 const ProductDisplay = ({ productId }: { productId: string }) => {
   const { product, loading } = useProduct(productId);
   const { reviews } = useReviews(productId);
+  const { isLiked, toggle } = useFavouriteToggle(productId);
   const { addToCart } = useCartContext();
 
   const [colorSelected, setColorSelected] = useState<string | null>(null);
@@ -44,7 +47,9 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
   //   setProductId(productId);
   // });
 
-  const colors = [...new Set(product?.variants.map((v: Variant) => v.color))];
+  const colors = Array.from(
+    new Set(product?.variants.map((v: Variant) => v.color))
+  ) as string[];
 
   const ratings = reviews.map((r: Review) => r.rating);
   const avgRating = ratings.length
@@ -65,10 +70,11 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
           <Image
             src={product.images[0].url}
             alt={`Brand image ${product.name}`}
-            layout="fill"
-            objectFit="contain"
+            fill
             loading="lazy"
-            quality={80}
+            quality={75}
+            sizes="100%"
+            className="object-contain"
           />
         </div>
         {/* Detail */}
@@ -119,19 +125,17 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
                 <div className="flex space-x-2">
                   {colors.map((color) => (
                     <button
-                      key={String(color)}
+                      key={color}
                       className={`hover:border-shop_dark_blue hover:text-shop_dark_blue min-w-20 border-1 border-gray-300 p-2 ${
                         color === colorSelected
                           ? 'border-shop_dark_blue text-shop_dark_blue'
                           : ''
                       }`}
-                      onClick={() =>
-                        setColorSelected(
-                          String((prev: string) =>
-                            prev === color ? null : color
-                          )
-                        )
-                      }
+                      onClick={() => {
+                        setColorSelected((prev) =>
+                          prev === color ? null : color
+                        );
+                      }}
                     >
                       {String(color)}
                     </button>
@@ -209,6 +213,19 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
                   🛒 Thêm vào giỏ hàng
                 </Button>
                 <Button className="rounded-xl py-4">Mua ngay</Button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => toggle()}
+                    className="cursor-pointer rounded-full"
+                  >
+                    <Heart
+                      fill={isLiked ? 'red' : 'none'}
+                      width={32}
+                      height={32}
+                    />
+                  </button>
+                  <span>Yêu thích</span>
+                </div>
               </section>
             </div>
           </div>

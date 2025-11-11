@@ -15,8 +15,7 @@ export const useDeleteFavourite = () => {
     mutationFn: deleteFavourite,
 
     onSuccess: (favourite) => {
-      queryClient.invalidateQueries({ queryKey: ['favourite'] });
-
+      queryClient.invalidateQueries({ queryKey: ['favourites'] });
       toast.success(`Đã xóa ${favourite.product.name} thành công"!`);
     },
 

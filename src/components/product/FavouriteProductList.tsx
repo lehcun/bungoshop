@@ -13,11 +13,11 @@ import { useDeleteFavourite } from '@/hook/useDeleteFavourite';
 
 const FavouriteProductList = () => {
   const { user, token } = useAuth();
-  const { data, isLoading } = useFavourite(token);
+  const { favourites, loading } = useFavourite(token);
   const { deleteFavourite } = useDeleteFavourite();
-  if (!user || isLoading || data.product || data.variant) {
+  if (!user || loading || !favourites) {
     return <p>...Loading</p>;
-  } else if (data.favourites === 0) {
+  } else if (favourites.length === 0) {
     return (
       <div className="flex flex-col items-center space-y-4 py-48 text-center">
         <div>
@@ -61,7 +61,7 @@ const FavouriteProductList = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((item: Favourite) => (
+          {favourites.map((item: Favourite) => (
             <tr key={item.id} className="table-row">
               <td className="text-md flex items-center gap-x-2 px-6 py-4 text-left font-light">
                 <X
