@@ -1,6 +1,7 @@
 'use client';
 
 import { User } from '@/models/User';
+import { data } from 'motion/react-client';
 import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -22,21 +23,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     'username' | 'email' | 'password' | null
   >(null);
   const router = useRouter();
-  // console.log('User: ', user?.cart);
-  // console.log('User: ', user);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem('token');
-    if (!savedToken) return;
-    setToken(savedToken);
-
     fetch('http://localhost:3001/users/me', {
-      headers: {
-        Authorization: `Bearer ${savedToken}`,
-      },
+      credentials: 'include',
     })
       .then((res) => res.json())
-      .then((data) => setUser(data.user))
+      .then((data) => {
+        setUser(data.user);
+        console.log(data);
+      })
       .catch((err) => console.error('Error:', err));
   }, []);
 
@@ -46,30 +42,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
+        // Tùy chọn này là BẮT BUỘC để cookie được gửi và nhận (cần CORS trên server)
+        credentials: 'include',
       });
-      const data = await res.json();
 
       if (!res.ok) {
         throw new Error('Login failed');
       }
 
-      console.log(data.access_token);
-
-      localStorage.setItem('token', data.access_token);
-
-      // fetch user ngay lập tức
-      const profileRes = await fetch('http://localhost:3001/users/me', {
-        headers: {
-          Authorization: `Bearer ${data.access_token}`,
-        },
-      });
-      const profile = await profileRes.json();
-
-      //debug
-      console.log(profile.user);
-      //debug
-      setUser(profile.user);
-      alert('dang nhap thanh cong');
+      const data = await res.json();
+      console.log(data);
+      setUser(data.user);
       router.push('/');
     } catch (err) {
       console.error('Login error:', err);
@@ -77,8 +60,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
+  const logout = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/auth/logout', {
+        credentials: 'include',
+      });
+      if (!res.ok) throw new Error('Logout failed');
+    } catch (err) {
+      console.error('Logout err: ', err);
+    }
     setUser(null);
     router.push('/');
   };

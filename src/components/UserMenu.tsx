@@ -22,7 +22,7 @@ const UserMenu = ({ handleLogout }: { handleLogout: () => void }) => {
       <div className="invisible absolute top-2 -left-37 h-8 w-48 bg-transparent opacity-0 group-hover:visible group-hover:opacity-100"></div>
       <ul className="bg-shop_dark_blue invisible absolute top-10 -right-4 z-2 w-48 rounded-md text-white opacity-0 shadow-xl shadow-black/10 transition-all duration-200 group-hover:visible group-hover:opacity-100 hover:rounded-md">
         <li className="py-2 hover:rounded-t-md hover:bg-gray-500">
-          <Link href={'/profile'} className="px-2">
+          <Link href={'/user/profile'} className="px-2">
             Tài Khoản Của Tôi
           </Link>
         </li>
