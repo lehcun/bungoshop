@@ -6,6 +6,8 @@ import { useCartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import Button from '../common/Button';
 import { useAuth } from '@/contexts/AuthContext';
+import { useAddresses } from '@/hook/useAddresses';
+import { Address } from '@/models/User';
 
 interface AddressFormData {
   recipient: string;
@@ -16,6 +18,7 @@ interface AddressFormData {
 }
 
 const CartSummary = () => {
+  const { addresses } = useAddresses();
   const { user } = useAuth();
   const { carts } = useCartContext();
   const [formData, setFormData] = useState<AddressFormData>({
@@ -28,10 +31,10 @@ const CartSummary = () => {
   const [isOpenForm, setIsOpenForm] = useState(false);
   const [selected, setSelected] = useState<string | undefined>();
   useEffect(() => {
-    if (user?.addresses.length && !selected) {
-      setSelected(user?.addresses[0].id);
+    if (addresses.length && !selected) {
+      setSelected(addresses[0].id);
     }
-  }, [user, selected]);
+  }, [addresses, selected]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -161,7 +164,7 @@ const CartSummary = () => {
         <h3 className="py-2 text-lg font-semibold">Địa chỉ nhận hàng</h3>
         <div className="px-2">
           <div className="mb-4 space-y-4">
-            {user?.addresses.map((address) => (
+            {addresses.map((address: Address) => (
               <div
                 key={address.id}
                 className="flex border-b-1 border-gray-300 py-2"

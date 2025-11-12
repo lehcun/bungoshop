@@ -21,13 +21,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [carts, setCarts] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
     fetch('http://localhost:3001/cart/me', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      credentials: 'include',
     })
       .then((res) => res.json())
       .then((data) => setCarts(data))
@@ -41,18 +36,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     quantity: number
   ) => {
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch('http://localhost:3001/cart/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           productId: product.id,
           variantId: variant.id,
           quantity,
         }),
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('Thêm giỏ hành thất bại');
       const data = await res.json();
@@ -75,9 +69,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   //Tang san pham
   const increaseQty = async (id: string) => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('token not found');
-
       const currentItem = carts.find((item) => item.id === id);
       if (!currentItem)
         throw new Error('Khong tim thay san pham ban muon tang quantity');
@@ -86,12 +77,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           id,
           quantity: currentItem.quantity + 1,
         }),
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('Tang san pham trong giỏ hành thất bại');
     } catch (err) {
@@ -107,9 +98,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const decreaseQty = async (id: string) => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('token not found');
-
       const currentItem = carts.find((item) => item.id === id);
       if (!currentItem)
         throw new Error('Khong tim thay san pham ban muon tang quantity');
@@ -118,12 +106,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           id,
           quantity: currentItem.quantity - 1,
         }),
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('Tang san pham trong giỏ hành thất bại');
     } catch (err) {
@@ -141,14 +129,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const removeCart = async (id: string) => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('token not found');
-
       const res = await fetch(`http://localhost:3001/cart/${id}`, {
         method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: 'include',
       });
 
       if (!res.ok) throw new Error('Xoa san pham that bai');

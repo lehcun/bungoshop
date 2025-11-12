@@ -1,7 +1,6 @@
 'use client';
 
 import { User } from '@/models/User';
-import { data } from 'motion/react-client';
 import { useRouter } from 'next/navigation';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -31,7 +30,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .then((res) => res.json())
       .then((data) => {
         setUser(data.user);
-        console.log(data);
       })
       .catch((err) => console.error('Error:', err));
   }, []);
