@@ -1,8 +1,8 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
 import { FacebookIcon, GoogleIcon } from '@/images';
 import Image from 'next/image';
+import { useSignUp } from '@/hook/auth/useSignUp';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
@@ -10,13 +10,17 @@ const SignUpPanel = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  //Tạm tạm thôi từ từ sửa sau
+  const [serverError, setServerError] = useState<
+    'username' | 'email' | 'password' | null
+  >(null);
 
-  const { serverError, signup } = useAuth();
+  const { signUp } = useSignUp();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      signup(username, email, password);
+      signUp({ name: username, email, password });
     } catch (err) {
       console.log(err);
     }

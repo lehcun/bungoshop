@@ -10,8 +10,8 @@ import { formatCurrency } from '@/lib/utils';
 import { useCartContext } from '@/contexts/CartContext';
 import { Review, Variant } from '@/models/Product';
 import { useReviews } from '@/hook/useReviews';
-import { useProduct } from '@/hook/useProduct';
-import { useFavouriteToggle } from '@/hook/useFavouriteToggle';
+import { useProduct } from '@/hook/products/useProduct';
+import { useFavouriteToggle } from '@/hook/favourite/useFavouriteToggle';
 
 const ProductDisplay = ({ productId }: { productId: string }) => {
   const { product, loading } = useProduct(productId);

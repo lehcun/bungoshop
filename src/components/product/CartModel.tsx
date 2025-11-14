@@ -2,14 +2,14 @@
 
 import CartItemList from '@/components/product/CartItemList';
 import CartSummary from './CartSummary';
-import { useAuth } from '@/contexts/AuthContext';
 import LoginRequired from '../LoginRequired';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { useCartContext } from '@/contexts/CartContext';
 import LonelyCart from '../LonelyCart';
 import Container from '../Container';
 
 const CartModel = () => {
-  const { user } = useAuth();
+  const { user } = useCurrentUser();
   const { carts } = useCartContext();
   if (!user) {
     return (

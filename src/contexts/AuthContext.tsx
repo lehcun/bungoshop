@@ -6,7 +6,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 interface AuthContextType {
   user: User | null;
-  token: string | null;
   serverError: 'username' | 'email' | 'password' | null;
   login: (email: string, password: string) => Promise<void>;
   signup: (name: string, email: string, password: string) => Promise<void>;
@@ -17,7 +16,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
   const [serverError, setServerError] = useState<
     'username' | 'email' | 'password' | null
   >(null);
@@ -81,6 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email,
           password,
         }),
+        credentials: 'include',
       });
 
       if (!res.ok) {
@@ -94,14 +93,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await res.json();
-      localStorage.setItem('token', data.access_token);
-
-      const profileRes = await fetch('http://localhost:3001/users/me', {
-        headers: { Authorization: `Bearer ${data.access_token}` },
-      });
-
-      const profile = await profileRes.json();
-      setUser(profile);
+      console.log(data.user);
+      setUser(data.user);
       router.push('/');
     } catch (err) {
       console.log(err);
@@ -109,9 +102,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ user, token, serverError, login, logout, signup }}
-    >
+    <AuthContext.Provider value={{ user, serverError, login, logout, signup }}>
       {children}
     </AuthContext.Provider>
   );

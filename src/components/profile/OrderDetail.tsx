@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { useOrder } from '@/hook/UseOrder';
 import { defaultAvatar } from '@/images';
 import { formatCurrency, formatOrderDate } from '@/lib/utils';
@@ -9,8 +9,8 @@ import Image from 'next/image';
 import React from 'react';
 
 const OrderDetail = () => {
-  const { user, token } = useAuth();
-  const { data, isLoading } = useOrder(token);
+  const { user } = useCurrentUser();
+  const { data, isLoading } = useOrder();
   if (!user || isLoading) return <p>Loading...</p>;
 
   const statusHandle = (status: string | null) => {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
+import { useLogin } from '@/hook/auth/useLogin';
 import { FacebookIcon, GoogleIcon } from '@/images';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -10,12 +10,12 @@ const LoginPanel = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login } = useAuth();
+  const { login } = useLogin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      login(email, password);
+      login({ email, password });
     } catch (err) {
       console.log(err);
     }

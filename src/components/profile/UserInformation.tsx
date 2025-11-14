@@ -1,12 +1,12 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { DefaultAvatar } from '@/images';
 import Image from 'next/image';
 import React from 'react';
 
 const UserInformation = () => {
-  const { user } = useAuth();
+  const { user } = useCurrentUser();
   return (
     <div className="w-5/6 bg-white px-8 shadow-sm">
       <section className="border-b-1 border-gray-300 py-4">

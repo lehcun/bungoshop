@@ -6,14 +6,16 @@ import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 import Login from './login/Login';
 import Link from 'next/link';
 import UserMenu from './UserMenu';
-import { useAuth } from '@/contexts/AuthContext';
 import { useCartContext } from '@/contexts/CartContext';
-import { useFavourite } from '@/hook/UseFavourite';
+import { useFavourite } from '@/hook/favourite/UseFavourite';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
+import { useLogout } from '@/hook/auth/useLogout';
 
 const UserActions = () => {
-  const { user, logout, token } = useAuth();
+  const { user } = useCurrentUser();
+  const { logout } = useLogout();
   const { carts } = useCartContext();
-  const { favourites } = useFavourite(token);
+  const { favourites } = useFavourite();
 
   const [cartFavoriteCount, setFavoriteCount] = useState<number | undefined>(
     favourites.length
@@ -21,6 +23,10 @@ const UserActions = () => {
   const [cartItemCount, setCartItemCount] = useState<number | undefined>(
     carts.length
   );
+
+  const handleLogout = () => {
+    logout();
+  };
 
   useEffect(() => {
     setCartItemCount(carts.length);
@@ -51,7 +57,7 @@ const UserActions = () => {
             {cartItemCount || 0}
           </div>
         </Link>
-        {!user ? <Login /> : <UserMenu handleLogout={logout} />}
+        {!user ? <Login /> : <UserMenu handleLogout={handleLogout} />}
       </div>
     </>
   );

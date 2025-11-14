@@ -1,19 +1,19 @@
 'use client';
 
 import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useFavourite } from '@/hook/UseFavourite';
 import { Heart, X } from 'lucide-react';
 import Button from '../common/Button';
 import { Favourite } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
 import Image from 'next/image';
 import { defaultAvatar } from '@/images';
-import { useDeleteFavourite } from '@/hook/useDeleteFavourite';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
+import { useFavourite } from '@/hook/favourite/UseFavourite';
+import { useDeleteFavourite } from '@/hook/favourite/useDeleteFavourite';
 
 const FavouriteProductList = () => {
-  const { user, token } = useAuth();
-  const { favourites, loading } = useFavourite(token);
+  const { user } = useCurrentUser();
+  const { favourites, loading } = useFavourite();
   const { deleteFavourite } = useDeleteFavourite();
   if (!user || loading || !favourites) {
     return <p>...Loading</p>;

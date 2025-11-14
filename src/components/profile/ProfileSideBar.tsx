@@ -1,13 +1,13 @@
 'use client';
 
-import { useAuth } from '@/contexts/AuthContext';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { DefaultAvatar } from '@/images';
 import { Pencil } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
 const ProfileSideBar = () => {
-  const { user } = useAuth();
+  const { user } = useCurrentUser();
   return (
     <div className="w-1/6">
       <section className="flex space-x-4 border-b-1 border-gray-300 py-4">

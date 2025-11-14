@@ -1,11 +1,10 @@
 import { getUserFavourites } from '@/services/favouriteService';
 import { useQuery } from '@tanstack/react-query';
 
-export function useFavourite(token: string | null) {
+export function useFavourite() {
   const query = useQuery({
     queryKey: ['favourites'],
-    queryFn: () => getUserFavourites(token),
-    enabled: !!token,
+    queryFn: () => getUserFavourites(),
   });
 
   return {

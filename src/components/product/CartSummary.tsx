@@ -5,9 +5,9 @@ import * as motion from 'motion/react-client';
 import { useCartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import Button from '../common/Button';
-import { useAuth } from '@/contexts/AuthContext';
 import { useAddresses } from '@/hook/useAddresses';
 import { Address } from '@/models/User';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 
 interface AddressFormData {
   recipient: string;
@@ -19,7 +19,7 @@ interface AddressFormData {
 
 const CartSummary = () => {
   const { addresses } = useAddresses();
-  const { user } = useAuth();
+  const { user } = useCurrentUser();
   const { carts } = useCartContext();
   const [formData, setFormData] = useState<AddressFormData>({
     recipient: '',
@@ -64,19 +64,17 @@ const CartSummary = () => {
   };
 
   const handlePayment = async () => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
     try {
       const res = await fetch('http://localhost:3001/orders/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           paymentMethod: 'COD',
           shippingAddressId: selected,
         }),
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('can not POST payment');
     } catch (err) {

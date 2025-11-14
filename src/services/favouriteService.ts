@@ -1,9 +1,9 @@
-export const getUserFavourites = async (token: string | null) => {
+export const getUserFavourites = async () => {
   const res = await fetch('http://localhost:3001/favourite', {
     headers: {
-      Authorization: `Bearer ${token}`,
       cache: 'no-store',
     },
+    credentials: 'include',
   });
   if (!res.ok) throw new Error('Failed to fetch user history');
 

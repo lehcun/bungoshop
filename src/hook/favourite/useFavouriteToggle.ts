@@ -1,13 +1,13 @@
-import { useAuth } from '@/contexts/AuthContext';
 import { useFavourite } from './UseFavourite';
 import { useCreateFavourite } from './useCreateFavourite';
 import { useDeleteFavourite } from './useDeleteFavourite';
 import { Favourite } from '@/models/Product';
 import toast from 'react-hot-toast';
+import { useCurrentUser } from '../auth/useCurrentUser';
 
 export const useFavouriteToggle = (productId: string) => {
-  const { user, token } = useAuth();
-  const { favourites } = useFavourite(token);
+  const { user } = useCurrentUser();
+  const { favourites } = useFavourite();
   const { mutate } = useCreateFavourite();
   const { deleteFavourite } = useDeleteFavourite();
 

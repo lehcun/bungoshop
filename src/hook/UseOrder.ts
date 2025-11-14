@@ -1,10 +1,9 @@
 import { getUserOrder } from '@/services/orderService';
 import { useQuery } from '@tanstack/react-query';
 
-export function useOrder(token: string | null) {
+export function useOrder() {
   return useQuery({
     queryKey: ['orders'],
-    queryFn: () => getUserOrder(token),
-    enabled: !!token,
+    queryFn: () => getUserOrder(),
   });
 }

@@ -4,11 +4,10 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as motion from 'motion/react-client';
+import { Heart } from 'lucide-react';
 import { Product } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
-import { Heart } from 'lucide-react';
-
-import { useFavouriteToggle } from '@/hook/useFavouriteToggle';
+import { useFavouriteToggle } from '@/hook/favourite/useFavouriteToggle';
 
 const ProductCard = ({ product }: { product: Product }) => {
   const { isLiked, toggle } = useFavouriteToggle(product.id);

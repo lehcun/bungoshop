@@ -5,7 +5,7 @@ import BrandGrid from '@/components/BrandGrid';
 import CatagoriesGrid from '@/components/CatagoriesGrid';
 import HomeProductsList from '@/components/HomeProductsList';
 import HomeSkeleton from '@/components/skeleton/HomeSkeleton';
-import { useProduct } from '@/hook/useProduct';
+import { useProduct } from '@/hook/products/useProduct';
 
 export default function HomePage() {
   const { loading } = useProduct();

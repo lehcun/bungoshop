@@ -1,9 +1,9 @@
-export const getUserOrder = async (token: string | null) => {
+export const getUserOrder = async () => {
   const res = await fetch('http://localhost:3001/orders/user/history', {
     headers: {
-      Authorization: `Bearer ${token}`,
       cache: 'no-store',
     },
+    credentials: 'include',
   });
   if (!res.ok) throw new Error('Failed to fetch user history');
 
