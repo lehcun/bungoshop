@@ -7,17 +7,17 @@ import { Heart } from 'lucide-react';
 import StarRating from '../common/StarRating';
 import Button from '../common/Button';
 import { formatCurrency } from '@/lib/utils';
-import { useCartContext } from '@/contexts/CartContext';
 import { Review, Variant } from '@/models/Product';
 import { useReviews } from '@/hook/useReviews';
 import { useProduct } from '@/hook/products/useProduct';
 import { useFavouriteToggle } from '@/hook/favourite/useFavouriteToggle';
+import { useAddCart } from '@/hook/cart/useAddCart';
 
 const ProductDisplay = ({ productId }: { productId: string }) => {
   const { product, loading } = useProduct(productId);
   const { reviews } = useReviews(productId);
   const { isLiked, toggle } = useFavouriteToggle(productId);
-  const { addToCart } = useCartContext();
+  const { addCart } = useAddCart();
 
   const [colorSelected, setColorSelected] = useState<string | null>(null);
   const [sizeSelected, setSizeSelected] = useState<string | null>(null);
@@ -57,7 +57,8 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
     : 0;
 
   const handleAdd = () => {
-    if (product && variant) addToCart(product, variant, quantity);
+    if (product && variant)
+      addCart({ productId: product.id, variantId: variant.id, quantity });
   };
 
   //Làm Loading sau

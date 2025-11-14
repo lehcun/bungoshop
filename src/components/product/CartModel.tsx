@@ -4,20 +4,20 @@ import CartItemList from '@/components/product/CartItemList';
 import CartSummary from './CartSummary';
 import LoginRequired from '../LoginRequired';
 import { useCurrentUser } from '@/hook/auth/useCurrentUser';
-import { useCartContext } from '@/contexts/CartContext';
 import LonelyCart from '../LonelyCart';
 import Container from '../Container';
+import { useCart } from '@/hook/cart/useCart';
 
 const CartModel = () => {
   const { user } = useCurrentUser();
-  const { carts } = useCartContext();
+  const { carts } = useCart();
   if (!user) {
     return (
       <Container className="flex items-center justify-center py-40">
         <LoginRequired />
       </Container>
     );
-  } else if (carts.length === 0) {
+  } else if (carts && carts.length === 0) {
     return (
       <Container className="flex items-center justify-center bg-gradient-to-t from-blue-50 to-blue-100 py-40">
         <LonelyCart />

@@ -1,12 +1,17 @@
 'use client';
 
-import { useCartContext } from '@/contexts/CartContext';
+import { CartItem } from '@/models/Product';
+import { useCart } from '@/hook/cart/useCart';
 import CartItemDetail from './CartItemDetail';
 
 const CartItemList = () => {
-  const { carts } = useCartContext();
+  const { carts } = useCart();
+  console.log(carts);
 
-  const totalQuantity = carts.reduce((sum, item) => sum + item.quantity, 0);
+  const totalQuantity = carts?.reduce(
+    (sum: number, item: CartItem) => sum + item.quantity,
+    0
+  );
 
   return (
     <div className="lg:w-2/3">
@@ -19,7 +24,7 @@ const CartItemList = () => {
           </span>
         </div>
         {/* List Item */}
-        {carts.map((item) => {
+        {carts?.map((item: CartItem) => {
           return (
             <div
               key={item.id}

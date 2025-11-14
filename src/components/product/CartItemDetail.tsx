@@ -1,19 +1,23 @@
 'use client';
 
-import React, { useContext } from 'react';
-
-import { CartContext } from '@/contexts/CartContext';
-import { formatCurrency } from '@/lib/utils';
-import { CartItem } from '@/models/Product';
+import React from 'react';
 import Image from 'next/image';
 
+import { formatCurrency } from '@/lib/utils';
+import { CartItem } from '@/models/Product';
+import { useRemoveCartItem } from '@/hook/cart/useRemoveCartItem';
+import { useIncreaseQuantity } from '@/hook/cart/useIncreaseQuantity';
+import { useDecreaseQuantity } from '@/hook/cart/useDecreaseQuantity';
+
 const CartItemDetail = ({ item }: { item: CartItem }) => {
-  const { increaseQty, decreaseQty, removeCart } = useContext(CartContext);
+  const { decreaseQty } = useDecreaseQuantity();
+  const { increaseQty } = useIncreaseQuantity();
+  const { removeCart } = useRemoveCartItem();
   const decrease = (id: string) => {
     if (item.quantity === 1) {
       removeCart(id);
     } else {
-      decreaseQty(id);
+      decreaseQty({ cartItemId: item.id, decrementAmount: -1 });
     }
   };
 
@@ -63,7 +67,7 @@ const CartItemDetail = ({ item }: { item: CartItem }) => {
           <button
             className="cursor-pointer px-4 py-2 hover:bg-gray-300"
             onClick={() => {
-              increaseQty(item.id);
+              increaseQty({ cartItemId: item.id, incrementAmount: 1 }); //Tăng 1 sản phẩm
             }}
           >
             +

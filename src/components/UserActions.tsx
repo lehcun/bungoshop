@@ -6,22 +6,22 @@ import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 import Login from './login/Login';
 import Link from 'next/link';
 import UserMenu from './UserMenu';
-import { useCartContext } from '@/contexts/CartContext';
 import { useFavourite } from '@/hook/favourite/UseFavourite';
 import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { useLogout } from '@/hook/auth/useLogout';
+import { useCart } from '@/hook/cart/useCart';
 
 const UserActions = () => {
   const { user } = useCurrentUser();
   const { logout } = useLogout();
-  const { carts } = useCartContext();
+  const { carts } = useCart();
   const { favourites } = useFavourite();
 
   const [cartFavoriteCount, setFavoriteCount] = useState<number | undefined>(
     favourites.length
   );
-  const [cartItemCount, setCartItemCount] = useState<number | undefined>(
-    carts.length
+  const [cartItemCount, setCartItemCount] = useState<number | null>(
+    carts?.length
   );
 
   const handleLogout = () => {
@@ -29,8 +29,8 @@ const UserActions = () => {
   };
 
   useEffect(() => {
-    setCartItemCount(carts.length);
-  }, [carts.length]);
+    setCartItemCount(carts?.length);
+  }, [carts?.length]);
 
   useEffect(() => {
     setFavoriteCount(favourites.length);

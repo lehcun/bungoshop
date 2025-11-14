@@ -2,12 +2,13 @@
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import * as motion from 'motion/react-client';
-import { useCartContext } from '@/contexts/CartContext';
 import { formatCurrency } from '@/lib/utils';
 import Button from '../common/Button';
 import { useAddresses } from '@/hook/useAddresses';
 import { Address } from '@/models/User';
 import { useCurrentUser } from '@/hook/auth/useCurrentUser';
+import { useCart } from '@/hook/cart/useCart';
+import { CartItem } from '@/models/Product';
 
 interface AddressFormData {
   recipient: string;
@@ -20,7 +21,7 @@ interface AddressFormData {
 const CartSummary = () => {
   const { addresses } = useAddresses();
   const { user } = useCurrentUser();
-  const { carts } = useCartContext();
+  const { carts } = useCart();
   const [formData, setFormData] = useState<AddressFormData>({
     recipient: '',
     city: '',
@@ -83,11 +84,12 @@ const CartSummary = () => {
   };
 
   const totalDiscount = carts.reduce(
-    (sum, item) => sum + (item.product.price - item.priceAtAdd) * item.quantity,
+    (sum: number, item: CartItem) =>
+      sum + (item.product.price - item.priceAtAdd) * item.quantity,
     0
   );
   const totalPrice = carts.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
+    (sum: number, item: CartItem) => sum + item.product.price * item.quantity,
     0
   );
 
