@@ -8,7 +8,7 @@ import { useCurrentUser } from '../auth/useCurrentUser';
 export const useFavouriteToggle = (productId: string) => {
   const { user } = useCurrentUser();
   const { favourites } = useFavourite();
-  const { mutate } = useCreateFavourite();
+  const { createFavourite } = useCreateFavourite();
   const { deleteFavourite } = useDeleteFavourite();
 
   const isLiked = favourites.find((f: Favourite) => f.productId === productId);
@@ -23,7 +23,7 @@ export const useFavouriteToggle = (productId: string) => {
         deleteFavourite(isLiked.id);
       }
     } else {
-      mutate({ userId: user.id, productId });
+      createFavourite(productId);
     }
   };
 

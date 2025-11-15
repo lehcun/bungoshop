@@ -83,12 +83,12 @@ const CartSummary = () => {
     }
   };
 
-  const totalDiscount = carts.reduce(
+  const totalDiscount = carts?.reduce(
     (sum: number, item: CartItem) =>
       sum + (item.product.price - item.priceAtAdd) * item.quantity,
     0
   );
-  const totalPrice = carts.reduce(
+  const totalPrice = carts?.reduce(
     (sum: number, item: CartItem) => sum + item.product.price * item.quantity,
     0
   );

@@ -1,26 +1,20 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
-export type CreateProductData = {
-  userId: string;
-  productId: string;
-};
-
 export const useCreateFavourite = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: async (data: CreateProductData) => {
-      const { userId, productId } = data;
+  const mutation = useMutation({
+    mutationFn: async (productId: string) => {
       const res = await fetch('http://localhost:3001/favourite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId,
           productId,
         }),
+        credentials: 'include',
       });
       return res.json();
     },
@@ -35,4 +29,12 @@ export const useCreateFavourite = () => {
       toast.error(msg);
     },
   });
+
+  return {
+    createFavourite: mutation.mutate,
+    isPending: mutation.isPending,
+    isError: mutation.isError,
+    isSuccess: mutation.isSuccess,
+    error: mutation.error,
+  };
 };

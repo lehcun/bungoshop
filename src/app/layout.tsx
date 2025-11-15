@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
-import { AuthProvider } from '@/contexts/AuthContext';
-import { CartProvider } from '@/contexts/CartContext';
 import ReactQueryProvider from '@/providers/ReactQueryProvider';
 import { Toaster } from 'react-hot-toast';
 
@@ -24,20 +22,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <AuthProvider>
-          <CartProvider>
-            <ReactQueryProvider>
-              {children}
-              <Toaster
-                position="top-right"
-                toastOptions={{
-                  duration: 2000,
-                  style: { fontSize: '14px' },
-                }}
-              />
-            </ReactQueryProvider>
-          </CartProvider>
-        </AuthProvider>
+        <ReactQueryProvider>
+          {children}
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              duration: 2000,
+              style: { fontSize: '14px' },
+            }}
+          />
+        </ReactQueryProvider>
       </body>
     </html>
   );

@@ -48,7 +48,7 @@ const ShopProductsList = () => {
             }}
           >
             <option value="default">Sắp xếp theo</option>
-            <option value="date_newest">Mới nhất</option>
+            <option value="date_newest">Mới nhất(mặc định)</option>
             <option value="date_oldest">Cũ nhất</option>
             <option value="price_asc">Giá: Thấp đến cao</option>
             <option value="price_desc">Giá: Cao đến thấp</option>
