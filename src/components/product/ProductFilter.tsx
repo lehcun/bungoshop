@@ -23,7 +23,7 @@ const ProductFilter = () => {
   ];
 
   const { filters, setFilters, setPage } = useProductListContext();
-  const { data: categories } = useCategories();
+  const { categories } = useCategories();
   const [brands, setBrands] = useState<Brand[]>([]);
 
   useEffect(() => {

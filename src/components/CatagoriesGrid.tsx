@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { useCategories } from '@/hook/useCategories';
 
 const CatagoriesGrid = () => {
-  const { data: categories } = useCategories();
+  const { categories } = useCategories();
 
   return (
     <Container className="py-24 text-center">

@@ -5,6 +5,7 @@ import Button from '@/components/common/Button';
 import { Product } from '@/models/Product';
 import Image from 'next/image';
 import { formatCurrency } from '@/lib/utils';
+import { noImage } from '@/images';
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -30,9 +31,9 @@ export default function Products() {
         </div>
         <div>
           <Button
+            href={'/dashboard/products/addproduct'}
             iconLeft="➕"
             className="rounded-xl bg-green-500 hover:bg-green-600"
-            onClick={toggleForm}
           >
             Thêm sản phẩm
           </Button>
@@ -88,7 +89,7 @@ export default function Products() {
               <div className="relative cursor-pointer">
                 <div className="flex h-70 items-center justify-center">
                   <Image
-                    src={product.images[0].url}
+                    src={product.images[0]?.url || noImage}
                     alt="product-img"
                     className="rounded-t-2xl object-cover"
                     fill
@@ -155,88 +156,6 @@ export default function Products() {
           </div>
         ))}
       </section>
-
-      {/* add product form */}
-      <div
-        className={`${isOpenForm ? 'flex' : 'hidden'} fixed inset-0 z-10 items-center justify-center backdrop-blur-sm`}
-      >
-        <div className="w-full max-w-2xl rounded-2xl bg-white p-6">
-          <h2 className="mb-4 text-xl font-semibold">Thêm Người Dùng Mới</h2>
-          <div className="flex flex-col gap-y-4">
-            <div className="flex flex-col gap-y-1">
-              <label>Tên sản phẩm</label>
-              <input
-                type="text"
-                className="rounded-lg border-1 border-gray-100 p-2"
-              />
-            </div>
-            <div className="flex gap-x-4">
-              <div className="flex w-full flex-col gap-y-1">
-                <label>Danh mục</label>
-                <select className="rounded-lg border-1 border-gray-200 p-2">
-                  <option>Chọn danh mục</option>
-                </select>
-              </div>
-              <div className="flex w-full flex-col gap-y-1">
-                <label>Thương hiệu</label>
-                <input
-                  type="text"
-                  className="rounded-lg border-1 border-gray-100 p-2"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-y-1">
-              <label>Giá bán(đ)</label>
-              <input
-                type="text"
-                className="rounded-lg border-1 border-gray-100 p-2"
-              />
-            </div>
-            <div className="flex gap-x-4">
-              <div className="flex w-full flex-col gap-y-1">
-                <label>Số lượng trong kho</label>
-                <input
-                  type="text"
-                  className="rounded-lg border-1 border-gray-100 p-2"
-                />
-              </div>
-              <div className="flex w-full flex-col gap-y-1">
-                <label>SKU</label>
-                <input
-                  type="text"
-                  className="rounded-lg border-1 border-gray-100 p-2"
-                />
-              </div>
-            </div>
-            <div className="flex flex-col gap-y-1">
-              <label>Link ảnh sản phẩm</label>
-              <input
-                type="text"
-                className="rounded-lg border-1 border-gray-100 p-2"
-              />
-            </div>
-            <div className="flex flex-col gap-y-1">
-              <label>Mô tả sản phẩm</label>
-              <textarea
-                rows={3}
-                className="w-full rounded-lg border border-gray-300 p-2"
-              ></textarea>
-            </div>
-            <div className="flex gap-x-2">
-              <Button
-                className="w-full rounded-xl border-1 border-green-500 text-green-500 hover:bg-gray-100"
-                variant="outline"
-                onClick={toggleForm}
-              >
-                Hủy
-              </Button>
-              <Button className="w-full rounded-xl bg-green-500 hover:bg-green-600">
-                Thêm người dùng
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

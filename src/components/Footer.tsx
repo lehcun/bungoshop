@@ -10,7 +10,7 @@ import { Category } from '@/models/Product';
 import { useCategories } from '@/hook/useCategories';
 
 const Footer = () => {
-  const { data: categories } = useCategories();
+  const { categories } = useCategories();
   const quickLink = [
     { name: 'About us', href: '/about' },
     { name: 'Contact us', href: '/contact' },

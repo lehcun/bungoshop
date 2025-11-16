@@ -60,7 +60,7 @@ export async function middleware(req: NextRequest) {
   // BUYER PATH
   // =========================================
   if (buyerPaths.some((path) => pathname.startsWith(path))) {
-    if (!token || verifiedRole !== 'CUSTOMER') {
+    if (!token) {
       const url = req.nextUrl.clone();
       url.pathname = '/buyer/login';
       return NextResponse.redirect(url);

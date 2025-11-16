@@ -20,23 +20,6 @@ export default function Users() {
       .then((data) => setUsers(data));
   }, [users]);
 
-  const addNewUser = async (name: string) => {
-    try {
-      const res = await fetch('http://localhost:3001/users', {
-        method: 'POST',
-        body: JSON.stringify({
-          name,
-          //Them
-        }),
-      });
-      if (!res.ok) throw new Error('Thêm giỏ hành thất bại');
-      const data = res.json();
-      // setUsers(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <div className="flex flex-col space-y-8 p-4">
       <header className="flex justify-between">
