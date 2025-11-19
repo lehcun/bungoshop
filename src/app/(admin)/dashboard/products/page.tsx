@@ -6,10 +6,11 @@ import { Product } from '@/models/Product';
 import Image from 'next/image';
 import { formatCurrency } from '@/lib/utils';
 import { noImage } from '@/images';
+import { useDeleteProduct } from '@/hook/products/useDeleteProduct';
 
 export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [isOpenForm, setIsOpenForm] = useState(false);
+  const { deleteProduct } = useDeleteProduct();
 
   useEffect(() => {
     fetch('http://localhost:3001/products')
@@ -17,9 +18,6 @@ export default function Products() {
       .then((data) => setProducts(data));
   }, []);
 
-  const toggleForm = () => {
-    setIsOpenForm(!isOpenForm);
-  };
   return (
     <div className="flex flex-col space-y-8 px-8 py-4">
       <header className="flex justify-between">
@@ -139,7 +137,7 @@ export default function Products() {
                   )}
                 </div>
                 <span className="text-gray-500">
-                  Kho:{' '}
+                  Kho:
                   {product.variants.reduce(
                     (accumulator, curr) => accumulator + curr.stock,
                     0
@@ -147,7 +145,11 @@ export default function Products() {
                 </span>
                 <div className="flex gap-x-2">
                   <Button className="w-full rounded-xl">✏️ Sửa</Button>
-                  <Button className="w-full rounded-xl" variant="danger">
+                  <Button
+                    className="w-full rounded-xl"
+                    variant="danger"
+                    onClick={() => deleteProduct(product.id)}
+                  >
                     🗑️ Xóa
                   </Button>
                 </div>

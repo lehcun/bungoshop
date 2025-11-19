@@ -1,8 +1,12 @@
+'use client';
+
 import Container from './Container';
 import ProductGrid from './ProductGrid';
-import { ProductListProvider } from '@/contexts/ProductListContext';
+import { useHotProduct } from '@/hook/products/useHotProducts';
 
 const HomeProductsList = () => {
+  const displayCount = 8;
+  const { products, loading } = useHotProduct(displayCount);
   return (
     <section className="bg-gray-100">
       <Container className="py-24">
@@ -13,9 +17,11 @@ const HomeProductsList = () => {
           </span>
         </div>
         <div className="">
-          <ProductListProvider displayCount={8}>
-            <ProductGrid />
-          </ProductListProvider>
+          <ProductGrid
+            products={products}
+            loading={loading}
+            displayCount={displayCount}
+          />
         </div>
       </Container>
     </section>

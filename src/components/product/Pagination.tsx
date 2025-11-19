@@ -1,10 +1,8 @@
-'use client';
-
-import { useProductListContext } from '@/contexts/ProductListContext';
+import { useProductFilter } from '@/hook/store/useProductFilter';
 import React from 'react';
 
-const Pagination = () => {
-  const { page, setPage, totalPages } = useProductListContext();
+const Pagination = ({ totalPages }: { totalPages: number }) => {
+  const { page, setPage } = useProductFilter();
 
   if (totalPages <= 1) return null;
 

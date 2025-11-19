@@ -1,13 +1,24 @@
-'use client';
-
 import React from 'react';
 import ProductGrid from '../ProductGrid';
-import { useProductListContext } from '@/contexts/ProductListContext';
 import Pagination from './Pagination';
+import { Product } from '@/models/Product';
+import { useProductFilter } from '@/hook/store/useProductFilter';
 
-const ShopProductsList = () => {
-  const { filters, setSort } = useProductListContext();
-
+const ShopProductsList = ({
+  products,
+  filters,
+  totalPages,
+}: {
+  products: Product[];
+  filters: {
+    categories: string[];
+    brands: string[];
+    sort: string;
+    priceRange: string;
+  };
+  totalPages: number;
+}) => {
+  const { setSort } = useProductFilter();
   return (
     <div className="lg:w-3/4">
       <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-6 shadow-lg shadow-black/10">
@@ -60,8 +71,8 @@ const ShopProductsList = () => {
           </div>
         </span>
       </div>
-      <ProductGrid className="mt-8 lg:grid-cols-3" />
-      <Pagination />
+      <ProductGrid className="mt-8 lg:grid-cols-3" products={products} />
+      <Pagination totalPages={totalPages} />
     </div>
   );
 };

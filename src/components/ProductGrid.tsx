@@ -3,13 +3,21 @@
 import React from 'react';
 import ProductCard from './ProductCard';
 import { cn } from '@/lib/utils';
-import { useProductListContext } from '@/contexts/ProductListContext';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ProductSkeleton } from './skeleton/ProductSkeleton';
+import { Product } from '@/models/Product';
 
-const ProductGrid = ({ className }: { className?: string }) => {
-  const { products, loading } = useProductListContext();
-
+const ProductGrid = ({
+  className,
+  products,
+  loading,
+  displayCount,
+}: {
+  className?: string;
+  products: Product[];
+  loading?: boolean;
+  displayCount?: number;
+}) => {
   return (
     <SkeletonTheme baseColor="#f3f4f6" highlightColor="#e5e7eb">
       <div
@@ -19,10 +27,10 @@ const ProductGrid = ({ className }: { className?: string }) => {
         )}
       >
         {loading
-          ? Array(12)
+          ? Array(displayCount || 12)
               .fill(null)
               .map((_, i) => <ProductSkeleton key={i} />)
-          : products.map((p) => <ProductCard key={p.id} product={p} />)}
+          : products?.map((p) => <ProductCard key={p.id} product={p} />)}
       </div>
     </SkeletonTheme>
   );

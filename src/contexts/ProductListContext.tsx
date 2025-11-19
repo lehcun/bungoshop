@@ -37,13 +37,7 @@ interface ProductListContextType {
 
 const ProductListContext = createContext<ProductListContextType | null>(null);
 
-export const ProductListProvider = ({
-  children,
-  displayCount,
-}: {
-  children: ReactNode;
-  displayCount?: number;
-}) => {
+export const ProductListProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -77,58 +71,53 @@ export const ProductListProvider = ({
         : 'default',
   });
 
-  const fetchProducts = useCallback(
-    async (displayCount?: number) => {
-      try {
-        setLoading(true);
+  const fetchProducts = useCallback(async () => {
+    try {
+      setLoading(true);
 
-        const params = new URLSearchParams();
+      const params = new URLSearchParams();
 
-        if (filters.categories?.length) {
-          params.append('categories', filters.categories.join(','));
-        }
-
-        if (filters.brands?.length) {
-          params.append('brands', filters.brands.join(','));
-        }
-
-        if (filters.sort) params.append('sort', filters.sort);
-
-        if (filters.priceRange) params.append('priceRange', filters.priceRange);
-
-        params.append('page', page.toString());
-        params.append('limit', '12');
-
-        const url = displayCount
-          ? `http://localhost:3001/products/display/${displayCount}`
-          : `http://localhost:3001/products?${params}`;
-
-        const res = await fetch(url);
-        const data = await res.json();
-
-        // Giả sử backend trả { data, meta }
-        setProducts(data.data || data);
-
-        if (data.meta?.totalPages) setTotalPages(data.meta.totalPages);
-
-        //Cap nhat url
-        if (!displayCount) {
-          router.push(`/shop?${params.toString()}`, { scroll: false });
-        }
-      } catch (error) {
-        console.error('Fetch error:', error);
-      } finally {
-        //test loading
-        // await new Promise((resolve) => setTimeout(resolve, 5000));
-        setLoading(false);
+      if (filters.categories?.length) {
+        params.append('categories', filters.categories.join(','));
       }
-    },
-    [filters, router, page]
-  );
+
+      if (filters.brands?.length) {
+        params.append('brands', filters.brands.join(','));
+      }
+
+      if (filters.sort) params.append('sort', filters.sort);
+
+      if (filters.priceRange) params.append('priceRange', filters.priceRange);
+
+      params.append('page', page.toString());
+      params.append('limit', '12');
+
+      const url = `http://localhost:3001/products?${params}`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+
+      // Giả sử backend trả { data, meta }
+      setProducts(data.data || data);
+
+      if (data.meta?.totalPages) setTotalPages(data.meta.totalPages);
+
+      //Cap nhat url
+      // if (!displayCount) {
+      //   router.push(`/shop?${params.toString()}`, { scroll: false });
+      // }
+    } catch (error) {
+      console.error('Fetch error:', error);
+    } finally {
+      //test loading
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
+      setLoading(false);
+    }
+  }, [filters, router, page]);
 
   useEffect(() => {
-    fetchProducts(displayCount);
-  }, [fetchProducts, displayCount]);
+    fetchProducts();
+  }, [fetchProducts]);
 
   const setSort = (
     sort: 'priceAsc' | 'priceDesc' | 'newest' | 'oldest' | 'default'

@@ -2,11 +2,20 @@
 
 import React, { useEffect, useState } from 'react';
 import { Category } from '@/models/Product';
-import { useProductListContext } from '@/contexts/ProductListContext';
 import { Brand } from '@/models/Brand';
 import { useCategories } from '@/hook/useCategories';
+import { useProductFilter } from '@/hook/store/useProductFilter';
 
-const ProductFilter = () => {
+const ProductFilter = ({
+  filters,
+}: {
+  filters: {
+    categories: string[];
+    brands: string[];
+    sort: string;
+    priceRange: string;
+  };
+}) => {
   const priceRanges = [
     { id: 1, label: 'Dưới 500k', range: '0-500' },
     {
@@ -21,8 +30,7 @@ const ProductFilter = () => {
     },
     { id: 4, label: 'Trên 2tr', range: '2000+' },
   ];
-
-  const { filters, setFilters, setPage } = useProductListContext();
+  const { setFilters, setPage, resetFilters } = useProductFilter();
   const { categories } = useCategories();
   const [brands, setBrands] = useState<Brand[]>([]);
 
@@ -39,7 +47,6 @@ const ProductFilter = () => {
       ? (filters.categories?.filter((c: string) => c !== name) ?? [])
       : [...(filters.categories ?? []), name];
     setFilters({
-      ...filters,
       categories: newCats,
       priceRange: '',
     });
@@ -49,7 +56,6 @@ const ProductFilter = () => {
   //Toggle muc gia
   const togglePrice = (price: string) => {
     setFilters({
-      ...filters,
       priceRange: price,
     });
     setPage(1);
@@ -62,11 +68,14 @@ const ProductFilter = () => {
       ? (filters.brands?.filter((c: string) => c !== name) ?? [])
       : [...(filters.brands ?? []), name];
     setFilters({
-      ...filters,
       brands: newCats,
       priceRange: '',
     });
     setPage(1);
+  };
+
+  const toggleResetFilter = () => {
+    resetFilters();
   };
 
   return (
@@ -98,6 +107,7 @@ const ProductFilter = () => {
                     <input
                       type="radio"
                       name="price"
+                      checked={!!filters.priceRange.includes(item.range)}
                       onChange={() => togglePrice(item.range)}
                     />
                     <span className="ml-2 text-center">{item.label}</span>
@@ -120,6 +130,12 @@ const ProductFilter = () => {
                 ))}
               </div>
             </section>
+            <button
+              className="text-shop_btn_blue underline underline-offset-auto"
+              onClick={toggleResetFilter}
+            >
+              reset bộ lọc
+            </button>
             {/* <div>
               <h3 className="my-2 text-lg font-semibold">Size</h3>
               <div className="flex flex-wrap gap-x-2">
