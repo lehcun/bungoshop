@@ -1,7 +1,7 @@
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import TopBar from '@/components/TopBar';
+import TopBar from '@/components/layout/TopBar';
 import '../globals.css';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 export default function RootLayout({
   children,

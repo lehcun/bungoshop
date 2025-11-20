@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import Logo from './Logo';
 import Link from 'next/link';
 import { FacebookIcon, GithubIcon, YoutubeIcon } from 'lucide-react';
-import { footerContacts } from '../constants/data';
-import Container from './Container';
 import { Category } from '@/models/Product';
 import { useCategories } from '@/hook/useCategories';
+import Container from '../Container';
+import Logo from '../ui/Logo';
+import { footerContacts } from '@/constants/data';
 
 const Footer = () => {
   const { categories } = useCategories();

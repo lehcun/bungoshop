@@ -1,10 +1,9 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { Category } from '@/models/Product';
+import React from 'react';
 import { Brand } from '@/models/Brand';
+import { Category } from '@/models/Product';
 import { useCategories } from '@/hook/useCategories';
 import { useProductFilter } from '@/hook/store/useProductFilter';
+import { useBrands } from '@/hook/useBrands';
 
 const ProductFilter = ({
   filters,
@@ -32,13 +31,7 @@ const ProductFilter = ({
   ];
   const { setFilters, setPage, resetFilters } = useProductFilter();
   const { categories } = useCategories();
-  const [brands, setBrands] = useState<Brand[]>([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3001/brands')
-      .then((res) => res.json())
-      .then((data) => setBrands(data));
-  }, []);
+  const { brands } = useBrands();
 
   //Toggle danh muc
   const toggleCategory = (name: string) => {
@@ -118,7 +111,7 @@ const ProductFilter = ({
             <section>
               <h3 className="my-2 text-lg font-semibold">Hãng</h3>
               <div className="flex flex-col gap-y-1.5">
-                {brands.map((brand) => (
+                {brands?.map((brand: Brand) => (
                   <span key={brand.id} className="flex">
                     <input
                       type="checkbox"

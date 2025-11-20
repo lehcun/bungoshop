@@ -3,10 +3,10 @@
 import React from 'react';
 import * as motion from 'motion/react-client';
 import Link from 'next/link';
-import Container from './Container';
 import { Category } from '@/models/Product';
 import Image from 'next/image';
 import { useCategories } from '@/hook/useCategories';
+import Container from '../Container';
 
 const CatagoriesGrid = () => {
   const { categories } = useCategories();

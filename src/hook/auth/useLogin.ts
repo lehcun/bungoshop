@@ -8,10 +8,19 @@ const loginAccount = async (email: string, password: string) => {
     body: JSON.stringify({ email, password }),
     credentials: 'include',
   });
+  if (!res.ok) {
+    // Đọc nội dung lỗi từ server (dự kiến là JSON)
+    const errorBody = await res.json();
+
+    // Ném một Error chứa thông báo lỗi cụ thể từ server
+    // Ví dụ: errorBody.message là 'Sai email' hoặc 'Sai mật khẩu'
+    throw new Error(errorBody.message || 'Đăng nhập thất bại');
+  }
+
   return res.json();
 };
 
-export const useLogin = () => {
+export const useLogin = (passwordRef: React.RefObject<HTMLInputElement>) => {
   const router = useRouter();
 
   const queryClient = useQueryClient();
@@ -27,8 +36,10 @@ export const useLogin = () => {
 
     // Khi có lỗi
     onError: (error) => {
-      const msg = error.message || 'Đăng nhập thất bại';
+      const msg = error.message || 'Lỗi không xác định';
       alert(msg);
+      passwordRef?.current?.focus();
+      passwordRef?.current?.select();
       console.error('Đăng nhập thất bại lỗi:', error);
     },
   });

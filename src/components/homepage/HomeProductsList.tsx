@@ -1,8 +1,8 @@
 'use client';
 
-import Container from './Container';
-import ProductGrid from './ProductGrid';
 import { useHotProduct } from '@/hook/products/useHotProducts';
+import Container from '../Container';
+import ProductGrid from '../ProductGrid';
 
 const HomeProductsList = () => {
   const displayCount = 8;

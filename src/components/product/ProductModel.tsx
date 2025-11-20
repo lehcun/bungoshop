@@ -9,7 +9,6 @@ const ProductModel = () => {
   const { categories, brands, sort, priceRange, page } = useProductFilter();
   const filters = { categories, brands, sort, priceRange };
   const { products, meta } = useProductQuery(filters, page);
-  console.log(products);
 
   return (
     <>

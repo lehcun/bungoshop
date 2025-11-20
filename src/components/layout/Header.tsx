@@ -1,9 +1,9 @@
 import React from 'react';
-import Logo from './Logo';
-import UserActions from './UserActions';
+import Container from '../Container';
+import Logo from '../ui/Logo';
+import Search from '../ui/Search';
+import UserActions from '../UserActions';
 // import NavBar from './NavBar';
-import Container from './Container';
-import Search from './Search';
 
 const Header = () => {
   return (

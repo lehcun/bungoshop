@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../Logo';
+import Logo from '../ui/Logo';
 import Container from '../Container';
 import Link from 'next/link';
 

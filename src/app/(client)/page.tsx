@@ -1,9 +1,9 @@
 'use client';
 
-import Banner from '@/components/Banner';
 import BrandGrid from '@/components/BrandGrid';
-import CatagoriesGrid from '@/components/CatagoriesGrid';
-import HomeProductsList from '@/components/HomeProductsList';
+import Banner from '@/components/homepage/Banner';
+import CatagoriesGrid from '@/components/homepage/CatagoriesGrid';
+import HomeProductsList from '@/components/homepage/HomeProductsList';
 import HomeSkeleton from '@/components/skeleton/HomeSkeleton';
 import { useProduct } from '@/hook/products/useProduct';
 

@@ -1,19 +1,12 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Container from './Container';
 import { Brand } from '@/models/Brand';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useBrands } from '@/hook/useBrands';
 
 const BrandGrid = () => {
-  const [brands, setBrands] = useState<Brand[]>([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3001/brands')
-      .then((res) => res.json())
-      .then((data) => setBrands(data));
-  });
+  const { brands } = useBrands();
   return (
     <Container className="py-24">
       <div className="flex flex-col gap-y-2 text-center">
@@ -23,7 +16,7 @@ const BrandGrid = () => {
         </span>
       </div>
       <div className="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-        {brands.map((brand) => (
+        {brands?.map((brand: Brand) => (
           <div
             key={brand.id}
             className="cursor-pointer py-8 text-center hover:bg-gray-100"

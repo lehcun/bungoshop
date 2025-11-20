@@ -6,7 +6,6 @@ import CartItemDetail from './CartItemDetail';
 
 const CartItemList = () => {
   const { carts } = useCart();
-  console.log(carts);
 
   const totalQuantity = carts?.reduce(
     (sum: number, item: CartItem) => sum + item.quantity,

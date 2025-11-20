@@ -5,10 +5,10 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import Image from 'next/image';
-import Container from './Container';
-import Button from './common/Button';
+import Container from '../Container';
+import Button from '../common/Button';
 
-export default function BannerSlider() {
+export default function Banner() {
   return (
     <section className="fashion-pattern relative overflow-hidden bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-100 py-16">
       <Container>
