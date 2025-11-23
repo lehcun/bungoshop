@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
+import { Variant } from './AddProductForm';
 
-const NewVariants = () => {
-  type Variant = {
-    sku: string;
-    color: string;
-    size: string;
-    price: string;
-    stock: string;
-    urlImg: string;
-  };
-
+const NewProductVariants = ({
+  onChange,
+}: {
+  onChange: (vars: Variant[]) => void;
+}) => {
   type VariantField = keyof Variant;
   const [variants, setVariants] = useState([
     {
@@ -37,6 +33,8 @@ const NewVariants = () => {
     const updated = [...variants];
     updated[index][field] = value;
     setVariants(updated);
+
+    onChange(updated);
   };
   return (
     <>
@@ -177,4 +175,4 @@ const NewVariants = () => {
   );
 };
 
-export default NewVariants;
+export default NewProductVariants;

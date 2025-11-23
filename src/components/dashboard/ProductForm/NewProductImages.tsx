@@ -1,8 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
+import { Image } from './AddProductForm';
 
-const NewImages = () => {
+const NewProductImages = ({
+  onChange,
+}: {
+  onChange: (imgs: Image[]) => void;
+}) => {
   const [images, setImages] = useState([{ url: '', alt: '' }]);
 
   const addImage = () => {
@@ -11,6 +16,14 @@ const NewImages = () => {
 
   const removeImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
+  };
+
+  const handleChange = (index: number, field: keyof Image, value: string) => {
+    const newImages = [...images];
+    newImages[index][field] = value;
+    setImages(newImages);
+
+    onChange(newImages);
   };
   return (
     <>
@@ -61,6 +74,8 @@ const NewImages = () => {
                     required
                     className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                     placeholder="https://example.com/images/product.jpg"
+                    value={image.url}
+                    onChange={(e) => handleChange(index, 'url', e.target.value)}
                   ></input>
                 </div>
                 <div className="flex flex-col">
@@ -68,10 +83,12 @@ const NewImages = () => {
                     Alt Text <span className="text-red-500">*</span>
                   </label>
                   <input
-                    type="url"
+                    type="alt"
                     required
                     className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                     placeholder="Ảnh mặt trước sản phẩm"
+                    value={image.alt}
+                    onChange={(e) => handleChange(index, 'alt', e.target.value)}
                   ></input>
                 </div>
               </div>
@@ -89,4 +106,4 @@ const NewImages = () => {
   );
 };
 
-export default NewImages;
+export default NewProductImages;
