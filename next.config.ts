@@ -18,6 +18,15 @@ const nextConfig: NextConfig = {
     // Cache tối thiểu
     minimumCacheTTL: 60, // Cache 60 giây
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://localhost:3001/api/:path*', // proxy tới NestJS
+      },
+    ];
+  },
 };
 
 export default nextConfig;

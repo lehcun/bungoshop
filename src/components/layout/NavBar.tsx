@@ -1,5 +1,5 @@
 import React from 'react';
-import { navbarList } from '../constants/data';
+import { navbarList } from '@/constants/data';
 import Link from 'next/link';
 
 const NavBar = () => {
