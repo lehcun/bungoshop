@@ -8,7 +8,7 @@ const fetchProduct = async (productId: string) => {
 
 export const useProduct = (productId?: string) => {
   const query = useQuery({
-    queryKey: ['product'],
+    queryKey: ['product', productId],
     queryFn: async () => fetchProduct(productId!), // ! là để xác định rằng đây là giá trị không thể null
     enabled: !!productId, // Chỉ thực sự chạy khi có productId
   });

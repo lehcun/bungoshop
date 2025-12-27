@@ -43,10 +43,6 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
     .filter((v: Variant) => v.color === colorSelected)
     .map((v: Variant) => v.size);
 
-  // useEffect(() => {
-  //   setProductId(productId);
-  // });
-
   const colors = Array.from(
     new Set(product?.variants.map((v: Variant) => v.color))
   ) as string[];

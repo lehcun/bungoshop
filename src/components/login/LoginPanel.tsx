@@ -43,9 +43,9 @@ const LoginPanel = () => {
             <></>
           )} */}
           <input
+            type="password"
             ref={passwordRef}
-            type="text"
-            placeholder="Password"
+            placeholder="Mật khẩu"
             className="w-100 border-1 border-gray-400 py-2 pl-3"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

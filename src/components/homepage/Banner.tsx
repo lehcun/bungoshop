@@ -17,12 +17,12 @@ export default function Banner() {
             <h1 className="flex flex-col space-x-2 text-6xl font-bold">
               <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text py-2 text-transparent">
                 Thời trang
-              </span>{' '}
+              </span>
               <span>Xu hướng</span>
             </h1>
             <p className="text-lg">
               Khám phá bộ sưu tập thời trang mới nhất với phong cách độc đáo và
-              chất lượng cao cấp
+              chất lượng cao
             </p>
             <section>
               <Button href="/shop" size="lg">

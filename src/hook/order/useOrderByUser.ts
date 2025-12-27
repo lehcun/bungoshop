@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-export const getUserFavourites = async () => {
-  const res = await fetch('http://localhost:3001/favourite', {
+export const getUserOrder = async () => {
+  const res = await fetch('http://localhost:3001/orders/user/history', {
     headers: {
       cache: 'no-store',
     },
@@ -12,14 +12,13 @@ export const getUserFavourites = async () => {
   return res.json();
 };
 
-export function useFavourite() {
+export function useOrderByUser() {
   const query = useQuery({
-    queryKey: ['favourites'],
-    queryFn: () => getUserFavourites(),
+    queryKey: ['orders', 'user'], // sửa lại key này để caching tốt hơn
+    queryFn: () => getUserOrder(),
   });
-
   return {
-    favourites: query.data ?? [],
+    orders: query.data || [],
     loading: query.isLoading,
     error: query.isError,
     refetch: query.refetch,

@@ -1,60 +1,18 @@
 'use client';
 
 import { formatCurrency } from '@/lib/utils';
-import { Order } from '@/models/User';
-import { useEffect, useMemo, useState } from 'react';
+import { useOrderGrowth } from '@/hook/order/useOrderByMonth';
+import { useAllProduct } from '@/hook/products/useAllProduct';
+import { useProductByMonth } from '@/hook/products/useProductByMonth';
+import { useUsers } from '@/hook/useUsers';
+import { useUsersByMonth } from '@/hook/useUsersByMonth';
 
 export default function DashboardOverview() {
-  const [currentMonthOrders, setCurrentMonthOrders] = useState<Order[]>([]);
-  const [previousMonthOrders, setPreviousMonthOrders] = useState<Order[]>([]);
-
-  const fetchMonthlyRevenues = async (month: number) => {
-    const previousMonth = month === 12 ? 1 : month - 1;
-    try {
-      //Fetch lấy dữ liệu cho tháng vùa rồi
-      const currentMonthRes = await fetch(
-        `http://localhost:3001/orders/month/${month}`
-      );
-      if (!currentMonthRes.ok) throw new Error('Can not call orders/month');
-      const currentData: Order[] = await currentMonthRes.json();
-      setCurrentMonthOrders(currentData);
-
-      //Fetch lấy dữ liệu cho tháng trước nữa
-      const previousMonthRes = await fetch(
-        ` /${previousMonth}`
-      );
-      if (!previousMonthRes.ok) throw new Error('Can not call orders/month');
-      const previousData: Order[] = await previousMonthRes.json();
-      setPreviousMonthOrders(previousData);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    const currMonth = new Date().getMonth() + 1;
-    fetchMonthlyRevenues(currMonth);
-  }, []);
-
-  const currMonthlyRevenue = useMemo(() => {
-    return currentMonthOrders.reduce((acc, curr) => acc + curr.totalPrice, 0);
-  }, [currentMonthOrders]);
-
-  const preMonthlyRevenue = useMemo(() => {
-    return previousMonthOrders.reduce((acc, curr) => acc + curr.totalPrice, 0);
-  }, [previousMonthOrders]);
-
-  const momGrowth = useMemo(() => {
-    if (currentMonthOrders === null || previousMonthOrders === null) {
-      return 0;
-    }
-    return ((currMonthlyRevenue - preMonthlyRevenue) / preMonthlyRevenue) * 100;
-  }, [
-    currMonthlyRevenue,
-    preMonthlyRevenue,
-    currentMonthOrders,
-    previousMonthOrders,
-  ]);
+  const { orderMonthlyResult } = useOrderGrowth();
+  const { products } = useAllProduct();
+  const { productsByMonth } = useProductByMonth();
+  const { users } = useUsers();
+  const { usersByMonth } = useUsersByMonth();
 
   return (
     <>
@@ -70,15 +28,17 @@ export default function DashboardOverview() {
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Tổng doanh thu</span>
               <span className="text-shop_dark_blue text-3xl font-bold">
-                {formatCurrency(currMonthlyRevenue)}
+                {formatCurrency(orderMonthlyResult?.revenueGrowth)}
               </span>
-              {momGrowth > 0 ? (
+              {orderMonthlyResult?.momGrowth > 0 ? (
                 <span className="text-sm text-green-500">
-                  ↗ {momGrowth.toFixed(1)}% so với tháng trước
+                  ↗ {orderMonthlyResult?.momGrowth.toFixed(1)}% so với tháng
+                  trước
                 </span>
               ) : (
                 <span className="text-sm text-red-500">
-                  ↗ {momGrowth.toFixed(1)}% so với tháng trước
+                  ↗ {orderMonthlyResult?.momGrowth.toFixed(1)}% so với tháng
+                  trước
                 </span>
               )}
             </div>
@@ -87,9 +47,11 @@ export default function DashboardOverview() {
           <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Đơn hàng</span>
-              <span className="text-3xl font-bold text-green-700">1247</span>
+              <span className="text-3xl font-bold text-green-700">
+                {orderMonthlyResult?.totalOrder}
+              </span>
               <span className="text-sm text-green-500">
-                ↗ +8.2% so với tháng trước
+                ↗ +{orderMonthlyResult?.currMonthlyCount} đơn hàng
               </span>
             </div>
             <span className="text-4xl">📦</span>
@@ -97,17 +59,23 @@ export default function DashboardOverview() {
           <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Sản phẩm</span>
-              <span className="text-3xl font-bold text-purple-500">759</span>
-              <span className="text-sm text-blue-500">↗ +15 sản phẩm</span>
+              <span className="text-3xl font-bold text-purple-500">
+                {products.length}
+              </span>
+              <span className="text-sm text-blue-500">
+                ↗ +{productsByMonth?.length} sản phẩm
+              </span>
             </div>
             <span className="text-4xl">🛍️</span>
           </div>
           <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
-              <span className="text-gray-600">Tổng doanh thu</span>
-              <span className="text-3xl font-bold text-orange-500">12,456</span>
+              <span className="text-gray-600">Số người dùng</span>
+              <span className="text-3xl font-bold text-orange-500">
+                {users?.length}
+              </span>
               <span className="text-sm text-green-500">
-                ↗ +234 khách hàng mới
+                ↗ +{usersByMonth?.length} khách hàng mới
               </span>
             </div>
             <span className="text-4xl">👥</span>

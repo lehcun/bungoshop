@@ -1,17 +1,17 @@
 'use client';
 
+import React from 'react';
+import Image from 'next/image';
 import { useCurrentUser } from '@/hook/auth/useCurrentUser';
-import { useOrder } from '@/hook/UseOrder';
 import { defaultAvatar } from '@/images';
 import { formatCurrency, formatOrderDate } from '@/lib/utils';
 import { Order } from '@/models/User';
-import Image from 'next/image';
-import React from 'react';
+import { useOrderByUser } from '@/hook/order/useOrderByUser';
 
 const OrderDetail = () => {
   const { user } = useCurrentUser();
-  const { data, isLoading } = useOrder();
-  if (!user || isLoading) return <p>Loading...</p>;
+  const { orders, loading } = useOrderByUser();
+  if (!user || loading) return <p>Loading...</p>;
 
   const statusHandle = (status: string | null) => {
     let textCss = '';
@@ -134,7 +134,7 @@ const OrderDetail = () => {
         </div>
       </section>
       <div className="space-y-4">
-        {data.map((order: Order) => (
+        {orders.map((order: Order) => (
           <section
             key={order.id}
             className="rounded-2xl bg-white p-4 shadow-md shadow-black/10"

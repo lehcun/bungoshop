@@ -62,8 +62,8 @@ const SignUpPanel = () => {
             <></>
           )}
           <input
-            type="text"
-            placeholder="Password"
+            type="password"
+            placeholder="Mật khẩu"
             className={`${serverError === 'email' ? 'focus:amber-600 border-1 border-amber-600' : 'border-gray-400'} w-100 border-1 py-2 pl-3`}
             value={password}
             onChange={(e) => setPassword(e.target.value)}

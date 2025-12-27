@@ -33,7 +33,7 @@ const AdminLoginPanel = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           placeholder="Password"
           className="w-100 border-1 border-gray-400 py-2 pl-3"
           value={password}
