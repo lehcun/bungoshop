@@ -26,7 +26,7 @@ const CartModel = () => {
   }
   return (
     <Container className="py-8">
-      <div className="my-8 text-3xl font-semibold">🛒 Giỏ hàng của bạn</div>
+      <div className="mb-8 text-3xl font-semibold">🛒 Giỏ hàng của bạn</div>
       <section className="flex gap-8">
         <CartItemList />
         <CartSummary />

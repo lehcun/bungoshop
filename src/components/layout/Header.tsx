@@ -2,7 +2,7 @@ import React from 'react';
 import Container from '../Container';
 import Logo from '../ui/Logo';
 import Search from '../ui/Search';
-import UserActions from '../UserActions';
+import UserActions from '../user/UserActions';
 // import NavBar from './NavBar';
 
 const Header = () => {

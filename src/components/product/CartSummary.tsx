@@ -6,11 +6,11 @@ import { formatCurrency } from '@/lib/utils';
 import Button from '../common/Button';
 import { useAddresses } from '@/hook/useAddresses';
 import { Address } from '@/models/User';
-import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { useCart } from '@/hook/cart/useCart';
 import { CartItem } from '@/models/Product';
+import AddAddressForm from '../user/AddAddressForm';
 
-interface AddressFormData {
+export interface AddressFormData {
   recipient: string;
   city: string;
   line1: string;
@@ -20,7 +20,6 @@ interface AddressFormData {
 
 const CartSummary = () => {
   const { addresses } = useAddresses();
-  const { user } = useCurrentUser();
   const { carts } = useCart();
   const [formData, setFormData] = useState<AddressFormData>({
     recipient: '',
@@ -54,7 +53,8 @@ const CartSummary = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: user?.id, ...formData }),
+        body: JSON.stringify(formData),
+        credentials: 'include',
       });
       if (!res.ok) throw new Error('can not POST');
 
@@ -169,12 +169,6 @@ const CartSummary = () => {
                 key={address.id}
                 className="flex border-b-1 border-gray-300 py-2"
               >
-                <input
-                  type="radio"
-                  checked={selected === address.id}
-                  onChange={() => setSelected(address.id)}
-                  className="mx-3 mt-2 h-6 w-6 cursor-pointer"
-                />
                 <div className="space-y-1 text-gray-500">
                   <div>
                     <label className="text-black">{address.recipient}</label>
@@ -188,77 +182,29 @@ const CartSummary = () => {
               </div>
             ))}
           </div>
-          <Button
-            className="w-full rounded-md border-1 border-gray-300"
-            variant="ghost"
-            onClick={toggleForm}
-          >
-            Thêm địa chỉ mới
-          </Button>
+          {addresses.length === 0 ? (
+            <Button
+              className="w-full rounded-md border-1 border-gray-300"
+              variant="ghost"
+              onClick={toggleForm}
+            >
+              Thêm địa chỉ mới
+            </Button>
+          ) : (
+            <></>
+          )}
         </div>
-      </div>
-      {/* add address form */}
-      <div
-        className={`${isOpenForm ? 'flex' : 'hidden'} fixed inset-0 z-10 items-center justify-center backdrop-blur-xl`}
-      >
-        <div className="w-full max-w-xl rounded-2xl bg-white p-6">
-          <h2 className="mb-4 text-xl font-semibold">Địa chỉ mới</h2>
-          <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
-            <input
-              name="recipient"
-              placeholder="Họ tên"
-              value={formData.recipient}
-              onChange={handleChange}
-              className="rounded-lg border-1 border-gray-200 p-2"
-            />
 
-            <input
-              name="city"
-              placeholder="Tỉnh/Thành phố"
-              value={formData.city}
-              onChange={handleChange}
-              className="rounded-lg border-1 border-gray-200 p-2"
-            />
-
-            <input
-              name="line1"
-              placeholder="Địa chỉ cụ thể"
-              value={formData.line1}
-              onChange={handleChange}
-              className="rounded-lg border-1 border-gray-200 p-2"
-            />
-
-            <input
-              name="phone"
-              placeholder="SĐT Người nhận"
-              value={formData.phone}
-              onChange={handleChange}
-              className="rounded-lg border-1 border-gray-200 p-2"
-            />
-
-            <input
-              name="label"
-              placeholder="Loại địa chỉ, VD: Nhà riêng, Văn phòng"
-              value={formData.label}
-              onChange={handleChange}
-              className="rounded-lg border-1 border-gray-200 p-2"
-            />
-            <div className="flex gap-x-2">
-              <Button
-                className="w-full rounded-xl border-1 border-blue-500 text-blue-500 hover:bg-gray-100"
-                variant="outline"
-                onClick={toggleForm}
-              >
-                Hủy
-              </Button>
-              <Button
-                type="submit"
-                className="w-full rounded-xl bg-blue-500 hover:bg-blue-600"
-              >
-                Thêm địa chỉ
-              </Button>
-            </div>
-          </form>
+        {/* add address form */}
+        <div
+          className={`${isOpenForm ? 'flex' : 'hidden'} fixed inset-0 z-10 items-center justify-center backdrop-blur-xl`}
+        >
+          <AddAddressForm
+            formData={formData}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            toggleForm={toggleForm}
+          />
         </div>
       </div>
     </div>

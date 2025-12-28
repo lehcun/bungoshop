@@ -45,9 +45,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // =========================================
   // ADMIN PATH
-  // =========================================
   if (adminPaths.some((path) => pathname.startsWith(path))) {
     if (!token || verifiedRole !== 'ADMIN') {
       const url = req.nextUrl.clone();
@@ -56,9 +54,7 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // =========================================
   // BUYER PATH
-  // =========================================
   if (buyerPaths.some((path) => pathname.startsWith(path))) {
     if (!token) {
       const url = req.nextUrl.clone();
@@ -67,14 +63,12 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // =========================================
   // CLIENT PATH
   // PUBLIC → không kiểm tra
-  // =========================================
   return NextResponse.next();
 }
 
-// Áp dụng middleware cho toàn bộ app
+// Áp dụng middleware
 export const config = {
   matcher: ['/dashboard/:path*', '/cart', '/favourite'],
 };
