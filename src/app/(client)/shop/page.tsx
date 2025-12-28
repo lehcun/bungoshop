@@ -1,6 +1,6 @@
 import NavPath from '@/components/ui/NavPath';
 
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 import ProductModel from '@/components/product/ProductModel';
 
 export default async function ShopPage() {

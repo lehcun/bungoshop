@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductGrid from '../ProductGrid';
+import ProductGrid from './ProductGrid';
 import Pagination from './Pagination';
 import { Product } from '@/models/Product';
 import { useProductFilter } from '@/hook/store/useProductFilter';

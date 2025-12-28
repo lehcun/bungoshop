@@ -1,6 +1,6 @@
 'use client';
 
-import BrandGrid from '@/components/BrandGrid';
+import BrandGrid from '@/components/homepage/BrandGrid';
 import Banner from '@/components/homepage/Banner';
 import CatagoriesGrid from '@/components/homepage/CatagoriesGrid';
 import HomeProductsList from '@/components/homepage/HomeProductsList';

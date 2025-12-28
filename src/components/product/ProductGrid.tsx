@@ -4,7 +4,7 @@ import React from 'react';
 import ProductCard from './ProductCard';
 import { cn } from '@/lib/utils';
 import { SkeletonTheme } from 'react-loading-skeleton';
-import { ProductSkeleton } from './skeleton/ProductSkeleton';
+import { ProductSkeleton } from '../skeleton/ProductSkeleton';
 import { Product } from '@/models/Product';
 
 const ProductGrid = ({

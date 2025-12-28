@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 
 export default async function HelpPage() {
   return (

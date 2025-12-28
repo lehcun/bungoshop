@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 import AdminLoginPanel from '@/components/dashboard/AdminLoginPanel';
 
 export default async function LoginLayout() {

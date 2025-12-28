@@ -1,11 +1,11 @@
 'use client';
 
-import CartItemList from '@/components/product/CartItemList';
+import CartItemList from '@/components/cart/CartItemList';
 import CartSummary from './CartSummary';
-import LoginRequired from '../LoginRequired';
+import LoginRequired from '../other/LoginRequired';
 import { useCurrentUser } from '@/hook/auth/useCurrentUser';
-import LonelyCart from '../LonelyCart';
-import Container from '../Container';
+import LonelyCart from '../other/LonelyCart';
+import Container from '../other/Container';
 import { useCart } from '@/hook/cart/useCart';
 
 const CartModel = () => {

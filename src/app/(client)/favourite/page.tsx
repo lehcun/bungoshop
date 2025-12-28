@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 import FavouriteProductList from '@/components/product/FavouriteProductList';
 
 export default async function FavoritePage() {

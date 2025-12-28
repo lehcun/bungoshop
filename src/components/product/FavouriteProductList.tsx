@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Heart, X } from 'lucide-react';
-import Button from '../common/Button';
+import Button from '../ui/Button';
 import { Favourite } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
 import Image from 'next/image';

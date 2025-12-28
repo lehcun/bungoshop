@@ -1,11 +1,13 @@
-import React, { ChangeEvent, FormEvent } from 'react';
-import { AddressFormData } from '../product/CartSummary';
-import Button from '../common/Button';
+import React from 'react';
+import Button from '../ui/Button';
+import { AddressFormData } from '@/hook/address/useCreateAddress';
 
 interface Props {
   formData: AddressFormData;
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: () => void;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
   toggleForm: () => void;
 }
 

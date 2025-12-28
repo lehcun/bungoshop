@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 
-import Login from '../login/Login';
+import Login from '../auth/Login';
 import Link from 'next/link';
 import UserMenu from './UserMenu';
 import { useFavourite } from '@/hook/favourite/UseFavourite';

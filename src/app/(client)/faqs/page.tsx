@@ -1,5 +1,5 @@
-import AskedDetail from '@/components/AskedDetail';
-import Container from '@/components/Container';
+import AskedDetail from '@/components/other/AskedDetail';
+import Container from '@/components/other/Container';
 
 export default async function FaqsPage() {
   return (

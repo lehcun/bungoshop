@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Category } from '@/models/Product';
 import Image from 'next/image';
 import { useCategories } from '@/hook/useCategories';
-import Container from '../Container';
+import Container from '../other/Container';
 
 const CatagoriesGrid = () => {
   const { categories } = useCategories();

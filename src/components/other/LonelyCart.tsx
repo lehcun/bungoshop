@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Button from './common/Button';
+import Button from '../ui/Button';
 import Image from 'next/image';
 
 const LonelyCart = () => {

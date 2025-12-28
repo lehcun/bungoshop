@@ -1,7 +1,7 @@
-import Container from '@/components/Container';
-import LoginFooter from '@/components/login/LoginFooter';
-import LoginTop from '@/components/login/LoginTop';
-import SignUpPanel from '@/components/login/SignUpPanel';
+import Container from '@/components/other/Container';
+import LoginFooter from '@/components/auth/LoginFooter';
+import LoginTop from '@/components/auth/LoginTop';
+import SignUpPanel from '@/components/auth/SignUpPanel';
 import { banner1 } from '@/images';
 import Image from 'next/image';
 

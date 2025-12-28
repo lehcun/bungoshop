@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Heart } from 'lucide-react';
 
-import StarRating from '../common/StarRating';
-import Button from '../common/Button';
+import StarRating from '../ui/StarRating';
+import Button from '../ui/Button';
 import { formatCurrency } from '@/lib/utils';
 import { Review, Variant } from '@/models/Product';
 import { useReviews } from '@/hook/useReviews';

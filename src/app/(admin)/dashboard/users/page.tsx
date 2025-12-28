@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { User } from '@/models/User';
-import Button from '@/components/common/Button';
+import Button from '@/components/ui/Button';
 import { defaultAvatar } from '@/images';
 
 export default function Users() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from './Container';
+import Container from '../other/Container';
 import { Brand } from '@/models/Brand';
 import Image from 'next/image';
 import Link from 'next/link';

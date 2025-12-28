@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Button from '@/components/common/Button';
+import Button from '@/components/ui/Button';
 import { Product } from '@/models/Product';
 import Image from 'next/image';
 import { formatCurrency } from '@/lib/utils';

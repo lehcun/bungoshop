@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from '../ui/Logo';
-import Container from '../Container';
+import Container from '../other/Container';
 import Link from 'next/link';
 
 const LoginTop = ({ isLogin }: { isLogin: boolean }) => {

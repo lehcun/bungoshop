@@ -5,7 +5,7 @@ import { Category } from '@/models/Product';
 import React, { useState } from 'react';
 import NewProductImages from './NewProductImages';
 import NewVariants from './NewProductVariants';
-import Button from '@/components/common/Button';
+import Button from '@/components/ui/Button';
 import { useCreateProduct } from '@/hook/products/useCreateProduct';
 
 export interface Image {

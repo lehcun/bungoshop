@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 import OrderDetail from '@/components/profile/OrderDetail';
 import Image from 'next/image';
 

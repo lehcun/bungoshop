@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../Container';
+import Container from '../other/Container';
 import Logo from '../ui/Logo';
 import Search from '../ui/Search';
 import UserActions from '../user/UserActions';

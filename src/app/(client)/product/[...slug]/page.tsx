@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 import NavPath from '@/components/ui/NavPath';
 import ProductDisplay from '@/components/product/ProductDisplay';
 import ReviewProduct from '@/components/product/ReviewProduct';

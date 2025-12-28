@@ -1,6 +1,6 @@
 import React from 'react';
-import Button from './common/Button';
-import Logo from './ui/Logo';
+import Button from '../ui/Button';
+import Logo from '../ui/Logo';
 
 const LoginRequired = () => {
   return (

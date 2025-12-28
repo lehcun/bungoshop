@@ -1,4 +1,4 @@
-import Container from '@/components/Container';
+import Container from '@/components/other/Container';
 import ProfileSideBar from '@/components/profile/ProfileSideBar';
 import UserInformation from '@/components/profile/UserInformation';
 

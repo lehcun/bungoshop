@@ -1,0 +1,89 @@
+src/
+└── components/
+    ├── ui/                     # Các component UI nguyên tử, tái sử dụng toàn app (theo Atomic Design)
+    │   ├── Button.tsx
+    │   ├── Input.tsx
+    │   ├── Label.tsx
+    │   ├── Card.tsx
+    │   ├── Modal.tsx
+    │   ├── Toast.tsx
+    │   ├── Skeleton.tsx
+    │   ├── Dropdown.tsx
+    │   ├── Table.tsx
+    │   └── index.ts            # barrel export tất cả UI components
+    │
+    ├── layout/                 # Các layout chung
+    │   ├── Header.tsx
+    │   ├── Footer.tsx
+    │   ├── Sidebar.tsx
+    │   ├── Navbar.tsx
+    │   ├── MobileMenu.tsx
+    │   └── Layout.tsx          # wrapper chính (có thể có children)
+    │
+    ├── auth/                   # Component liên quan đến authentication
+    │   ├── LoginForm.tsx
+    │   ├── RegisterForm.tsx
+    │   ├── ProtectedRoute.tsx
+    │   ├── AdminRoute.tsx
+    │   └── LogoutButton.tsx
+    │
+    ├── cart/                   # Component giỏ hàng
+    │   ├── CartDrawer.tsx      # drawer/mini-cart bên phải
+    │   ├── CartItem.tsx
+    │   ├── CartSummary.tsx
+    │   ├── EmptyCart.tsx
+    │   └── CartIcon.tsx
+    │
+    ├── product/                # Component sản phẩm
+    │   ├── ProductCard.tsx
+    │   ├── ProductList.tsx
+    │   ├── ProductDetail.tsx
+    │   ├── ProductGallery.tsx
+    │   ├── ProductReviews.tsx
+    │   ├── BrandFilter.tsx
+    │   ├── CategoryFilter.tsx
+    │   └── RelatedProducts.tsx
+    │
+    ├── address/                # Component quản lý địa chỉ (rất hợp lý vì address là domain riêng)
+    │   ├── AddressList.tsx
+    │   ├── AddressCard.tsx
+    │   ├── AddressForm.tsx     # form thêm/sửa địa chỉ
+    │   ├── AddressSelector.tsx # chọn địa chỉ (dùng ở checkout, profile)
+    │   └── DefaultAddressBadge.tsx
+    │
+    ├── checkout/               # Component quy trình thanh toán
+    │   ├── CheckoutSummary.tsx
+    │   ├── PaymentMethodSelector.tsx
+    │   ├── CheckoutSteps.tsx   # step 1: giỏ hàng, step 2: địa chỉ, step 3: thanh toán
+    │   └── OrderConfirmation.tsx
+    │
+    ├── order/                  # Component đơn hàng
+    │   ├── OrderList.tsx
+    │   ├── OrderItem.tsx
+    │   ├── OrderDetail.tsx
+    │   ├── OrderStatusBadge.tsx
+    │   └── OrderTracking.tsx
+    │
+    ├── favourite/              # Yêu thích
+    │   ├── FavouriteButton.tsx
+    │   ├── FavouriteList.tsx
+    │   └── FavouriteItem.tsx
+    │
+    ├── profile/                # Trang cá nhân (nếu có)
+    │   ├── ProfileInfo.tsx
+    │   ├── ProfileAddresses.tsx
+    │   ├── ProfileOrders.tsx
+    │   └── ChangePasswordForm.tsx
+    │
+    ├── admin/                  # Component dành cho admin (nếu có dashboard)
+    │   ├── AdminSidebar.tsx
+    │   ├── AdminStatsCard.tsx
+    │   ├── ProductManagement.tsx
+    │   └── UserManagement.tsx
+    │
+    └── common/                 # Các component lặt vặt không thuộc domain nào rõ ràng
+        ├── LoadingSpinner.tsx
+        ├── ErrorBoundary.tsx
+        ├── NotFound.tsx
+        ├── Pagination.tsx
+        └── Breadcrumb.tsx

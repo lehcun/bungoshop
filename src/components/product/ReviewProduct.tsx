@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React from 'react';
-import StarRating from '../common/StarRating';
+import StarRating from '../ui/StarRating';
 import { defaultAvatar } from '@/images';
 import { useReviews } from '@/hook/useReviews';
 import { Review } from '@/models/Product';
