@@ -1,27 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../ui/Button';
-import { AddressFormData } from '@/hook/address/useCreateAddress';
-
-interface Props {
-  formData: AddressFormData;
-  handleSubmit: () => void;
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => void;
-  toggleForm: () => void;
-}
+import { useCreateAddress } from '@/hook/address/useCreateAddress';
+import { Address } from '@/models/User';
+import { useUpdateAddress } from '@/hook/address/useUpdateAddress';
 
 const AddAddressForm = ({
-  formData,
-  handleSubmit,
-  handleChange,
-  toggleForm,
-}: Props) => {
+  initData,
+  onSuccess,
+  onCancel,
+}: {
+  initData?: Address | null;
+  onSuccess: () => void;
+  onCancel: () => void;
+}) => {
+  const isEditMode = !!initData;
+
+  const [formData, setFormData] = useState({
+    recipient: initData?.recipient || '',
+    phone: initData?.phone || '',
+    line1: initData?.line1 || '',
+    city: initData?.city || '',
+    label: initData?.label || '',
+    isDefault: initData?.isDefault || false,
+  });
+
+  const { createAddress } = useCreateAddress();
+  const { updateAddress } = useUpdateAddress();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, isDefault: e.target.checked }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault(); // <-- Dừng việc trình duyệt tự ý reload trang
+
+    if (isEditMode) {
+      // updateAddress()
+    } else {
+      createAddress(formData, { onSuccess }); // Truyền thẳng hàm onSuccess vào có tác dụng đè lên hàm trong hook
+    }
+  };
+
   return (
     <>
-      <div className="w-full max-w-xl rounded-2xl bg-white p-6">
-        <h2 className="mb-4 text-xl font-semibold">Địa chỉ mới</h2>
-        <form className="flex flex-col gap-y-4" onSubmit={handleSubmit}>
+      <section>
+        {/* <h2 className="mb-4 text-xl font-semibold">Địa chỉ mới</h2> */}
+        <form className="flex flex-col gap-y-4 py-4" onSubmit={handleSubmit}>
           <input
             name="recipient"
             placeholder="Họ tên"
@@ -61,23 +92,32 @@ const AddAddressForm = ({
             onChange={handleChange}
             className="rounded-lg border-1 border-gray-200 p-2"
           />
+          <div className="flex items-center">
+            <input
+              name="isDefault"
+              type="checkbox"
+              onChange={handleCheckbox}
+              className="mr-2 h-4 w-4 cursor-pointer rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+            <label className="text-gray-600">Đặt làm địa chỉ mặc định</label>
+          </div>
           <div className="flex gap-x-2">
             <Button
               className="w-full rounded-xl border-1 border-blue-500 text-blue-500 hover:bg-gray-100"
               variant="outline"
-              onClick={toggleForm}
+              onClick={onCancel}
             >
-              Hủy
+              Quay Lại
             </Button>
             <Button
               type="submit"
               className="w-full rounded-xl bg-blue-500 hover:bg-blue-600"
             >
-              Thêm địa chỉ
+              {isEditMode ? 'Cập nhật địa chỉ' : 'Thêm địa chỉ'}
             </Button>
           </div>
         </form>
-      </div>
+      </section>
     </>
   );
 };

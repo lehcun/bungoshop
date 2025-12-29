@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export const useAddresses = () => {
   const query = useQuery({
-    queryKey: ['addresses'],
+    queryKey: ['addresses', 'all'],
     queryFn: async () => {
       const res = await fetch('http://localhost:3001/users/address', {
         credentials: 'include',

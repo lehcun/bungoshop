@@ -3,7 +3,6 @@
 import React from 'react';
 import * as motion from 'motion/react-client';
 import { formatCurrency } from '@/lib/utils';
-import Button from '../ui/Button';
 import { useCart } from '@/hook/cart/useCart';
 import { CartItem } from '@/models/Product';
 import CheckoutAddress from '../address/CheckoutAddress';

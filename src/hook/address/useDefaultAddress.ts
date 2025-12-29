@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export const useDefaultAddress = () => {
   const query = useQuery({
-    queryKey: ['addresses'],
+    queryKey: ['addresses', 'default'],
     queryFn: async () => {
       const res = await fetch('http://localhost:3001/users/address/default', {
         credentials: 'include',
