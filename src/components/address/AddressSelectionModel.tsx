@@ -1,27 +1,38 @@
 import { useAddresses } from '@/hook/address/useAddresses';
 import { Address } from '@/models/User';
 import { X } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import AddAddressForm from '../user/AddAddressForm';
 import Button from '../ui/Button';
 
 const AddressSelectionModel = ({
   isOpen,
   handleOpenAddressList,
+  selectedAddress,
+  setSelectedAddress,
 }: {
   isOpen: boolean;
   handleOpenAddressList: () => void;
+  selectedAddress: Address | null;
+  setSelectedAddress: Dispatch<SetStateAction<Address | null>>;
 }) => {
   const { addresses } = useAddresses();
 
   //View set cho form hien thi
   const [view, setView] = useState<'list' | 'add' | 'edit'>('list');
+  const isAddr = addresses.length === 0;
+
+  useEffect(() => {
+    if (addresses.length === 0) {
+      setView('add');
+    }
+  }, [addresses]);
 
   //Dia chi dang duoc chinh sua
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
 
   const handleClose = () => {
-    setView('list');
+    setView(isAddr ? 'add' : 'list');
     setEditingAddress(null);
     handleOpenAddressList();
   };
@@ -38,6 +49,12 @@ const AddressSelectionModel = ({
   const handleBackToList = () => {
     setView('list');
     setEditingAddress(null);
+  };
+
+  //Xử lý chọn địa chỉ khác và render lại
+  const handleSelectAddress = (address: Address) => {
+    setSelectedAddress(address);
+    handleClose();
   };
 
   // Nếu modal không mở → không render gì
@@ -71,8 +88,8 @@ const AddressSelectionModel = ({
                     <div className="flex">
                       <input
                         type="radio"
-                        checked={address.isDefault}
-                        // onChange={}
+                        checked={address.id === selectedAddress?.id}
+                        onChange={() => handleSelectAddress(address)}
                         className="mt-0.5 mr-2 h-4 w-4 rounded-lg border-2 border-gray-200"
                       />
                       <div className="flex-1 space-y-1 text-gray-500">
@@ -108,12 +125,12 @@ const AddressSelectionModel = ({
               <AddAddressForm
                 initData={view === 'edit' ? editingAddress : null}
                 onSuccess={handleBackToList}
-                onCancel={handleBackToList}
+                onCancel={isAddr ? handleClose : handleBackToList}
               />
             )}
           </div>
           {view === 'list' ? (
-            <section className="flex border-t-1 border-gray-400 p-4">
+            <section className="flex-end border-t-1 border-gray-400 p-4">
               <Button onClick={handleOpenAddForm}>Thêm địa chỉ mới</Button>
             </section>
           ) : (

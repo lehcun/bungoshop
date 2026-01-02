@@ -13,6 +13,12 @@ const updateAddressApi = async ({
     credentials: 'include',
   });
   if (!res.ok) throw new Error('Không thể cập nhật địa chỉ');
+
+  //Vì PUT trả về 204 nên đoạn này để bắt sự kiện trả về onSuccess ở dưới
+  if (res.status === 204 || res.headers.get('content-length') === '0') {
+    return null;
+  }
+  // Trả về lỗi nếu có
   return res.json();
 };
 

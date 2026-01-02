@@ -1,14 +1,20 @@
 import { useDefaultAddress } from '@/hook/address/useDefaultAddress';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../ui/Button';
-import { useCreateAddress } from '@/hook/address/useCreateAddress';
-import AddAddressForm from '../user/AddAddressForm';
 import AddressSelectionModel from './AddressSelectionModel';
+import { Address } from '@/models/User';
 
 const CheckoutAddress = () => {
   const { defaultAddress } = useDefaultAddress();
   // const { toggleForm } = useCreateAddress();
-  const address = defaultAddress;
+
+  //Luu address da chon
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(
+    defaultAddress
+  );
+
+  useEffect(() => {}, [selectedAddress]);
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenAddressList = () => {
@@ -26,20 +32,27 @@ const CheckoutAddress = () => {
         </button>
       </div>
       <div className="px-2">
-        {address ? (
+        {selectedAddress ? (
           <div className="mb-4">
             <div className="space-y-1 text-gray-500">
               <div className="flex gap-x-2">
-                <label className="text-black">{address?.recipient}</label>
+                <label className="text-black">
+                  {selectedAddress?.recipient}
+                </label>
                 {' | '}
-                <label>{address?.phone}</label>
+                <label>{selectedAddress?.phone}</label>
               </div>
               <p>
-                {address?.line1}/{address?.city}/{address?.country}
+                {selectedAddress?.line1}/{selectedAddress?.city}/
+                {selectedAddress?.country}
               </p>
-              <label className="border-shop_dark_blue text-shop_dark_blue border-1 px-2 text-sm">
-                Mặc định
-              </label>
+              {selectedAddress.isDefault ? (
+                <label className="border-shop_dark_blue text-shop_dark_blue border-1 px-2 text-sm">
+                  Mặc định
+                </label>
+              ) : (
+                <></>
+              )}
             </div>
           </div>
         ) : (
@@ -47,7 +60,7 @@ const CheckoutAddress = () => {
             <Button
               className="w-full rounded-md border-1 border-gray-300"
               variant="ghost"
-              // onClick={toggleForm}
+              onClick={handleOpenAddressList}
             >
               Thêm địa chỉ mới
             </Button>
@@ -59,6 +72,8 @@ const CheckoutAddress = () => {
       <AddressSelectionModel
         isOpen={isOpen}
         handleOpenAddressList={handleOpenAddressList}
+        selectedAddress={selectedAddress}
+        setSelectedAddress={setSelectedAddress}
       />
     </div>
   );

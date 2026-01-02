@@ -42,7 +42,7 @@ const AddAddressForm = ({
     e.preventDefault(); // <-- Dừng việc trình duyệt tự ý reload trang
 
     if (isEditMode) {
-      // updateAddress()
+      updateAddress({ id: initData.id, ...formData }, { onSuccess });
     } else {
       createAddress(formData, { onSuccess }); // Truyền thẳng hàm onSuccess vào có tác dụng đè lên hàm trong hook
     }
