@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Brand } from '@/models/Brand';
 import { Category } from '@/models/Product';
 import { useCategories } from '@/hook/useCategories';
-import { useProductFilter } from '@/hook/store/useProductFilter';
+import { SortType, useProductFilter } from '@/hook/store/useProductFilter';
 import { useBrands } from '@/hook/useBrands';
+import { useSearchParams } from 'next/navigation';
 
 const ProductFilter = ({
   filters,
@@ -11,7 +12,7 @@ const ProductFilter = ({
   filters: {
     categories: string[];
     brands: string[];
-    sort: string;
+    sort: SortType;
     priceRange: string;
   };
 }) => {
@@ -32,6 +33,51 @@ const ProductFilter = ({
   const { setFilters, setPage, resetFilters } = useProductFilter();
   const { categories } = useCategories();
   const { brands } = useBrands();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const currCategories = filters.categories;
+    const currPriceRange = filters.priceRange;
+    const currBrands = filters.brands;
+    const currSort = filters.sort;
+
+    const params = new URLSearchParams(searchParams.toString());
+    const categoriesFromUrl = params.getAll('categories');
+    const brandsFromUrl = params.getAll('brands');
+    const priceFromUrl = params.get('priceRange');
+    const sortFromUrl = params.get('sort') || 'default';
+
+    // if (sortFromUrl && sortFromUrl !== 'default') {
+    //   newFilters.sort = sortFromUrl;
+    // }
+
+    const categoriesEqual =
+      currCategories.length === categoriesFromUrl.length &&
+      categoriesFromUrl.every((cat) => currCategories.includes(cat));
+
+    const brandsEqual =
+      currBrands.length === brandsFromUrl.length &&
+      brandsFromUrl.every((brand) => currBrands.includes(brand));
+
+    const priceEqual = priceFromUrl === currPriceRange;
+    // const sortEqual = sortFromUrl === currentSort;
+
+    // Chỉ update nếu có sự khác biệt thực sự
+    if (!(categoriesEqual && brandsEqual && priceEqual)) {
+      const newFilters: Partial<typeof filters> = {};
+
+      if (!categoriesEqual)
+        newFilters.categories =
+          categoriesFromUrl.length > 0 ? categoriesFromUrl : [];
+      if (!brandsEqual)
+        newFilters.brands = brandsFromUrl.length > 0 ? brandsFromUrl : [];
+      if (!priceEqual)
+        newFilters.priceRange = priceFromUrl ? priceFromUrl : undefined;
+
+      setFilters(newFilters);
+      setPage(1);
+    }
+  }, [searchParams, setFilters, setPage, filters]);
 
   //Toggle danh muc
   const toggleCategory = (name: string) => {
@@ -39,31 +85,23 @@ const ProductFilter = ({
     const newCats: string[] = exists
       ? (filters.categories?.filter((c: string) => c !== name) ?? [])
       : [...(filters.categories ?? []), name];
-    setFilters({
-      categories: newCats,
-      priceRange: '',
-    });
+    setFilters({ categories: newCats });
     setPage(1);
   };
 
   //Toggle muc gia
   const togglePrice = (price: string) => {
-    setFilters({
-      priceRange: price,
-    });
+    setFilters({ priceRange: price });
     setPage(1);
   };
 
   //Toggle Hang
   const toggleBrand = (name: string) => {
     const exists: boolean = filters.brands?.includes(name) ?? false;
-    const newCats: string[] = exists
+    const newBras: string[] = exists
       ? (filters.brands?.filter((c: string) => c !== name) ?? [])
       : [...(filters.brands ?? []), name];
-    setFilters({
-      brands: newCats,
-      priceRange: '',
-    });
+    setFilters({ brands: newBras });
     setPage(1);
   };
 
@@ -100,7 +138,7 @@ const ProductFilter = ({
                     <input
                       type="radio"
                       name="price"
-                      checked={!!filters.priceRange.includes(item.range)}
+                      checked={filters.priceRange === item.range}
                       onChange={() => togglePrice(item.range)}
                     />
                     <span className="ml-2 text-center">{item.label}</span>
@@ -129,32 +167,6 @@ const ProductFilter = ({
             >
               reset bộ lọc
             </button>
-            {/* <div>
-              <h3 className="my-2 text-lg font-semibold">Size</h3>
-              <div className="flex flex-wrap gap-x-2">
-                {mockFilters.sizes.map((size) => (
-                  <span
-                    key={size}
-                    onClick={() => toggleSize(size)}
-                    className={`text-md hover:text-shop_dark_blue hover:border-shop_dark_blue flex h-8 w-8 cursor-pointer items-center justify-center rounded-full border-2 ${
-                      sizeSelected.includes(size)
-                        ? 'from-shop_light_blue to-shop_dark_blue hover:text-shop_dark_blue bg-red-200 bg-gradient-to-br text-white'
-                        : 'border-black text-black'
-                    }`}
-                  >
-                    <div>{size}</div>
-                  </span>
-                ))}
-              </div>
-            </div> */}
-            {/* <motion.div
-              className="from-shop_light_blue/70 to-shop_light_blue mt-2 cursor-pointer rounded-2xl bg-gradient-to-r py-4 text-center"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={applyFilter}
-            >
-              <button>Áp dụng bộ lọc</button>
-            </motion.div> */}
           </div>
         </section>
       </div>

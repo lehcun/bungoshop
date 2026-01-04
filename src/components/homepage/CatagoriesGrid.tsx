@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import * as motion from 'motion/react-client';
-import Link from 'next/link';
-import { Category } from '@/models/Product';
 import Image from 'next/image';
-import { useCategories } from '@/hook/useCategories';
+import Link from 'next/link';
+import * as motion from 'motion/react-client';
 import Container from '../other/Container';
+import { Category } from '@/models/Product';
+import { useCategories } from '@/hook/useCategories';
 
 const CatagoriesGrid = () => {
   const { categories } = useCategories();
