@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Button from '../ui/Button';
-import { Address } from '@/models/User';
 import { useDefaultAddress } from '@/hook/address/useDefaultAddress';
 import AddressSelectionModel from './AddressSelectionModel';
+import { Address } from '@/models/User';
 
-const CheckoutAddress = () => {
+const CheckoutAddress = ({
+  selectedAddress,
+  setSelectedAddress,
+}: {
+  selectedAddress: Address | null;
+  setSelectedAddress: Dispatch<SetStateAction<Address | null>>;
+}) => {
   const { defaultAddress } = useDefaultAddress();
-
-  //Luu address da chon
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
 
   useEffect(() => {
     setSelectedAddress(defaultAddress);
-  }, [defaultAddress]);
+  });
 
   const [isOpen, setIsOpen] = useState(false);
 

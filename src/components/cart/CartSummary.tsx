@@ -1,15 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import * as motion from 'motion/react-client';
 import { formatCurrency } from '@/lib/utils';
-import { useCart } from '@/hook/cart/useCart';
 import { CartItem } from '@/models/Product';
+import { Address } from '@/models/User';
 import CheckoutAddress from '../address/CheckoutAddress';
+import { useCart } from '@/hook/cart/useCart';
 
 const CartSummary = () => {
   const { carts } = useCart();
-
+  //Luu address da chon
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  console.log(selectedAddress);
   const handlePayment = async () => {
     try {
       const res = await fetch('http://localhost:3001/orders/checkout', {
@@ -19,7 +22,7 @@ const CartSummary = () => {
         },
         body: JSON.stringify({
           paymentMethod: 'COD',
-          // shippingAddressId: selected,
+          shippingAddressId: selectedAddress?.id,
         }),
         credentials: 'include',
       });
@@ -103,7 +106,10 @@ const CartSummary = () => {
         </div> */}
       </div>
 
-      <CheckoutAddress />
+      <CheckoutAddress
+        selectedAddress={selectedAddress}
+        setSelectedAddress={setSelectedAddress}
+      />
     </div>
   );
 };
