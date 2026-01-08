@@ -1,19 +1,18 @@
-import { useDefaultAddress } from '@/hook/address/useDefaultAddress';
 import React, { useEffect, useState } from 'react';
 import Button from '../ui/Button';
-import AddressSelectionModel from './AddressSelectionModel';
 import { Address } from '@/models/User';
+import { useDefaultAddress } from '@/hook/address/useDefaultAddress';
+import AddressSelectionModel from './AddressSelectionModel';
 
 const CheckoutAddress = () => {
   const { defaultAddress } = useDefaultAddress();
-  // const { toggleForm } = useCreateAddress();
 
   //Luu address da chon
-  const [selectedAddress, setSelectedAddress] = useState<Address | null>(
-    defaultAddress
-  );
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
 
-  useEffect(() => {}, [selectedAddress]);
+  useEffect(() => {
+    setSelectedAddress(defaultAddress);
+  }, [defaultAddress]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,15 +55,13 @@ const CheckoutAddress = () => {
             </div>
           </div>
         ) : (
-          <>
-            <Button
-              className="w-full rounded-md border-1 border-gray-300"
-              variant="ghost"
-              onClick={handleOpenAddressList}
-            >
-              Thêm địa chỉ mới
-            </Button>
-          </>
+          <Button
+            className="w-full rounded-md border-1 border-gray-300"
+            variant="ghost"
+            onClick={handleOpenAddressList}
+          >
+            Thêm địa chỉ mới
+          </Button>
         )}
       </div>
 

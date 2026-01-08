@@ -8,8 +8,8 @@ import React from 'react';
 const UserInformation = () => {
   const { user } = useCurrentUser();
   return (
-    <div className="w-5/6 bg-white px-8 shadow-sm">
-      <section className="border-b-1 border-gray-300 py-4">
+    <div className="bg-white px-8 shadow-sm">
+      <section className="h-20 border-b-1 border-gray-300 py-4">
         <h3 className="text-xl font-semibold">Hồ sơ của tôi</h3>
         <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
       </section>

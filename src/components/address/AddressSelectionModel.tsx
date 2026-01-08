@@ -7,13 +7,13 @@ import Button from '../ui/Button';
 
 const AddressSelectionModel = ({
   isOpen,
-  handleOpenAddressList,
   selectedAddress,
+  handleOpenAddressList,
   setSelectedAddress,
 }: {
   isOpen: boolean;
+  selectedAddress?: Address | null;
   handleOpenAddressList: () => void;
-  selectedAddress: Address | null;
   setSelectedAddress: Dispatch<SetStateAction<Address | null>>;
 }) => {
   const { addresses } = useAddresses();

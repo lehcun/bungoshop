@@ -10,7 +10,7 @@ const AddAddressForm = ({
   onCancel,
 }: {
   initData?: Address | null;
-  onSuccess: () => void;
+  onSuccess?: () => void;
   onCancel: () => void;
 }) => {
   const isEditMode = !!initData;
