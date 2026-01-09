@@ -28,8 +28,8 @@ const UserAddressModel = () => {
     setEditingAddress(null);
   };
   return (
-    <div className="bg-white px-8 shadow-sm">
-      <section className="flex h-20 items-center justify-between border-b-1 border-gray-300 py-4">
+    <div className="bg-white shadow-sm">
+      <section className="flex h-20 items-center justify-between border-b-1 border-gray-300 px-8 py-4">
         <h3 className="text-xl font-semibold">Địa chỉ của tôi</h3>
         <Button onClick={handleOpenForm} className="rounded-md">
           Thêm địa chỉ mới
@@ -37,46 +37,50 @@ const UserAddressModel = () => {
       </section>
 
       {/* Address User list */}
-      {addresses.length > 0 ? (
-        <section>
-          {addresses?.map((address: Address) => (
-            <div
-              key={address.id}
-              className="border-b border-gray-400 py-4 last:border-0"
-            >
-              <div className="flex">
-                <div className="flex-1 space-y-1 text-gray-500">
-                  <div className="flex gap-x-2">
-                    <label className="text-black">{address?.recipient}</label>
-                    {' | '}
-                    <label className="flex-1">{address?.phone}</label>
-                    <button
-                      onClick={() => handleOpenUpdateForm(address)}
-                      className="text-blue-600"
-                    >
-                      Sửa
-                    </button>
+      <div className="px-8">
+        {addresses.length > 0 ? (
+          <section>
+            {addresses?.map((address: Address) => (
+              <div
+                key={address.id}
+                className="border-b border-gray-300 py-4 last:border-0"
+              >
+                <div className="flex">
+                  <div className="flex-1 space-y-1 text-gray-500">
+                    <div className="flex gap-x-2">
+                      <label className="text-black">{address?.recipient}</label>
+                      {' | '}
+                      <label className="flex-1">{address?.phone}</label>
+                      <button
+                        onClick={() => handleOpenUpdateForm(address)}
+                        className="text-blue-600"
+                      >
+                        Sửa
+                      </button>
+                    </div>
+                    <p>
+                      {address?.line1}/{address?.city}/{address?.country}
+                    </p>
+                    {address.isDefault ? (
+                      <label className="border-shop_dark_blue text-shop_dark_blue border-1 px-2 text-sm">
+                        Mặc định
+                      </label>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                  <p>
-                    {address?.line1}/{address?.city}/{address?.country}
-                  </p>
-                  {address.isDefault ? (
-                    <label className="border-shop_dark_blue text-shop_dark_blue border-1 px-2 text-sm">
-                      Mặc định
-                    </label>
-                  ) : (
-                    <></>
-                  )}
                 </div>
               </div>
-            </div>
-          ))}
-        </section>
-      ) : (
-        <section className="py-16 text-center">
-          <label className="text-xl">Tài khoản hiện có nhập địa chỉ nào</label>
-        </section>
-      )}
+            ))}
+          </section>
+        ) : (
+          <section className="py-16 text-center">
+            <label className="text-xl">
+              Tài khoản hiện có nhập địa chỉ nào
+            </label>
+          </section>
+        )}
+      </div>
 
       {isOpen ? (
         <div

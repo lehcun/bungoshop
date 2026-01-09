@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 
 // Danh sách route cần bảo vệ
 const adminPaths = ['/dashboard'];
-const buyerPaths = ['/cart', '/favourite'];
+const buyerPaths = ['/cart', '/favourite', '/user'];
 
 interface CustomJWTPayload extends JWTPayload {
   role?: string;
@@ -70,5 +70,5 @@ export async function middleware(req: NextRequest) {
 
 // Áp dụng middleware
 export const config = {
-  matcher: ['/dashboard/:path*', '/cart', '/favourite'],
+  matcher: ['/dashboard/:path*', '/cart', '/favourite', '/user/:path*'],
 };

@@ -7,28 +7,41 @@ import { CartItem } from '@/models/Product';
 import { Address } from '@/models/User';
 import CheckoutAddress from '../address/CheckoutAddress';
 import { useCart } from '@/hook/cart/useCart';
+import { useCheckout } from '@/hook/checkout/useCheckout';
+import toast from 'react-hot-toast';
 
 const CartSummary = () => {
   const { carts } = useCart();
   //Luu address da chon
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-  console.log(selectedAddress);
-  const handlePayment = async () => {
-    try {
-      const res = await fetch('http://localhost:3001/orders/checkout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          paymentMethod: 'COD',
-          shippingAddressId: selectedAddress?.id,
-        }),
-        credentials: 'include',
+  const { createOrder } = useCheckout();
+  // const handlePayment = async () => {
+  //   try {
+  //     const res = await fetch('http://localhost:3001/orders/checkout', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         paymentMethod: 'COD',
+  //         shippingAddressId: selectedAddress?.id,
+  //       }),
+  //       credentials: 'include',
+  //     });
+  //     if (!res.ok) throw new Error('can not POST payment');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const handlePayment = () => {
+    if (selectedAddress) {
+      createOrder({
+        paymentMethod: 'COD',
+        shippingAddressId: selectedAddress.id,
       });
-      if (!res.ok) throw new Error('can not POST payment');
-    } catch (err) {
-      console.log(err);
+    } else {
+      toast('Chưa có địa chỉ hoặc là lỗi phương thức');
     }
   };
 
