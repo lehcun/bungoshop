@@ -36,48 +36,28 @@ const ProductFilter = ({
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const currCategories = filters.categories;
-    const currPriceRange = filters.priceRange;
-    const currBrands = filters.brands;
-    const currSort = filters.sort;
-
     const params = new URLSearchParams(searchParams.toString());
-    const categoriesFromUrl = params.getAll('categories');
-    const brandsFromUrl = params.getAll('brands');
-    const priceFromUrl = params.get('priceRange');
-    const sortFromUrl = params.get('sort') || 'default';
 
-    // if (sortFromUrl && sortFromUrl !== 'default') {
-    //   newFilters.sort = sortFromUrl;
-    // }
+    const next = {
+      categories: params.getAll('categories'),
+      brands: params.getAll('brands'),
+      priceRange: params.get('priceRange') || '',
+      sort: (params.get('sort') as SortType) || 'default',
+    };
 
-    const categoriesEqual =
-      currCategories.length === categoriesFromUrl.length &&
-      categoriesFromUrl.every((cat) => currCategories.includes(cat));
+    const curr = useProductFilter.getState();
 
-    const brandsEqual =
-      currBrands.length === brandsFromUrl.length &&
-      brandsFromUrl.every((brand) => currBrands.includes(brand));
+    const same =
+      JSON.stringify(curr.categories) === JSON.stringify(next.categories) &&
+      JSON.stringify(curr.brands) === JSON.stringify(next.brands) &&
+      curr.priceRange === next.priceRange &&
+      curr.sort === next.sort;
 
-    const priceEqual = priceFromUrl === currPriceRange;
-    // const sortEqual = sortFromUrl === currentSort;
-
-    // Chỉ update nếu có sự khác biệt thực sự
-    if (!(categoriesEqual && brandsEqual && priceEqual)) {
-      const newFilters: Partial<typeof filters> = {};
-
-      if (!categoriesEqual)
-        newFilters.categories =
-          categoriesFromUrl.length > 0 ? categoriesFromUrl : [];
-      if (!brandsEqual)
-        newFilters.brands = brandsFromUrl.length > 0 ? brandsFromUrl : [];
-      if (!priceEqual)
-        newFilters.priceRange = priceFromUrl ? priceFromUrl : undefined;
-
-      setFilters(newFilters);
+    if (!same) {
+      setFilters(next);
       setPage(1);
     }
-  }, [searchParams, setFilters, setPage, filters]);
+  }, [searchParams]); // 🔥 chỉ phụ thuộc URL
 
   //Toggle danh muc
   const toggleCategory = (name: string) => {
