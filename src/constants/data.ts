@@ -69,7 +69,7 @@ export const footerSupports = [
 
 export const footerContacts = [
   {
-    title: '123 Trường Chinh, Cẩm Lệ, TP. Đà Nẵng',
+    title: 'xxx Trường Chinh, TP. Đà Nẵng',
     icon: '📍',
   },
   {

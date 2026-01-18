@@ -5,6 +5,7 @@ import { FacebookIcon, GoogleIcon } from '@/images';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useRef, useState } from 'react';
+import Button from '../ui/Button';
 
 const LoginPanel = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -12,9 +13,7 @@ const LoginPanel = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { login, error } = useLogin(
-    passwordRef as React.RefObject<HTMLInputElement>
-  );
+  const { login } = useLogin(passwordRef as React.RefObject<HTMLInputElement>);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,26 +36,23 @@ const LoginPanel = () => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <div className="relative">
-          {/* {passwordRef !== null ? (
-            <label className="absolute -top-6 text-red-500">sai mật khẩu</label>
-          ) : (
-            <></>
-          )} */}
           <input
             type="password"
             ref={passwordRef}
-            placeholder="Mật khẩu"
+            placeholder="Password"
             className="w-100 border-1 border-gray-400 py-2 pl-3"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button
+        <Button
           type="submit"
-          className="bg-shop_dark_blue rounded-sm py-2 text-xl text-white hover:opacity-80"
+          variant="custom"
+          disabled={!password || !email}
+          className="bg-shop_dark_blue rounded-sm py-2 text-xl text-white hover:opacity-80 focus:ring-blue-500 disabled:bg-blue-200"
         >
-          Đăng nhập
-        </button>
+          Login
+        </Button>
       </form>
       <p className="my-2 cursor-pointer text-orange-300 hover:opacity-90">
         Quên mật khẩu

@@ -6,7 +6,14 @@ import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'link';
+  variant?:
+    | 'primary'
+    | 'secondary'
+    | 'outline'
+    | 'ghost'
+    | 'danger'
+    | 'link'
+    | 'custom';
   size?: 'sm' | 'md' | 'lg';
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
@@ -37,7 +44,7 @@ export default function Button({
 
   const variants = {
     primary:
-      'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-300',
+      'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-200',
     secondary:
       'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400 disabled:bg-gray-100',
     outline:
@@ -47,6 +54,7 @@ export default function Button({
     danger:
       'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300',
     link: 'text-blue-600 underline-offset-4 hover:underline focus:ring-0 px-0',
+    custom: '',
   };
 
   const sizes = {

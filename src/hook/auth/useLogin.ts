@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 const loginAccount = async (email: string, password: string) => {
   const res = await fetch('http://localhost:3001/auth/login', {
@@ -11,9 +12,12 @@ const loginAccount = async (email: string, password: string) => {
   if (!res.ok) {
     // Đọc nội dung lỗi từ server (dự kiến là JSON)
     const errorBody = await res.json();
+    if (password.length === 0) {
+      throw new Error('Ô mật khẩu không được để trống');
+    }
 
     // Ném một Error chứa thông báo lỗi cụ thể từ server
-    // Ví dụ: errorBody.message là 'Sai email' hoặc 'Sai mật khẩu'
+    // Ví dụ: errorBody.message là 'Sai email hoặc mật khẩu'
     throw new Error(errorBody.message || 'Đăng nhập thất bại');
   }
 
@@ -30,14 +34,15 @@ export const useLogin = (passwordRef: React.RefObject<HTMLInputElement>) => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
-      alert('Đăng nhập thành công');
+      toast.success('Đăng nhập thành công');
       router.push('/');
     },
 
     // Khi có lỗi
     onError: (error) => {
       const msg = error.message || 'Lỗi không xác định';
-      alert(msg);
+      toast.error(msg);
+      //Viet dieu khien kiem tra vao day
       passwordRef?.current?.focus();
       passwordRef?.current?.select();
       console.error('Đăng nhập thất bại lỗi:', error);

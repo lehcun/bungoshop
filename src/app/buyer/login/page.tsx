@@ -1,9 +1,9 @@
 import Container from '@/components/other/Container';
-import LoginFooter from '@/components/auth/LoginFooter';
 import LoginPanel from '@/components/auth/LoginPanel';
 import LoginTop from '@/components/auth/LoginTop';
 import { banner1 } from '@/images';
 import Image from 'next/image';
+import Footer from '@/components/layout/Footer';
 
 export default async function LoginLayout() {
   return (
@@ -17,7 +17,7 @@ export default async function LoginLayout() {
           </Container>
         </section>
       </div>
-      <LoginFooter />
+      <Footer />
     </div>
   );
 }
