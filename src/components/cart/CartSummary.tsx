@@ -2,46 +2,68 @@
 
 import React, { useState } from 'react';
 import * as motion from 'motion/react-client';
+import toast from 'react-hot-toast';
 import { formatCurrency } from '@/lib/utils';
 import { CartItem } from '@/models/Product';
 import { Address } from '@/models/User';
-import CheckoutAddress from '../address/CheckoutAddress';
 import { useCart } from '@/hook/cart/useCart';
 import { useCheckout } from '@/hook/checkout/useCheckout';
-import toast from 'react-hot-toast';
+import CheckoutAddress from '../address/CheckoutAddress';
+
+export type PaymentType = 'VNPay' | 'MOMO' | 'ATM' | 'COD';
 
 const CartSummary = () => {
   const { carts } = useCart();
   //Luu address da chon
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const { createOrder } = useCheckout();
-  // const handlePayment = async () => {
-  //   try {
-  //     const res = await fetch('http://localhost:3001/orders/checkout', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({
-  //         paymentMethod: 'COD',
-  //         shippingAddressId: selectedAddress?.id,
-  //       }),
-  //       credentials: 'include',
-  //     });
-  //     if (!res.ok) throw new Error('can not POST payment');
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+
+  //Luu phuong thuc thanh toan
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState<PaymentType | null>(null);
+
+  const paymentList = [
+    {
+      name: 'VNPay' as PaymentType,
+      style: 'bg-blue-600',
+      noneSelectedStyle: 'bg-blue-200 border-blue-400 border-1',
+    },
+    {
+      name: 'MOMO' as PaymentType,
+      style: 'bg-momo',
+      noneSelectedStyle: 'bg-momo/20 border-momo/60 border-1',
+    },
+    {
+      name: 'ATM' as PaymentType,
+      style: 'bg-green-600',
+      noneSelectedStyle: 'bg-green-200 border-green-400 border-1',
+    },
+    {
+      name: 'COD' as PaymentType,
+      style: 'bg-purple-600',
+      noneSelectedStyle: 'bg-purple-200 border-purple-400 border-1',
+    },
+  ];
+
+  const handleSelectPaymentMethod = (selectPayment: PaymentType) => {
+    if (selectPayment === selectedPaymentMethod) {
+      setSelectedPaymentMethod(null);
+    } else {
+      setSelectedPaymentMethod(selectPayment);
+    }
+  };
 
   const handlePayment = () => {
-    if (selectedAddress) {
+    if (selectedPaymentMethod && selectedAddress) {
       createOrder({
-        paymentMethod: 'COD',
+        paymentMethod: selectedPaymentMethod,
         shippingAddressId: selectedAddress.id,
       });
+
+      if (selectedPaymentMethod.includes('VNPAY')) {
+      }
     } else {
-      toast('Chưa có địa chỉ hoặc là lỗi phương thức');
+      toast.error('Chưa có địa chỉ hoặc là lỗi phương thức');
     }
   };
 
@@ -95,28 +117,29 @@ const CartSummary = () => {
           <>💳 Thanh toán</>
         </motion.div>
         {/* payment method */}
-        {/* <div className="py-4 text-center text-gray-500">
+        <div className="py-4 text-center text-gray-500">
           <h3>Phương thức thanh toán:</h3>
           <div className="my-2 flex justify-center space-x-3">
-            <div className="flex h-6 w-10 cursor-pointer items-center justify-center rounded bg-blue-600 text-xs text-white hover:opacity-80">
-              VISA
-            </div>
-            <div className="flex h-6 w-10 cursor-pointer items-center justify-center rounded bg-red-600 text-xs text-white hover:opacity-80">
-              MC
-            </div>
-            <div className="flex h-6 w-10 cursor-pointer items-center justify-center rounded bg-green-600 text-xs text-white hover:opacity-80">
-              ATM
-            </div>
-            <div className="flex h-6 w-10 cursor-pointer items-center justify-center rounded bg-purple-600 text-xs text-white hover:opacity-80">
-              COD
-            </div>
+            {paymentList.map(
+              (
+                pm // pm = payment method
+              ) => (
+                <button
+                  key={pm.name}
+                  onClick={() => handleSelectPaymentMethod(pm.name)}
+                  className={`${selectedPaymentMethod === pm.name ? pm.style : pm.noneSelectedStyle} flex h-6 w-10 cursor-pointer items-center justify-center rounded text-xs text-white hover:opacity-80`}
+                >
+                  {pm.name}
+                </button>
+              )
+            )}
           </div>
-        </div> */}
+        </div>
         {/* footer */}
-        {/* <div className="my-2 rounded-xl bg-green-50 p-4 text-green-500">
+        <div className="rounded-xl bg-green-50 p-4 text-green-500">
           <p className="text-green-700">🔒 Thanh toán an toàn & bảo mật</p>
           <p className="text-sm">Thông tin của bạn được mã hóa SSL 256-bit</p>
-        </div> */}
+        </div>
       </div>
 
       <CheckoutAddress
