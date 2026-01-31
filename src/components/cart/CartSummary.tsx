@@ -9,6 +9,7 @@ import { Address } from '@/models/User';
 import { useCart } from '@/hook/cart/useCart';
 import { useCheckout } from '@/hook/checkout/useCheckout';
 import CheckoutAddress from '../address/CheckoutAddress';
+import { useCreatePayment } from '@/hook/checkout/useCreatePayment';
 
 export type PaymentType = 'VNPay' | 'MOMO' | 'ATM' | 'COD';
 
@@ -17,6 +18,7 @@ const CartSummary = () => {
   //Luu address da chon
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const { createOrder } = useCheckout();
+  const { createPayment } = useCreatePayment();
 
   //Luu phuong thuc thanh toan
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
@@ -55,12 +57,23 @@ const CartSummary = () => {
 
   const handlePayment = () => {
     if (selectedPaymentMethod && selectedAddress) {
-      createOrder({
+      const order = createOrder({
         paymentMethod: selectedPaymentMethod,
         shippingAddressId: selectedAddress.id,
       });
 
-      if (selectedPaymentMethod.includes('VNPAY')) {
+      if (selectedPaymentMethod.includes('VNPay')) {
+        //Goi hook payment
+        const url = createPayment({
+          amount: totalPrice,
+          info: `Thanh toan cho don hang ${order} `,
+        });
+
+        console.log({
+          amount: totalPrice,
+          info: 'Thanh toan cho don hang order',
+        });
+        console.log(url);
       }
     } else {
       toast.error('Chưa có địa chỉ hoặc là lỗi phương thức');
