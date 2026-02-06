@@ -41,7 +41,7 @@ export const useCheckout = () => {
   });
 
   return {
-    createOrder: mutation.mutate,
+    createOrder: mutation.mutateAsync,
     isPending: mutation.isPending,
     isError: mutation.isError,
     isSuccess: mutation.isSuccess,

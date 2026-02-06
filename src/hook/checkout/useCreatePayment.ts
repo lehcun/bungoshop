@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 export interface CreatePaymentBody {
   amount: number;
   info: string;
+  orderId: string;
 }
 
 const createPayment = async (paymentData: CreatePaymentBody) => {
@@ -27,7 +28,7 @@ export const useCreatePayment = () => {
 
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      toast.success('Thanh toan thanh cong');
+      toast.loading('Chuyển hướng sang tranh thanh toán');
       router.push(data.url);
     },
 

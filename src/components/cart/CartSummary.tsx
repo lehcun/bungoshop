@@ -55,25 +55,29 @@ const CartSummary = () => {
     }
   };
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (selectedPaymentMethod && selectedAddress) {
-      const order = createOrder({
+      //Tạm giữ hàng ở đây
+      const { order, message } = await createOrder({
         paymentMethod: selectedPaymentMethod,
         shippingAddressId: selectedAddress.id,
       });
+
+      const orderId = order?.id;
 
       if (selectedPaymentMethod.includes('VNPay')) {
         //Goi hook payment
         const url = createPayment({
           amount: totalPrice,
-          info: `Thanh toan cho don hang ${order} `,
+          info: `Thanh toan cho don hang ${order.id} `,
+          orderId,
         });
+        console.log(url);
 
         console.log({
           amount: totalPrice,
-          info: 'Thanh toan cho don hang order',
+          info: `Thanh toan cho don hang ${order} `,
         });
-        console.log(url);
       }
     } else {
       toast.error('Chưa có địa chỉ hoặc là lỗi phương thức');
