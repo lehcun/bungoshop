@@ -1,9 +1,11 @@
 const OrderSearchAndFilter = ({
   activeStatus,
+  searchTerm,
   setStatus,
   setSearchTerm,
 }: {
   activeStatus: string;
+  searchTerm: string;
   setStatus: (status: string) => void;
   setSearchTerm: (term: string) => void;
 }) => {
@@ -13,8 +15,8 @@ const OrderSearchAndFilter = ({
     { icon: '🚚', name: 'Đã giao', value: 'shipped' },
     { icon: '✅', name: 'Hoàn thành', value: 'completed' },
     { icon: '❌', name: 'Đã hủy', value: 'canceled' },
-    { icon: '', name: 'Đã thanh toán', value: 'paid' },
-    { icon: '', name: 'Đã hoàn tiền', value: 'refunded' },
+    { icon: '💳 ', name: 'Đã thanh toán', value: 'paid' },
+    { icon: '💸', name: 'Đã hoàn tiền', value: 'refunded' },
   ];
 
   return (
@@ -43,6 +45,8 @@ const OrderSearchAndFilter = ({
         <input
           type="text"
           placeholder="🔍 Tìm kiếm đơn hàng..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
           className="w-64 rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500"
         />
         <select className="rounded-lg border border-gray-300 px-4 py-2 focus:ring-2 focus:ring-blue-500">

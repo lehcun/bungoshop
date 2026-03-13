@@ -2,8 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import { formatCurrency, formatOrderDate } from '@/lib/utils';
 import { Order } from '@/models/User';
+import { useReOrder } from '@/hook/order/useReOrder';
 
 const OrderItem = ({ order }: { order: Order }) => {
+  const { reOrder } = useReOrder(order.id);
+
   const statusHandle = (status: string | null, totalPrice: number) => {
     let textCss = '';
     let bgCss = '';
@@ -99,86 +102,15 @@ const OrderItem = ({ order }: { order: Order }) => {
           <button className="rounded-sm border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
             Yêu Cầu Trả Hàng/Hoàn Tiền
           </button>
-          <button className="flex items-center rounded-sm border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
+          <button
+            onClick={() => reOrder()}
+            className="flex items-center rounded-sm border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50"
+          >
             Mua lại
           </button>
         </div>
       </div>
     </div>
-
-    // <div className="max-w-4xl mx-auto bg-white border border-gray-200 shadow-sm rounded-sm font-sans text-sm">
-
-    //   {/* --- Header: Shop Info --- */}
-    //   <div className="flex items-center justify-between p-3 border-b border-gray-100">
-    //     <div className="flex items-center space-x-3">
-    //       <span className="bg-[#ee4d2d] text-white text-[10px] px-1 rounded-sm font-semibold uppercase">
-    //         Yêu thích
-    //       </span>
-    //       <span className="font-bold text-gray-800">whose.studio</span>
-    //       <button className="flex items-center space-x-1 border border-gray-300 px-2 py-1 rounded-sm text-xs hover:bg-gray-50">
-    //          <span className="text-[#ee4d2d]">💬</span>
-    //          <span>Chat</span>
-    //       </button>
-    //       <button className="flex items-center space-x-1 border border-gray-300 px-2 py-1 rounded-sm text-xs hover:bg-gray-50">
-    //          <span>🏪 Xem Shop</span>
-    //       </button>
-    //     </div>
-    //     <div className="flex items-center text-[#26aa99] space-x-1">
-    //       <span className="text-lg">🚚</span>
-    //       <span className="border-r pr-2 border-gray-300">Giao hàng thành công</span>
-    //       <span className="pl-2 text-[#ee4d2d] font-medium">HOÀN THÀNH</span>
-    //     </div>
-    //   </div>
-
-    //   {/* --- Body: Product Info --- */}
-    //   <div className="p-4 flex items-start space-x-4 border-b border-dotted border-gray-200">
-    //     <div className="relative w-20 h-20 border border-gray-100">
-    //       <img
-    //         src="/denim-jacket.jpg" // Thay bằng link ảnh thật của bạn
-    //         alt="Denim Jacket"
-    //         className="object-cover w-full h-full"
-    //       />
-    //     </div>
-    //     <div className="flex-1">
-    //       <h3 className="text-base text-gray-800 line-clamp-1">
-    //         DENIM JACKET - Áo khoác denim xanh chỉ trắng Whose Studio
-    //       </h3>
-    //       <p className="text-gray-500 mt-1">Phân loại hàng: Đen chỉ trắng, M</p>
-    //       <p className="text-gray-800 mt-1 font-medium">x1</p>
-    //     </div>
-    //     <div className="text-right">
-    //       <span className="text-gray-400 line-through mr-2">350.000₫</span>
-    //       <span className="text-[#ee4d2d] font-semibold text-base">289.000₫</span>
-    //     </div>
-    //   </div>
-
-    //   {/* --- Footer: Pricing & Buttons --- */}
-    //   <div className="p-4 bg-[#fffefb]">
-    //     <div className="flex justify-end items-center mb-6">
-    //       <span className="text-gray-600 mr-3">Thành tiền:</span>
-    //       <span className="text-[#ee4d2d] text-2xl font-semibold">234.090₫</span>
-    //     </div>
-
-    //     <div className="flex flex-wrap items-center justify-between gap-4">
-    //       <div className="text-xs text-gray-500 max-w-xs">
-    //         Đánh giá sản phẩm trước <span className="underline cursor-pointer">03-03-2026</span>
-    //         <p className="text-[#ee4d2d] mt-1 cursor-pointer">Đánh giá ngay và nhận 300 Xu</p>
-    //       </div>
-
-    //       <div className="flex space-x-2">
-    //         <button className="bg-[#ee4d2d] text-white px-10 py-2 rounded-sm hover:bg-[#d73211] transition-colors font-medium">
-    //           Đánh Giá
-    //         </button>
-    //         <button className="border border-gray-300 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors">
-    //           Yêu Cầu Trả Hàng/Hoàn Tiền
-    //         </button>
-    //         <button className="border border-gray-300 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors flex items-center">
-    //           Thêm <span className="ml-1 text-[10px]">▼</span>
-    //         </button>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 };
 
