@@ -9,7 +9,15 @@ import { useRemoveCartItem } from '@/hook/cart/useRemoveCartItem';
 import { useIncreaseQuantity } from '@/hook/cart/useIncreaseQuantity';
 import { useDecreaseQuantity } from '@/hook/cart/useDecreaseQuantity';
 
-const CartItemDetail = ({ item }: { item: CartItem }) => {
+const CartItemDetail = ({
+  item,
+  selectedItems,
+  toggleSelect,
+}: {
+  item: CartItem;
+  selectedItems: CartItem[];
+  toggleSelect: (item: CartItem) => void;
+}) => {
   const { decreaseQty } = useDecreaseQuantity();
   const { increaseQty } = useIncreaseQuantity();
   const { removeCart } = useRemoveCartItem();
@@ -24,6 +32,12 @@ const CartItemDetail = ({ item }: { item: CartItem }) => {
   return (
     <>
       <div className="flex">
+        <input
+          type="checkbox"
+          checked={selectedItems.includes(item)}
+          onChange={() => toggleSelect(item)}
+          className="m-auto mr-4 h-5 w-5 cursor-pointer accent-blue-500"
+        />
         <div className={`relative mr-4 h-24 w-24 rounded-2xl p-2`}>
           <Image
             src={item.product.images[0].url}

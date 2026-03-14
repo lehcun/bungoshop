@@ -22,7 +22,7 @@ const AdminLoginPanel = () => {
   };
 
   return (
-    <div className="my-8 rounded-md bg-white p-8">
+    <div className="bg-shop_bg my-8 rounded-md p-8">
       <h2 className="pb-8 text-xl">Đăng nhập Admin</h2>
       <form onSubmit={handleSubmit} className="flex flex-col space-y-8">
         <input
