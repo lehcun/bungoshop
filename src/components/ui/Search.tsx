@@ -68,7 +68,7 @@ const Search = () => {
         <></>
       )}
       {isFocused && (
-        <div className="absolute top-full left-0 z-50 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-md">
+        <div className="bg-shop_bg absolute top-full left-0 z-50 mt-1 w-full rounded-lg border border-gray-200 shadow-md">
           <div>
             {/* Trending section */}
             <section className="border-b-2 border-gray-300 px-4 pb-4">

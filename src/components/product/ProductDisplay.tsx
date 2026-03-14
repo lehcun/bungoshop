@@ -60,7 +60,7 @@ const ProductDisplay = ({ productId }: { productId: string }) => {
   //Làm Loading sau
   if (loading || !product) return <div>Loading...</div>;
   return (
-    <section className="w-full bg-white">
+    <section className="bg-shop_bg w-full">
       <div className="flex space-x-8 p-4">
         {/* Image */}
         <div className="relative mr-4 h-125 w-125 rounded-2xl p-2">

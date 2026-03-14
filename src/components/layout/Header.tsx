@@ -7,7 +7,7 @@ import UserActions from '../user/UserActions';
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-50 bg-white/70 shadow-lg shadow-black/10">
+    <header className="bg-shop_bg/70 sticky top-0 z-50 shadow-lg shadow-black/10">
       <Container className="flex items-center justify-between py-5">
         <Logo />
         {/* <NavBar /> */}

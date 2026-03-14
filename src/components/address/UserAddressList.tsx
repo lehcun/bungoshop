@@ -28,7 +28,7 @@ const UserAddressModel = () => {
     setEditingAddress(null);
   };
   return (
-    <div className="bg-white shadow-sm">
+    <div className="bg-shop_bg shadow-sm">
       <section className="flex h-20 items-center justify-between border-b-1 border-gray-300 px-8 py-4">
         <h3 className="text-xl font-semibold">Địa chỉ của tôi</h3>
         <Button onClick={handleOpenForm} className="rounded-md">
@@ -86,7 +86,7 @@ const UserAddressModel = () => {
         <div
           className={`fixed inset-0 z-50 flex items-center justify-center backdrop-brightness-70`}
         >
-          <div className="w-full max-w-xl rounded-md bg-white">
+          <div className="bg-shop_bg w-full max-w-xl rounded-md">
             <section className="flex border-b-1 border-gray-400 p-4">
               <h2 className="flex-1 text-xl font-semibold">
                 {view === 'add' && 'Thêm địa chỉ mới'}

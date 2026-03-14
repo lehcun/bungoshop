@@ -2,7 +2,7 @@ import Container from '@/components/other/Container';
 
 export default async function ContactPage() {
   return (
-    <Container className="items-center space-y-8 bg-white py-28 text-xl">
+    <Container className="bg-shop_bg items-center space-y-8 py-28 text-xl">
       <div className="text-center">
         <h1 className="text-4xl font-semibold">Liên Hệ Với Chúng Tôi</h1>
         <label>Chúng tôi luôn sẵn sàng hỗ trợ bạn</label>

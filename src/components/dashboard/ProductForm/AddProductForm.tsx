@@ -68,7 +68,7 @@ const AddProductForm = () => {
   return (
     <div className="space-y-8">
       {/* Sản phẩm chính */}
-      <section className="space-y-2 rounded-2xl bg-white p-8">
+      <section className="bg-shop_bg space-y-2 rounded-2xl p-8">
         <h2 className="text-2xl font-semibold">ℹ️ Thông Tin Cơ Bản</h2>
         <div className="flex space-x-4">
           <div className="flex flex-1 flex-col gap-y-1">

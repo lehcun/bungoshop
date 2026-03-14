@@ -28,7 +28,7 @@ const NewProductImages = ({
   return (
     <>
       {/* Images */}
-      <section className="form-section rounded-2xl bg-white p-8 shadow-lg">
+      <section className="form-section bg-shop_bg rounded-2xl p-8 shadow-lg">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
@@ -72,7 +72,7 @@ const NewProductImages = ({
                   <input
                     type="url"
                     required
-                    className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                     placeholder="https://example.com/images/product.jpg"
                     value={image.url}
                     onChange={(e) => handleChange(index, 'url', e.target.value)}
@@ -85,7 +85,7 @@ const NewProductImages = ({
                   <input
                     type="alt"
                     required
-                    className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                     placeholder="Ảnh mặt trước sản phẩm"
                     value={image.alt}
                     onChange={(e) => handleChange(index, 'alt', e.target.value)}

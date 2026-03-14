@@ -3,7 +3,7 @@ import FavouriteProductList from '@/components/product/FavouriteProductList';
 
 export default async function FavoritePage() {
   return (
-    <Container className="flex flex-col space-y-8 bg-white py-8">
+    <Container className="bg-shop_bg flex flex-col space-y-8 py-8">
       <FavouriteProductList />
     </Container>
   );

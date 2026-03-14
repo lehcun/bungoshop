@@ -26,7 +26,7 @@ const UserInformation = () => {
   );
 
   return (
-    <div className="rounded-md bg-white px-10 py-2 shadow-sm">
+    <div className="bg-shop_bg rounded-md px-10 py-2 shadow-sm">
       {/* Tiêu đề */}
       <section className="mb-8 border-b border-gray-100 py-5">
         <h3 className="text-lg font-medium text-gray-900">Hồ sơ của tôi</h3>

@@ -37,7 +37,7 @@ export default function Products() {
           </Button>
         </div>
       </header>
-      <section className="grid justify-between gap-4 rounded-2xl bg-white px-6 py-4 md:grid-cols-5">
+      <section className="bg-shop_bg grid justify-between gap-4 rounded-2xl px-6 py-4 md:grid-cols-5">
         <div className="flex flex-col gap-y-1">
           <label className="text-gray-500">Tìm kiếm</label>
           <input
@@ -113,7 +113,7 @@ export default function Products() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-y-4 rounded-b-2xl bg-white p-6">
+              <div className="bg-shop_bg flex flex-col gap-y-4 rounded-b-2xl p-6">
                 <h3 className="truncate text-xl font-semibold">
                   {product.name}
                 </h3>

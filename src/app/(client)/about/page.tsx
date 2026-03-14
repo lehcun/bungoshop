@@ -2,7 +2,7 @@ import Container from '@/components/other/Container';
 
 export default async function AboutPage() {
   return (
-    <Container className="flex flex-col space-y-8 bg-white py-28 text-xl">
+    <Container className="bg-shop_bg flex flex-col space-y-8 py-28 text-xl">
       <h1 className="text-4xl font-semibold">🛒 Giới Thiệu về BungoShop</h1>
       <p>
         BungoShop là một công ty công nghệ tiên tiến, chuyên cung cấp các giải

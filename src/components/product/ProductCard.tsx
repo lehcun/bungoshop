@@ -54,7 +54,7 @@ const ProductCard = ({ product }: { product: Product }) => {
               </div>
             </Link>
 
-            <div className="flex flex-col gap-y-4 rounded-b-2xl bg-white p-6">
+            <div className="bg-shop_bg flex flex-col gap-y-4 rounded-b-2xl p-6">
               <h3 className="truncate text-xl font-semibold">{product.name}</h3>
               <div className="flex gap-x-2">
                 {product.discountPercent === 0 ? (

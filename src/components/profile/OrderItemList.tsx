@@ -23,7 +23,7 @@ const OrderItemList = ({
       {orders.map((order: Order) => (
         <section
           key={order.id}
-          className="rounded-md bg-white p-4 shadow-md shadow-black/10"
+          className="bg-shop_bg rounded-md p-4 shadow-md shadow-black/10"
         >
           <OrderItem order={order} />
         </section>

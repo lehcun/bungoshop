@@ -12,7 +12,7 @@ const LonelyCart = () => {
         duration: 0.6,
         ease: 'easeOut',
       }}
-      className="flex w-150 flex-col items-center space-y-4 overflow-hidden rounded-2xl bg-white p-8 text-center shadow-md shadow-black/10"
+      className="bg-shop_bg flex w-150 flex-col items-center space-y-4 overflow-hidden rounded-2xl p-8 text-center shadow-md shadow-black/10"
     >
       <motion.div
         animate={{

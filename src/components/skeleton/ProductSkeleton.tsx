@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 // SKELETON LOADING – GIỐNG HỆT THẬT
 export const ProductSkeleton = () => {
   return (
-    <div className="overflow-hidden rounded-xl bg-white shadow-sm">
+    <div className="bg-shop_bg overflow-hidden rounded-xl shadow-sm">
       {/* Badge skeleton */}
       <div className="absolute top-2 left-2 z-10">
         <Skeleton width={48} height={20} borderRadius={999} />

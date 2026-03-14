@@ -4,7 +4,7 @@ import Logo from '../ui/Logo';
 
 const LoginRequired = () => {
   return (
-    <div className="my-40 flex flex-col items-center space-y-2 overflow-hidden rounded-2xl bg-white p-8 text-center shadow-md shadow-black/10">
+    <div className="bg-shop_bg my-40 flex flex-col items-center space-y-2 overflow-hidden rounded-2xl p-8 text-center shadow-md shadow-black/10">
       <Logo />
       <h1>Vui lòng đăng nhập để truy cập phần này</h1>
       <Button href="/buyer/login" className="w-60 rounded-md">

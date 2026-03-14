@@ -65,7 +65,7 @@ const AddressSelectionModel = ({
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center backdrop-brightness-70`}
       >
-        <div className="w-full max-w-xl rounded-md bg-white">
+        <div className="bg-shop_bg w-full max-w-xl rounded-md">
           <section className="flex border-b-1 border-gray-400 p-4">
             <h2 className="flex-1 text-xl font-semibold">
               {view === 'list' && 'Địa chỉ của tôi'}

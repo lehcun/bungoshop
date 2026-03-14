@@ -21,7 +21,7 @@ const ShopProductsList = ({
   const { setSort } = useProductFilter();
   return (
     <div className="lg:w-3/4">
-      <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-6 shadow-lg shadow-black/10">
+      <div className="bg-shop_bg flex items-center justify-between rounded-2xl px-4 py-6 shadow-lg shadow-black/10">
         <h2 className="text-xl font-semibold">Toàn bộ sản phẩm</h2>
         <span className="flex space-x-4">
           <select

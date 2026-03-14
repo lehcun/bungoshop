@@ -1,13 +1,15 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
+  --background: #f1f7f9;
   --foreground: #171717;
 }
 
 @theme {
-  --color-shop_light_blue: #00b8ff;
-  --color-shop_dark_blue: #00719c;
+  --color-shop_bg: #f1f7f9;
+  --color-shop_light_blue: #0077b6;
+  --color-shop_dark_blue: #0a61c9;
+  --color-shop_blue_hover: #064089;
   --color-shop_btn_blue: #6495ed;
   --color-shop_banner: #fcf0e4;
   --color-shop-test: #4169e1;

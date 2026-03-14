@@ -38,7 +38,7 @@ const NewProductVariants = ({
   };
   return (
     <>
-      <section className="form-section rounded-2xl bg-white p-8 shadow-lg">
+      <section className="form-section bg-shop_bg rounded-2xl p-8 shadow-lg">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100">
@@ -86,7 +86,7 @@ const NewProductVariants = ({
                       onChange={(e) =>
                         updateVariant(index, 'sku', e.target.value)
                       }
-                      className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                      className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                       placeholder="ATB-RED-M"
                     ></input>
                   </div>
@@ -102,7 +102,7 @@ const NewProductVariants = ({
                       onChange={(e) =>
                         updateVariant(index, 'color', e.target.value)
                       }
-                      className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                      className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                       placeholder="Red"
                     ></input>
                   </div>
@@ -116,7 +116,7 @@ const NewProductVariants = ({
                       onChange={(e) =>
                         updateVariant(index, 'size', e.target.value)
                       }
-                      className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                      className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                       placeholder="M"
                     ></input>
                   </div>
@@ -129,7 +129,7 @@ const NewProductVariants = ({
                       onChange={(e) =>
                         updateVariant(index, 'price', e.target.value)
                       }
-                      className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                      className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                       placeholder="199999"
                     ></input>
                   </div>
@@ -143,7 +143,7 @@ const NewProductVariants = ({
                       onChange={(e) =>
                         updateVariant(index, 'stock', e.target.value)
                       }
-                      className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                      className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                       placeholder="20"
                     ></input>
                   </div>
@@ -156,7 +156,7 @@ const NewProductVariants = ({
                     onChange={(e) =>
                       updateVariant(index, 'urlImg', e.target.value)
                     }
-                    className="input-focus w-full rounded-lg border border-gray-300 bg-white px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
+                    className="input-focus bg-shop_bg w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-blue-500"
                     placeholder="https://example.com/variants/product.jpg"
                   ></input>
                 </div>

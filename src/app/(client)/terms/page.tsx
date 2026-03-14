@@ -2,7 +2,7 @@ import Container from '@/components/other/Container';
 
 export default async function TermPage() {
   return (
-    <Container className="flex flex-col space-y-8 bg-white py-28 text-xl">
+    <Container className="bg-shop_bg flex flex-col space-y-8 py-28 text-xl">
       <h1 className="text-4xl font-semibold">📜 Điều Khoản và Điều Kiện</h1>
       <div>
         <h2 className="text-2xl font-semibold">1. Chấp Thuận Điều Khoản</h2>

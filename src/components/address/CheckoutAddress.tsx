@@ -23,7 +23,7 @@ const CheckoutAddress = ({
     setIsOpen(!isOpen);
   };
   return (
-    <div className="rounded-2xl bg-white p-4 shadow-lg shadow-black/10">
+    <div className="bg-shop_bg rounded-2xl p-4 shadow-lg shadow-black/10">
       <div className="flex items-center">
         <h3 className="flex-1 py-2 text-lg font-semibold">Địa chỉ nhận hàng</h3>
         <button

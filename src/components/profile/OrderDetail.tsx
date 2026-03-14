@@ -6,7 +6,7 @@ const OrderDetail = () => {
   return (
     <>
       {/* Thong tin nguoi dung */}
-      {/* <section className="flex space-x-4 rounded-2xl bg-white p-4 shadow-md shadow-black/10">
+      {/* <section className="flex space-x-4 rounded-2xl bg-shop_bg p-4 shadow-md shadow-black/10">
         <div className={`relative h-18 w-18 overflow-hidden rounded-full`}>
           <Image
             src={user?.avatarUrl && defaultAvatar}

@@ -92,7 +92,7 @@ const ProductFilter = ({
   return (
     <div className="lg:w-1/4">
       <div className="top-24 lg:sticky">
-        <section className="rounded-2xl bg-white px-4 py-8 shadow-lg shadow-black/10">
+        <section className="bg-shop_bg rounded-2xl px-4 py-8 shadow-lg shadow-black/10">
           <div className="flex flex-col gap-4">
             <h2 className="text-xl font-semibold">Bộ lọc</h2>{' '}
             <section>

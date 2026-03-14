@@ -44,16 +44,16 @@ export default function Button({
 
   const variants = {
     primary:
-      'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 disabled:bg-blue-200',
+      'bg-shop_dark_blue text-white hover:bg-shop_blue_hover focus:ring-blue-500 disabled:bg-blue-200',
     secondary:
       'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-400 disabled:bg-gray-100',
     outline:
-      'border border-blue-500 text-blue-600 hover:bg-blue-50 focus:ring-blue-400 disabled:border-gray-300 disabled:text-gray-400',
+      'border border-blue-500 text-shop_dark_blue hover:bg-blue-50 focus:ring-blue-400 disabled:border-gray-300 disabled:text-gray-400',
     ghost:
       'text-gray-700 hover:bg-gray-100 focus:ring-gray-300 disabled:text-gray-400',
     danger:
       'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 disabled:bg-red-300',
-    link: 'text-blue-600 underline-offset-4 hover:underline focus:ring-0 px-0',
+    link: 'text-shop_dark_blue underline-offset-4 hover:underline focus:ring-0 px-0',
     custom: '',
   };
 

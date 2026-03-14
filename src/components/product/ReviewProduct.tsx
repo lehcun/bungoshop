@@ -18,7 +18,7 @@ const ReviewProduct = ({ productId }: { productId: string }) => {
       : 0;
 
   return (
-    <div className="w-full bg-white p-4">
+    <div className="bg-shop_bg w-full p-4">
       <h2 className="text-xl">ĐÁNH GIÁ SẢN PHẨM</h2>
       <div className="my-4 border-1 border-blue-200 bg-blue-100 px-4 py-8">
         <p>

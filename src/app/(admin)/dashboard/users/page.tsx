@@ -35,7 +35,7 @@ export default function Users() {
           </Button>
         </div>
       </header>
-      <section className="grid justify-between gap-4 rounded-2xl bg-white px-6 py-4 md:grid-cols-4">
+      <section className="bg-shop_bg grid justify-between gap-4 rounded-2xl px-6 py-4 md:grid-cols-4">
         <div className="flex flex-col gap-y-1">
           <label className="text-gray-500">Tìm kiếm</label>
           <input
@@ -67,7 +67,7 @@ export default function Users() {
           </Button>
         </div>
       </section>
-      <section className="justify-between overflow-hidden rounded-2xl bg-white shadow-xl">
+      <section className="bg-shop_bg justify-between overflow-hidden rounded-2xl shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-gray-100">
@@ -183,7 +183,7 @@ export default function Users() {
       <div
         className={`${isOpenForm ? 'flex' : 'hidden'} fixed inset-0 z-10 items-center justify-center backdrop-blur-sm`}
       >
-        <div className="w-full max-w-md rounded-2xl bg-white p-6">
+        <div className="bg-shop_bg w-full max-w-md rounded-2xl p-6">
           <h2 className="mb-4 text-xl font-semibold">Thêm Người Dùng Mới</h2>
           <div className="flex flex-col gap-y-4">
             <div className="flex flex-col gap-y-1">

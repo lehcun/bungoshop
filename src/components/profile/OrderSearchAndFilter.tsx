@@ -20,7 +20,7 @@ const OrderSearchAndFilter = ({
   ];
 
   return (
-    <section className="flex space-x-4 rounded-md bg-white p-4 shadow-md shadow-black/10">
+    <section className="bg-shop_bg flex space-x-4 rounded-md p-4 shadow-md shadow-black/10">
       <div className="flex flex-1 flex-wrap gap-2">
         {filterOptions.map((item) => {
           const isActive = activeStatus === item.value;
