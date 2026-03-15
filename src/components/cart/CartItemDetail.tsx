@@ -1,13 +1,12 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
-
 import { formatCurrency } from '@/lib/utils';
-import { CartItem } from '@/models/Product';
+import { CartItem, Variant } from '@/models/Product';
 import { useRemoveCartItem } from '@/hook/cart/useRemoveCartItem';
 import { useIncreaseQuantity } from '@/hook/cart/useIncreaseQuantity';
 import { useDecreaseQuantity } from '@/hook/cart/useDecreaseQuantity';
+import CartItemVariantSelector from './CartItemVariantSelector';
+import { useUpdateCartVariant } from '@/hook/cart/useUpdateCartVariant';
 
 const CartItemDetail = ({
   item,
@@ -18,6 +17,7 @@ const CartItemDetail = ({
   selectedItems: CartItem[];
   toggleSelect: (item: CartItem) => void;
 }) => {
+  const { updateVariant } = useUpdateCartVariant();
   const { decreaseQty } = useDecreaseQuantity();
   const { increaseQty } = useIncreaseQuantity();
   const { removeCart } = useRemoveCartItem();
@@ -26,6 +26,13 @@ const CartItemDetail = ({
       removeCart(id);
     } else {
       decreaseQty({ cartItemId: item.id, decrementAmount: -1 });
+    }
+  };
+
+  // Bắt sự kiện khi người dùng bấm "Xác nhận" ở Popup
+  const handleUpdateVariant = (newVariant: Variant) => {
+    if (item.variant?.id !== newVariant.id) {
+      updateVariant({ cartItemId: item.id, newVariantId: newVariant.id });
     }
   };
 
@@ -51,9 +58,10 @@ const CartItemDetail = ({
         <div className="flex flex-col justify-between">
           <div>
             <h3 className="text-lg font-semibold">{item.product.name}</h3>
-            <div className="text-gray-500">
-              Size: {item.variant?.size} | {item.variant?.color}
-            </div>
+            <CartItemVariantSelector
+              currentVariant={item.variant}
+              onConfirm={handleUpdateVariant}
+            />
           </div>
           <div className="flex gap-x-2">
             <span className="text-shop_dark_blue text-xl font-bold">
