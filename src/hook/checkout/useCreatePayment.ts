@@ -15,7 +15,10 @@ const createPayment = async (paymentData: CreatePaymentBody) => {
     body: JSON.stringify(paymentData),
     credentials: 'include',
   });
-  if (!res.ok) throw new Error('Failed fetch create new product');
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => ({}));
+    throw new Error(errorData.message || 'Lỗi khi tạo phiên thanh toán');
+  }
   return res.json();
 };
 
@@ -33,8 +36,8 @@ export const useCreatePayment = () => {
     },
 
     onError: (error) => {
-      console.log('err mess: ', error);
-      alert(error);
+      console.error('Payment Error: ', error);
+      toast.error(error.message || 'Đã có lỗi xảy ra khi thanh toán');
     },
   });
 

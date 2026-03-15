@@ -6,15 +6,13 @@ import toast from 'react-hot-toast';
 import { formatCurrency } from '@/lib/utils';
 import { CartItem } from '@/models/Product';
 import { Address } from '@/models/User';
-import { useCart } from '@/hook/cart/useCart';
 import { useCheckout } from '@/hook/checkout/useCheckout';
 import CheckoutAddress from '../address/CheckoutAddress';
 import { useCreatePayment } from '@/hook/checkout/useCreatePayment';
 
 export type PaymentType = 'VNPay' | 'MOMO' | 'ATM' | 'COD';
 
-const CartSummary = () => {
-  const { carts } = useCart();
+const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
   //Luu address da chon
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const { createOrder } = useCheckout();
@@ -96,7 +94,7 @@ const CartSummary = () => {
 
   return (
     <div className="space-y-8 lg:w-1/3">
-      <div className="rounded-2xl bg-white p-4 shadow-lg shadow-black/10">
+      <div className="bg-shop_bg rounded-2xl p-4 shadow-lg shadow-black/10">
         <h3 className="py-2 text-xl font-semibold">Tóm tắt đơn hàng</h3>
         {/* Price calculator */}
         <div>
@@ -108,7 +106,7 @@ const CartSummary = () => {
             <div className="my-1 flex justify-between">
               <span>Giảm giá:</span>
               <span className="text-red-600">
-                -${formatCurrency(totalDiscount)}
+                -{formatCurrency(totalDiscount)}đ
               </span>
             </div>
             <div className="my-1 flex justify-between">
