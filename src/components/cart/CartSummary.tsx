@@ -56,25 +56,21 @@ const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
   const handlePayment = async () => {
     if (selectedPaymentMethod && selectedAddress) {
       //Tạm giữ hàng ở đây
-      const { order, message } = await createOrder({
+      const { order } = await createOrder({
         paymentMethod: selectedPaymentMethod,
         shippingAddressId: selectedAddress.id,
+        cartItemIds: selectedItems.map((item) => item.id),
       });
 
-      const orderId = order?.id;
+      if (!order?.id) throw new Error('Không tạo được đơn hàng');
 
-      if (selectedPaymentMethod.includes('VNPay')) {
+      if (
+        selectedPaymentMethod.includes('VNPay') ||
+        selectedPaymentMethod === 'MOMO'
+      ) {
         //Goi hook payment
-        const url = createPayment({
-          amount: totalPrice,
-          info: `Thanh toan cho don hang ${order.id} `,
-          orderId,
-        });
-        console.log(url);
-
-        console.log({
-          amount: totalPrice,
-          info: `Thanh toan cho don hang ${order} `,
+        await createPayment({
+          orderId: order?.id,
         });
       }
     } else {
@@ -82,12 +78,12 @@ const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
     }
   };
 
-  const totalDiscount = carts?.reduce(
+  const totalDiscount = selectedItems?.reduce(
     (sum: number, item: CartItem) =>
       sum + (item.product.price - item.priceAtAdd) * item.quantity,
     0
   );
-  const totalPrice = carts?.reduce(
+  const totalPrice = selectedItems?.reduce(
     (sum: number, item: CartItem) => sum + item.product.price * item.quantity,
     0
   );

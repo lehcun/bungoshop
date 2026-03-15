@@ -1,10 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 export interface CreatePaymentBody {
-  amount: number;
-  info: string;
   orderId: string;
 }
 
@@ -23,7 +20,6 @@ const createPayment = async (paymentData: CreatePaymentBody) => {
 };
 
 export const useCreatePayment = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -31,8 +27,13 @@ export const useCreatePayment = () => {
 
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['orders'] });
-      toast.loading('Chuyển hướng sang tranh thanh toán');
-      router.push(data.url);
+      toast.loading('Chuyển hướng sang tranh thanh toán...');
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        toast.error('Không tìm thấy đường dẫn thanh toán!');
+      }
     },
 
     onError: (error) => {

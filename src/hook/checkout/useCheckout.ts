@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 interface CheckoutPayload {
   paymentMethod: string;
   shippingAddressId: string;
+  cartItemIds: string[];
 }
 
 export const useCheckout = () => {
@@ -13,6 +14,7 @@ export const useCheckout = () => {
     mutationFn: async ({
       paymentMethod,
       shippingAddressId,
+      cartItemIds,
     }: CheckoutPayload) => {
       const res = await fetch('http://localhost:3001/orders/checkout', {
         method: 'POST',
@@ -22,6 +24,7 @@ export const useCheckout = () => {
         body: JSON.stringify({
           paymentMethod,
           shippingAddressId,
+          cartItemIds,
         }),
         credentials: 'include',
       });
@@ -31,7 +34,7 @@ export const useCheckout = () => {
     onSuccess: (newOrder) => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
       queryClient.invalidateQueries({ queryKey: ['order'] });
-      toast.success(`Thanh toán thành công đơn hàng ${newOrder.order.id}`);
+      toast.success(`Tạo thành công đơn hàng ${newOrder.order.id}`);
     },
 
     onError: (error) => {
