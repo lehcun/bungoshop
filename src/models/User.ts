@@ -80,6 +80,8 @@ export interface Address {
 }
 
 export interface FormattedOrderItem {
+  productId: string;
+  variantId: string;
   productName: string;
   varient: { size: string; color: string } | null;
   price: number;

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { formatCurrency, formatOrderDate } from '@/lib/utils';
 import { Order } from '@/models/User';
 import { useReOrder } from '@/hook/order/useReOrder';
+import ReviewModal from '../product/ReviewModal';
 
 const OrderItem = ({ order }: { order: Order }) => {
   const { reOrder } = useReOrder(order.id);
@@ -20,7 +21,7 @@ const OrderItem = ({ order }: { order: Order }) => {
       textCss = 'text-blue-700';
       bgCss = 'bg-blue-200 ';
     } else if (status === 'SHIPPED') {
-      title = 'Đang giao';
+      title = 'Đã giao';
       textCss = 'text-orange-700';
       bgCss = 'bg-orange-200 ';
     } else if (status === 'COMPLETED') {
@@ -49,6 +50,8 @@ const OrderItem = ({ order }: { order: Order }) => {
       </>
     );
   };
+
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   return (
     <div className="px-4">
@@ -96,7 +99,10 @@ const OrderItem = ({ order }: { order: Order }) => {
       </div>
       <div className="space-x-4 py-2">
         <div className="flex justify-end space-x-2">
-          <button className="bg-shop_btn_blue hover:bg hover:bg-shop_dark_blue rounded-sm px-10 py-2 font-medium text-white transition-colors">
+          <button
+            onClick={() => setIsReviewModalOpen(true)}
+            className={`bg-shop_btn_blue hover:bg hover:bg-shop_dark_blue rounded-sm px-10 py-2 font-medium text-white transition-colors ${order.status === 'SHIPPED' ? 'block' : 'hidden'}`}
+          >
             Đánh Giá
           </button>
           <button className="rounded-sm border border-gray-300 px-4 py-2 transition-colors hover:bg-gray-50">
@@ -110,6 +116,12 @@ const OrderItem = ({ order }: { order: Order }) => {
           </button>
         </div>
       </div>
+
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        order={order}
+      />
     </div>
   );
 };
