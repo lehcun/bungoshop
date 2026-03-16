@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Brand } from '@/models/Brand';
 import { Category } from '@/models/Product';
-import { useCategories } from '@/hook/useCategories';
 import { SortType, useProductFilter } from '@/hook/store/useProductFilter';
 import { useBrands } from '@/hook/useBrands';
 import { useSearchParams } from 'next/navigation';
+import { useCategories } from '@/hook/useCategories';
 
 const ProductFilter = ({
   filters,

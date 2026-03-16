@@ -4,10 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { FacebookIcon, GithubIcon, YoutubeIcon } from 'lucide-react';
 import { Category } from '@/models/Product';
-import { useCategories } from '@/hook/useCategories';
 import Container from '../other/Container';
 import Logo from '../ui/Logo';
 import { footerContacts } from '@/constants/data';
+import { useCategories } from '@/hook/useCategories';
 
 const Footer = () => {
   const { categories } = useCategories();
