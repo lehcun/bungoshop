@@ -11,7 +11,7 @@ export interface AddressFormData {
 }
 
 const createAddressApi = async (data: AddressFormData) => {
-  const res = await fetch('http://localhost:3001/users/address', {
+  const res = await fetch(`http://localhost:3001/users/address`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),

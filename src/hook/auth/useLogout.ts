@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const logout = async () => {
-  const res = await fetch('http://localhost:3001/auth/logout', {
+  const res = await fetch(`http://localhost:3001/auth/logout`, {
     method: 'GET',
     credentials: 'include',
   });

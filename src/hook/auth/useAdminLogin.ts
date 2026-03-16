@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const loginAccount = async (email: string, password: string) => {
-  const res = await fetch('http://localhost:3001/auth/admin/login', {
+  const res = await fetch(`http://localhost:3001/auth/admin/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),

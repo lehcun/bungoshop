@@ -15,7 +15,7 @@ export default function Users() {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/users')
+    fetch(`http://localhost:3001/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, [users]);

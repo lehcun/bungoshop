@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const fetchUsersByMonth = async () => {
-  const res = await fetch('http://localhost:3001/users/month');
+  const res = await fetch(`http://localhost:3001/users/month`);
   if (!res.ok) throw new Error('Failed fetch UserMonthly');
   return res.json();
 };

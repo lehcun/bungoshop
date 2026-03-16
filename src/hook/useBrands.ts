@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const fetchBrands = async () => {
-  const res = await fetch('http://localhost:3001/brands');
+  const res = await fetch(`http://localhost:3001/brands`);
   if (!res.ok) throw new Error('Failed fetch brands');
   return res.json();
 };

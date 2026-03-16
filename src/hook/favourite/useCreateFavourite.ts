@@ -6,7 +6,7 @@ export const useCreateFavourite = () => {
 
   const mutation = useMutation({
     mutationFn: async (productId: string) => {
-      const res = await fetch('http://localhost:3001/favourite', {
+      const res = await fetch(`http://localhost:3001/favourite`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

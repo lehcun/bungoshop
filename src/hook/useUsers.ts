@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const fetchUsers = async () => {
-  const res = await fetch('http://localhost:3001/users');
+  const res = await fetch(`${process.env.API_URL}/users`);
   if (!res.ok) throw new Error('Failed fetch All User');
   return res.json();
 };

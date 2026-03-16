@@ -16,7 +16,7 @@ export const useCheckout = () => {
       shippingAddressId,
       cartItemIds,
     }: CheckoutPayload) => {
-      const res = await fetch('http://localhost:3001/orders/checkout', {
+      const res = await fetch(`http://localhost:3001/orders/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

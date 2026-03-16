@@ -4,7 +4,7 @@ export const useAddresses = () => {
   const query = useQuery({
     queryKey: ['addresses', 'all'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:3001/users/address', {
+      const res = await fetch(`http://localhost:3001/users/address`, {
         credentials: 'include',
       });
       if (!res.ok) throw new Error('Failed to fetch user address');

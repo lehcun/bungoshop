@@ -4,7 +4,7 @@ export const useDefaultAddress = () => {
   const query = useQuery({
     queryKey: ['addresses', 'default'],
     queryFn: async () => {
-      const res = await fetch('http://localhost:3001/users/address/default', {
+      const res = await fetch(`http://localhost:3001/users/address/default`, {
         credentials: 'include',
       });
       if (!res.ok) throw new Error('Failed to fetch user address');

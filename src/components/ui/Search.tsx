@@ -41,7 +41,7 @@ const Search = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/categories/trend')
+    fetch(`http://localhost:3001/categories/trend`)
       .then((res) => res.json())
       .then((data) => setTrendingCategories(data));
   }, []);
