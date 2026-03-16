@@ -5,7 +5,7 @@ const addCart = async (
   variantId: string,
   quantity: number
 ) => {
-  const res = await fetch(`http://localhost:3001/cart/add`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cart/add`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

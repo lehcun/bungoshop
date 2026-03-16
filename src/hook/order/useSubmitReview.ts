@@ -15,14 +15,17 @@ const submitReviewApi = async ({
   payload: ReviewPayload[];
   orderId: string;
 }) => {
-  const res = await fetch(`http://localhost:3001/reviews?id=${orderId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/reviews?id=${orderId}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      credentials: 'include',
+    }
+  );
 
   if (!res.ok) {
     const errorData = await res.json();

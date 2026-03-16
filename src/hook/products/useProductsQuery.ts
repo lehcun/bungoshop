@@ -29,7 +29,7 @@ const fetchProductsFn = async ({ filters, page }: fetchParam) => {
   params.append('limit', '12');
 
   const res = await fetch(
-    `http://localhost:3001/products?${params.toString()}`
+    `${process.env.NEXT_PUBLIC_API_URL}/products?${params.toString()}`
   );
   if (!res.ok) throw new Error('Loi fetch bang param');
   return res.json();

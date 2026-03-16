@@ -15,7 +15,7 @@ export default function Users() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3001/users`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, [users]);

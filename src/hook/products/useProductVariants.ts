@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 const fetchProductVariants = async (productId: string) => {
   const res = await fetch(
-    `http://localhost:3001/products/${productId}/variants`
+    `${process.env.NEXT_PUBLIC_API_URL}/products/${productId}/variants`
   );
 
   if (!res.ok) throw new Error('Không thể tải danh sách phân loại');

@@ -16,18 +16,21 @@ export const useCheckout = () => {
       shippingAddressId,
       cartItemIds,
     }: CheckoutPayload) => {
-      const res = await fetch(`http://localhost:3001/orders/checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          paymentMethod,
-          shippingAddressId,
-          cartItemIds,
-        }),
-        credentials: 'include',
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/orders/checkout`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            paymentMethod,
+            shippingAddressId,
+            cartItemIds,
+          }),
+          credentials: 'include',
+        }
+      );
       return res.json();
     },
 

@@ -29,7 +29,9 @@ const Search = () => {
   useEffect(() => {
     const delayBounce = setTimeout(() => {
       if (searchParams.trim()) {
-        fetch(`http://localhost:3001/products/search?keyword=${searchParams}`)
+        fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/products/search?keyword=${searchParams}`
+        )
           .then((res) => res.json())
           .then((data) => setResults(data));
       } else {
@@ -41,7 +43,7 @@ const Search = () => {
   }, [searchParams]);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/categories/trend`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/trend`)
       .then((res) => res.json())
       .then((data) => setTrendingCategories(data));
   }, []);

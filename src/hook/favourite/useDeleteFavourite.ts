@@ -3,9 +3,12 @@ import toast from 'react-hot-toast';
 
 // Hàm gọi API DELETE (có thể tách riêng nếu thích)
 const deleteFavourite = async (favouriteId: string) => {
-  const res = await fetch(`http://localhost:3001/favourite/${favouriteId}`, {
-    method: 'DELETE',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/favourite/${favouriteId}`,
+    {
+      method: 'DELETE',
+    }
+  );
   return res.json(); // thường server trả về { success: true } hoặc product đã xoá
 };
 

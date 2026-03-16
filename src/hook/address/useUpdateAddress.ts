@@ -6,12 +6,15 @@ const updateAddressApi = async ({
   id,
   ...data
 }: { id: string } & Partial<AddressFormData & { isDefault: boolean }>) => {
-  const res = await fetch(`http://localhost:3001/users/address/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/users/address/${id}`,
+    {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      credentials: 'include',
+    }
+  );
   if (!res.ok) throw new Error('Không thể cập nhật địa chỉ');
 
   //Vì PUT trả về 204 nên đoạn này để bắt sự kiện trả về onSuccess ở dưới

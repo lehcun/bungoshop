@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const fetchReOrder = async (orderId: string) => {
-  const res = await fetch(`http://localhost:3001/orders/reOrder`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/reOrder`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

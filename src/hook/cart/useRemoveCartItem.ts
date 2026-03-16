@@ -1,10 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const removeCartItem = async (cartItemId: string) => {
-  const res = await fetch(`http://localhost:3001/cart/${cartItemId}`, {
-    method: 'DELETE',
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/cart/${cartItemId}`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+    }
+  );
 
   if (!res.ok) throw new Error('Xoa san pham trong gio hang that bai');
   return res.json();

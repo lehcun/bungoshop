@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 const fetchOrderGrowth = async () => {
-  const res = await fetch(`http://localhost:3001/orders/month`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/month`);
   if (!res.ok) throw new Error('Failed to fetch product');
   return res.json();
 };

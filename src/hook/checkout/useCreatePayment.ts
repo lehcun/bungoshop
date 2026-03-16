@@ -6,7 +6,7 @@ export interface CreatePaymentBody {
 }
 
 const createPayment = async (paymentData: CreatePaymentBody) => {
-  const res = await fetch(`http://localhost:3001/payment/create`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/payment/create`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(paymentData),

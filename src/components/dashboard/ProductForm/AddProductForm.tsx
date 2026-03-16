@@ -1,12 +1,12 @@
 'use client';
 
-import { useCategories } from '@/hook/useCategories';
-import { Category } from '@/models/Product';
 import React, { useState } from 'react';
 import NewProductImages from './NewProductImages';
 import NewVariants from './NewProductVariants';
 import Button from '@/components/ui/Button';
 import { useCreateProduct } from '@/hook/products/useCreateProduct';
+import { Category } from '@/models/Product';
+import { useCategories } from '@/hook/useCategories';
 
 export interface Image {
   url: string;

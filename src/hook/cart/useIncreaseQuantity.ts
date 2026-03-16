@@ -4,17 +4,20 @@ const increaseQuantity = async (
   cartItemId: string,
   incrementAmount: number
 ) => {
-  const res = await fetch(`http://localhost:3001/cart/${cartItemId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      id: cartItemId,
-      quantityChange: incrementAmount,
-    }),
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/cart/${cartItemId}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: cartItemId,
+        quantityChange: incrementAmount,
+      }),
+      credentials: 'include',
+    }
+  );
   if (!res.ok) throw new Error('Tang san pham trong giỏ hành thất bại');
   return res.json();
 };

@@ -4,7 +4,7 @@ export const useCategories = () => {
   const query = useQuery({
     queryKey: ['categories'],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:3001/categories`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
       if (!res.ok) throw new Error('Failed to fetch user history');
       return res.json();
     },

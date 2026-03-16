@@ -13,7 +13,7 @@ export default function Products() {
   const { deleteProduct } = useDeleteProduct();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/products`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);

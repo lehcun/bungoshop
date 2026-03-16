@@ -16,7 +16,7 @@ export const getUserOrder = async (status?: string, search?: string) => {
 
   // Nối params vào URL (nếu params rỗng thì queryString sẽ là chuỗi rỗng)
   const queryString = params.toString();
-  const url = `http://localhost:3001/orders/user/history${queryString ? `?${queryString}` : ''}`;
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/orders/user/history${queryString ? `?${queryString}` : ''}`;
 
   const res = await fetch(url, {
     cache: 'no-store', // Nằm ngoài headers nhé

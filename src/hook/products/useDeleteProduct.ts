@@ -2,10 +2,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 
 const deleteProduct = async (productId: string) => {
-  const res = await fetch(`http://localhost:3001/product/${productId}`, {
-    method: 'DELETE',
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/product/${productId}`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+    }
+  );
   return res.json();
 };
 

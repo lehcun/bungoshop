@@ -7,12 +7,15 @@ export interface UpdateCartVariantPayload {
 }
 
 const updateCartVariantApi = async (payload: UpdateCartVariantPayload) => {
-  const res = await fetch(`http://localhost:3001/cart/update-variant`, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-    credentials: 'include',
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/cart/update-variant`,
+    {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      credentials: 'include',
+    }
+  );
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
