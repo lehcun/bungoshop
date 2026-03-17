@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-const signUp = async (name: string, email: string, password: string) => {
+const signUpApi = async (name: string, email: string, password: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -10,15 +10,13 @@ const signUp = async (name: string, email: string, password: string) => {
       email,
       password,
     }),
-    credentials: 'include',
   });
+  if (!res.ok)
+    throw new Error((await res.json()).message || 'Đăng ký thất bại');
   return res.json();
 };
 
-export const useSignUp = () => {
-  const router = useRouter();
-
-  const queryClient = useQueryClient();
+export const useSignUp = (onSuccessCallback: () => void) => {
   const mutation = useMutation({
     mutationFn: ({
       name,
@@ -28,26 +26,50 @@ export const useSignUp = () => {
       name: string;
       email: string;
       password: string;
-    }) => signUp(name, email, password),
-
+    }) => signUpApi(name, email, password),
     onSuccess: (data) => {
-      // Nếu backend tự động login (set cookie + trả user), thì:
-      queryClient.setQueryData(['user'], data.user || data);
+      alert(data.message); // Hiển thị: "Vui lòng kiểm tra email..."
+      onSuccessCallback(); // Gọi hàm đổi UI sang Bước 2
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+  });
+  return { signUp: mutation.mutate, isPending: mutation.isPending };
+};
+
+// --- BƯỚC 2: GỌI API XÁC NHẬN OTP & NHẬN COOKIE ---
+const verifyOtpApi = async (email: string, code: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/verify-register`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, code }),
+      credentials: 'include',
+    }
+  );
+  if (!res.ok) throw new Error((await res.json()).message || 'Mã xác nhận sai');
+  return res.json();
+};
+
+export const useVerifyRegister = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ email, code }: { email: string; code: string }) =>
+      verifyOtpApi(email, code),
+    onSuccess: (data) => {
+      alert('Đăng ký và xác thực thành công!');
+      // Lúc này backend đã trả về user, ta mới setQueryData và chuyển trang
+      queryClient.setQueryData(['user'], data.user);
       router.push('/');
     },
-
     onError: (error) => {
-      const msg = error.message || 'Đăng ký thất bại';
-      alert(msg);
-      console.error('Đăng ký lỗi:', error);
+      alert(error.message);
     },
   });
 
-  return {
-    signUp: mutation.mutate,
-    isPending: mutation.isPending,
-    isError: mutation.isError,
-    isSuccess: mutation.isSuccess,
-    error: mutation.error,
-  };
+  return { verify: mutation.mutate, isPending: mutation.isPending };
 };
