@@ -10,6 +10,8 @@ export const useCurrentUser = () => {
       if (!res.ok) throw new Error('Failed to fetch Current user ');
       return res.json();
     },
+    retry: false, // không cố gọi lại
+    refetchOnWindowFocus: false, // Chuyển tab qua lại không tự gọi API nữa
   });
 
   return {

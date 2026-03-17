@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { HeartIcon, ShoppingCartIcon } from 'lucide-react';
 
 import Login from '../auth/Login';
@@ -14,27 +14,15 @@ import { useCart } from '@/hook/cart/useCart';
 const UserActions = () => {
   const { user } = useCurrentUser();
   const { logout } = useLogout();
-  const { carts } = useCart();
-  const { favourites } = useFavourite();
+  const { carts } = useCart(!!user);
+  const { favourites } = useFavourite(!!user);
 
-  const [cartFavoriteCount, setFavoriteCount] = useState<number | undefined>(
-    favourites.length
-  );
-  const [cartItemCount, setCartItemCount] = useState<number | null>(
-    carts?.length
-  );
+  const cartItemCount = carts?.length || 0;
+  const cartFavoriteCount = favourites?.length || 0;
 
   const handleLogout = () => {
     logout();
   };
-
-  useEffect(() => {
-    setCartItemCount(carts?.length);
-  }, [carts?.length]);
-
-  useEffect(() => {
-    setFavoriteCount(favourites.length);
-  }, [favourites]);
 
   return (
     <>

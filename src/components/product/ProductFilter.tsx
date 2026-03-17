@@ -57,7 +57,7 @@ const ProductFilter = ({
       setFilters(next);
       setPage(1);
     }
-  }, [searchParams]); // 🔥 chỉ phụ thuộc URL
+  }, [searchParams, setFilters, setPage]);
 
   //Toggle danh muc
   const toggleCategory = (name: string) => {

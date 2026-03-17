@@ -7,15 +7,15 @@ import { Favourite } from '@/models/Product';
 import { formatCurrency } from '@/lib/utils';
 import Image from 'next/image';
 import { defaultAvatar } from '@/images';
-import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 import { useFavourite } from '@/hook/favourite/UseFavourite';
 import { useDeleteFavourite } from '@/hook/favourite/useDeleteFavourite';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
 
 const FavouriteProductList = () => {
   const { user } = useCurrentUser();
-  const { favourites, loading } = useFavourite();
+  const { favourites, loading } = useFavourite(!!user);
   const { deleteFavourite } = useDeleteFavourite();
-  if (!user || loading || !favourites) {
+  if (loading || !favourites) {
     return <p>...Loading</p>;
   } else if (favourites.length === 0) {
     return (

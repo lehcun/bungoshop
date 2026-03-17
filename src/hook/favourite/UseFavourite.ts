@@ -12,10 +12,13 @@ export const getUserFavourites = async () => {
   return res.json();
 };
 
-export function useFavourite() {
+export function useFavourite(isLoggedIn: boolean) {
   const query = useQuery({
     queryKey: ['favourites'],
-    queryFn: () => getUserFavourites(),
+    queryFn: getUserFavourites,
+    enabled: isLoggedIn,
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   return {

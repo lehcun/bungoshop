@@ -12,20 +12,26 @@ interface CustomJWTPayload extends JWTPayload {
 }
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-
   const token = req.cookies.get('access_token')?.value; // Lấy token từ cookie
   const SECRET_KEY = process.env.SECRET_KEY;
 
-  let verifiedRole: string | undefined;
-  if (token) {
-    const secret = new TextEncoder().encode(SECRET_KEY); // Mã hóa SECRET_KEY
-    let decodedPayload: CustomJWTPayload | null = null;
+  //Kiểm tra biến môi trường
+  if (!SECRET_KEY) {
+    console.error(
+      'CRITICAL: Thiếu biến môi trường SECRET_KEY trong middleware'
+    );
+    return NextResponse.next(); // Tránh crash toàn bộ web, để backend tự lo khâu Auth
+  }
 
-    //Xác minh và trích xuất Role từ Token
+  let verifiedRole: string | undefined;
+
+  //Xác thực nếu có tokens
+  if (token) {
     try {
+      const secret = new TextEncoder().encode(SECRET_KEY);
       const { payload } = await jwtVerify(token, secret);
-      decodedPayload = payload as CustomJWTPayload;
-      verifiedRole = decodedPayload.role; // <-- Lấy role đã được xác minh!
+      const decodedPayload = payload as CustomJWTPayload;
+      verifiedRole = decodedPayload.role;
     } catch (error) {
       // Bắt lỗi Token hết hạn (JWTExpired) hoặc không hợp lệ
       console.error(
@@ -33,15 +39,15 @@ export async function middleware(req: NextRequest) {
         error
       );
 
-      // Xóa cookie token đã hết hạn (tùy chọn)
-      const response = NextResponse.redirect(new URL('/login', req.url));
-      response.cookies.delete('access_token');
-
-      // Chuyển hướng về trang đăng nhập tùy theo khu vực đang truy cập
+      // FIX LỖI XÓA COOKIE: Chỉ tạo 1 response duy nhất
       const redirectPath = adminPaths.some((p) => pathname.startsWith(p))
         ? '/admin/login'
         : '/buyer/login';
-      return NextResponse.redirect(new URL(redirectPath, req.url));
+
+      const response = NextResponse.redirect(new URL(redirectPath, req.url));
+      response.cookies.delete('access_token'); // Xóa sạch token cũ
+
+      return response;
     }
   }
 
@@ -56,15 +62,13 @@ export async function middleware(req: NextRequest) {
 
   // BUYER PATH
   if (buyerPaths.some((path) => pathname.startsWith(path))) {
+    // Với buyer, chỉ cần có token hợp lệ (đã được verify ở trên) là vào được
     if (!token) {
-      const url = req.nextUrl.clone();
-      url.pathname = '/buyer/login';
-      return NextResponse.redirect(url);
+      return NextResponse.redirect(new URL('/buyer/login', req.url));
     }
   }
 
-  // CLIENT PATH
-  // PUBLIC → không kiểm tra
+  // PUBLIC PATH (Các route không nằm trong matcher sẽ tự động pass qua đây)
   return NextResponse.next();
 }
 

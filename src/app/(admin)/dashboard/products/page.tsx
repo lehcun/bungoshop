@@ -1,22 +1,14 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
-import { Product } from '@/models/Product';
 import Image from 'next/image';
-import { formatCurrency } from '@/lib/utils';
 import { noImage } from '@/images';
+import { formatCurrency } from '@/lib/utils';
 import { useDeleteProduct } from '@/hook/products/useDeleteProduct';
+import { useAllProduct } from '@/hook/products/useAllProduct';
+import { Product } from '@/models/Product';
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const { products } = useAllProduct();
   const { deleteProduct } = useDeleteProduct();
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/products`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data));
-  }, []);
 
   return (
     <div className="flex flex-col space-y-8 px-8 py-4">
@@ -81,7 +73,7 @@ export default function Products() {
 
       {/* Product List */}
       <section className="grid grid-cols-4 gap-8">
-        {products.map((product) => (
+        {products.map((product: Product) => (
           <div key={product.id}>
             <div className="rounded-2xl shadow-md shadow-black/10 hover:shadow-lg">
               <div className="relative cursor-pointer">
