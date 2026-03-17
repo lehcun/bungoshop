@@ -12,7 +12,7 @@ import { CartItem } from '@/models/Product';
 
 const CartModel = () => {
   const { user } = useCurrentUser();
-  const { carts } = useCart();
+  const { carts } = useCart(!!user);
   const [selectedItems, setSelectedItems] = useState<CartItem[]>([]);
 
   const toggleSelect = (itemToggle: CartItem) => {
