@@ -171,9 +171,7 @@ const Search = () => {
               </section>
             )}
             <section className="rounded-b-lg bg-gray-100 p-4 text-sm text-gray-600">
-              <p>
-                💡 Tip: Use quotes for exact matches • ⌨️ Press Enter to search
-              </p>
+              <p>💡 Tip: Use quotes for exact matches ⌨️</p>
             </section>
           </div>
         </div>

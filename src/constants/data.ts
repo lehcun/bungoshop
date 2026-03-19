@@ -81,7 +81,7 @@ export const footerContacts = [
     icon: '📧',
   },
   {
-    title: '8:00 - 22:00 (Hàng ngày)',
+    title: '24/7',
     icon: '🕒',
   },
 ];

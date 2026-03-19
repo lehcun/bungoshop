@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 export default async function LoginLayout() {
   return (
     <div>
-      <LoginTop isLogin={'Đăng nhập'} />
+      <LoginTop title={'Đăng nhập'} />
       <div>
         <section className="bg-shop_banner">
           <Container className="flex justify-center space-x-8">

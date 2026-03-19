@@ -56,7 +56,7 @@ const LoginPanel = () => {
       </form>
       <Link
         href={'/buyer/forgot-password'}
-        className="my-4 block cursor-pointer text-right text-sm text-orange-500 transition hover:text-orange-600 hover:underline"
+        className="my-4 block cursor-pointer text-right text-sm text-blue-500 transition hover:text-blue-600 hover:underline"
       >
         Quên mật khẩu?
       </Link>
