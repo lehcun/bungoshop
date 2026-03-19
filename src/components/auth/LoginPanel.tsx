@@ -54,9 +54,12 @@ const LoginPanel = () => {
           Login
         </Button>
       </form>
-      <p className="my-2 cursor-pointer text-orange-300 hover:opacity-90">
-        Quên mật khẩu
-      </p>
+      <Link
+        href={'/buyer/forgot-password'}
+        className="my-4 block cursor-pointer text-right text-sm text-orange-500 transition hover:text-orange-600 hover:underline"
+      >
+        Quên mật khẩu?
+      </Link>
       <div className="my-8 flex justify-between border-t-1 border-gray-300 py-6">
         <Link
           href={'/login'}

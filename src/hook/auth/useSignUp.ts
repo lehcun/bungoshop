@@ -73,3 +73,32 @@ export const useVerifyRegister = () => {
 
   return { verify: mutation.mutate, isPending: mutation.isPending };
 };
+
+// --- API GỬI LẠI MÃ OTP ---
+const resendOtpApi = async (email: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/auth/resend-otp`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    }
+  );
+  if (!res.ok)
+    throw new Error((await res.json()).message || 'Không thể gửi lại mã');
+  return res.json();
+};
+
+export const useResendOtp = () => {
+  const mutation = useMutation({
+    mutationFn: ({ email }: { email: string }) => resendOtpApi(email),
+    onSuccess: (data) => {
+      alert(data.message);
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+  });
+
+  return { resend: mutation.mutate, isPending: mutation.isPending };
+};

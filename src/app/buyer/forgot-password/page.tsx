@@ -1,23 +1,20 @@
 import Container from '@/components/other/Container';
-import LoginPanel from '@/components/auth/LoginPanel';
 import LoginTop from '@/components/auth/LoginTop';
-import { banner1 } from '@/images';
-import Image from 'next/image';
 import Footer from '@/components/layout/Footer';
+import ForgotPasswordPanel from '@/components/auth/ForgotPasswordPanel';
 
-export default async function LoginLayout() {
+export default async function ForgotPasswordLayout() {
   return (
-    <div>
-      <LoginTop isLogin={'Đăng nhập'} />
+    <>
+      <LoginTop title={'Quên mật khẩu'} />
       <div>
         <section className="bg-shop_banner">
           <Container className="flex justify-center space-x-8">
-            <Image src={banner1} alt="banner1" width={600} height={1} />
-            <LoginPanel />
+            <ForgotPasswordPanel />
           </Container>
         </section>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
