@@ -1,12 +1,59 @@
 'use client';
 
-import { useCurrentUser } from '@/hook/auth/useCurrentUser';
-import { DefaultAvatar } from '@/images';
 import Image from 'next/image';
-import React from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { DefaultAvatar } from '@/images';
+import { useCurrentUser } from '@/hook/auth/useCurrentUser';
+import { useUpdateUserInfo } from '@/hook/user/useUpdateUserInfo';
+
+const maskEmail = (email?: string) => {
+  if (!email) return '';
+  const [name, domain] = email.split('@');
+  if (!domain) return email;
+  if (name.length <= 2) return `${name}***@${domain}`;
+  return `${name.substring(0, 2)}${'*'.repeat(name.length - 2)}@${domain}`;
+};
 
 const UserInformation = () => {
-  const { user } = useCurrentUser();
+  const { user: userData, loading: isLoading } = useCurrentUser();
+  const user = userData?.user || userData;
+
+  const { updateUserInfo } = useUpdateUserInfo();
+
+  const [day, setDay] = useState('1');
+  const [month, setMonth] = useState('1');
+  const [year, setYear] = useState('2005');
+
+  useEffect(() => {
+    if (user.dob) {
+      const dateObj = new Date(user.dob);
+      setYear(dateObj.getFullYear().toString());
+      setMonth((dateObj.getMonth() + 1).toString());
+      setDay(dateObj.getDate().toString());
+    }
+  }, [user]);
+
+  const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Chặn hành vi load lại trang mặc định của form
+
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('fullName')?.toString();
+    const gender = formData.get('gender') === 'Nam' ? 'MALE' : 'FEMALE';
+
+    // Format ngày sinh: YYYY-MM-DD (VD: 2005-01-05)
+    const formattedDob = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+
+    const updatePayload = {
+      name: name,
+      gender: gender,
+      dob: formattedDob,
+    };
+
+    updateUserInfo(updatePayload);
+  };
+
+  if (isLoading) return <div>Đang tải...</div>;
+  if (!user) return <div>Không tìm thấy thông tin...</div>;
 
   const InfoRow = ({
     label,
@@ -35,33 +82,34 @@ const UserInformation = () => {
         </p>
       </section>
 
-      <section className="flex flex-col md:flex-row">
+      <form onSubmit={handleUpdate} className="flex flex-col md:flex-row">
         {/* CỘT TRÁI: THÔNG TIN */}
         <div className="flex-1 pb-10">
-          <InfoRow label="Tên đăng nhập">{user?.username || 'NA'}</InfoRow>
+          <InfoRow label="Tên đăng nhập">{user.username || 'NA'}</InfoRow>
 
           <InfoRow label="Tên">
             <input
               type="text"
-              defaultValue="Cunnn"
+              name="fullName" // Bắt buộc phải có để formData.get() lấy được
+              defaultValue={user.name || ''} // Đã sửa từ value -> defaultValue
               className="w-full max-w-[400px] border border-gray-300 px-3 py-2 outline-none focus:border-gray-500"
             />
           </InfoRow>
 
           <InfoRow label="Email">
             <div className="flex items-center">
-              <span>{user?.email}</span>
+              <span>{maskEmail(user.email)}</span>
               <button className="ml-3 text-xs text-blue-500 underline">
-                {user?.email ? 'Thay đổi' : 'Thêm'}
+                {user.email ? 'Thay đổi' : 'Thêm'}
               </button>
             </div>
           </InfoRow>
 
           <InfoRow label="Số điện thoại">
             <div className="flex items-center">
-              <span>{user?.phone}</span>
+              <span>{user.phone}</span>
               <button className="ml-3 text-xs text-blue-500 underline">
-                {user?.phone ? 'Thay đổi' : 'Thêm'}
+                {user.phone ? 'Thay đổi' : 'Thêm'}
               </button>
             </div>
           </InfoRow>
@@ -72,8 +120,9 @@ const UserInformation = () => {
                 <input
                   type="radio"
                   name="gender"
-                  className="mr-2 h-4 w-4 accent-orange-600"
-                  defaultChecked
+                  className="mr-2 h-4 w-4 accent-blue-600"
+                  value="Nam"
+                  defaultChecked={user.gender !== 'FEMALE'}
                 />
                 Nam
               </label>
@@ -81,7 +130,9 @@ const UserInformation = () => {
                 <input
                   type="radio"
                   name="gender"
-                  className="mr-2 h-4 w-4 accent-orange-600"
+                  className="mr-2 h-4 w-4 accent-blue-600"
+                  value="Nữ"
+                  defaultChecked={user.gender === 'FEMALE'}
                 />
                 Nữ
               </label>
@@ -90,18 +141,41 @@ const UserInformation = () => {
 
           <InfoRow label="Ngày sinh">
             <div className="flex space-x-2">
-              <select className="rounded-sm border p-2 text-sm">
+              <select
+                value={day}
+                onChange={(e) => setDay(e.target.value)}
+                className="rounded-sm border p-2 text-sm"
+              >
                 {[...Array(31)].map((_, i) => (
                   <option key={i}>{i + 1}</option>
                 ))}
               </select>
-              <select className="rounded-sm border p-2 text-sm">
-                {['Tháng 1', 'Tháng 2', 'Tháng 3'].map((m) => (
-                  <option key={m}>{m}</option>
+              <select
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                className="rounded-sm border p-2 text-sm"
+              >
+                {[...Array(12)].map((_, i) => (
+                  <option key={i} value={i + 1}>
+                    Tháng {i + 1}
+                  </option>
                 ))}
               </select>
-              <select className="rounded-sm border p-2 text-sm">
-                <option>2005</option>
+              <select
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                className="rounded-sm border p-2 text-sm outline-none"
+              >
+                {Array.from(
+                  { length: new Date().getFullYear() - 1950 + 1 },
+                  (_, i) => 1950 + i
+                )
+                  .reverse()
+                  .map((y) => (
+                    <option key={y} value={y}>
+                      {y}
+                    </option>
+                  ))}
               </select>
             </div>
           </InfoRow>
@@ -109,7 +183,10 @@ const UserInformation = () => {
           {/* Nút lưu */}
           <div className="mt-10 flex">
             <div className="w-[140px]"></div>
-            <button className="bg-shop_dark_blue min-w-[70px] rounded-sm px-6 py-2 text-white hover:opacity-90">
+            <button
+              type="submit"
+              className="bg-shop_dark_blue min-w-[70px] rounded-sm px-6 py-2 text-white hover:opacity-90"
+            >
               Lưu
             </button>
           </div>
@@ -133,7 +210,7 @@ const UserInformation = () => {
             <p>Định dạng: .JPEG, .PNG</p>
           </div>
         </div>
-      </section>
+      </form>
     </div>
   );
 };

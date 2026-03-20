@@ -4,8 +4,8 @@ import { formatCurrency } from '@/lib/utils';
 import { useOrderGrowth } from '@/hook/order/useOrderByMonth';
 import { useAllProduct } from '@/hook/products/useAllProduct';
 import { useProductByMonth } from '@/hook/products/useProductByMonth';
-import { useUsers } from '@/hook/useUsers';
-import { useUsersByMonth } from '@/hook/useUsersByMonth';
+import { useUsers } from '@/hook/user/useUsers';
+import { useUsersByMonth } from '@/hook/user/useUsersByMonth';
 
 export default function DashboardOverview() {
   const { orderMonthlyResult } = useOrderGrowth();

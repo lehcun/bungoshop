@@ -15,8 +15,6 @@ const loginAccount = async (email: string, password: string) => {
 };
 
 export const useAdminLogin = () => {
-  const router = useRouter();
-
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
@@ -25,7 +23,7 @@ export const useAdminLogin = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['user'] });
       alert('Đăng nhập thành công');
-      router.push('/dashboard');
+      window.location.href = '/dashboard';
     },
 
     // Khi có lỗi
