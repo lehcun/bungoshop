@@ -9,6 +9,7 @@ import { Address } from '@/models/User';
 import { useCheckout } from '@/hook/checkout/useCheckout';
 import CheckoutAddress from '../address/CheckoutAddress';
 import { useCreatePayment } from '@/hook/checkout/useCreatePayment';
+import { useCreateMoMoPayment } from '@/hook/checkout/useCreateMoMoPayment';
 
 export type PaymentType = 'VNPay' | 'MOMO' | 'ATM' | 'COD';
 
@@ -17,6 +18,7 @@ const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
   const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
   const { createOrder } = useCheckout();
   const { createPayment } = useCreatePayment();
+  const { createMoMoPayment } = useCreateMoMoPayment();
 
   //Luu phuong thuc thanh toan
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
@@ -64,12 +66,13 @@ const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
 
       if (!order?.id) throw new Error('Không tạo được đơn hàng');
 
-      if (
-        selectedPaymentMethod.includes('VNPay') ||
-        selectedPaymentMethod === 'MOMO'
-      ) {
+      if (selectedPaymentMethod.includes('VNPay')) {
         //Goi hook payment
         await createPayment({
+          orderId: order?.id,
+        });
+      } else if (selectedPaymentMethod === 'MOMO') {
+        await createMoMoPayment({
           orderId: order?.id,
         });
       }
