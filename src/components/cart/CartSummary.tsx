@@ -55,28 +55,77 @@ const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
     }
   };
 
+  // const handlePayment = async () => {
+  //   if (selectedPaymentMethod && selectedAddress) {
+  //     //Tạm giữ hàng ở đây
+  //     const { order } = await createOrder({
+  //       paymentMethod: selectedPaymentMethod,
+  //       shippingAddressId: selectedAddress.id,
+  //       cartItemIds: selectedItems.map((item) => item.id),
+  //     });
+
+  //     if (!order?.id) throw new Error('Không tạo được đơn hàng');
+
+  //     if (selectedPaymentMethod === 'VNPay') {
+  //       await createPayment({
+  //         orderId: order?.id,
+  //       });
+  //     } else if (selectedPaymentMethod === 'MOMO') {
+  //       await createMoMoPayment({
+  //         orderId: order?.id,
+  //       });
+  //     }
+  //   } else {
+  //     toast.error('Chưa có địa chỉ hoặc là lỗi phương thức');
+  //   }
+  // };
+
   const handlePayment = async () => {
+    // 📸 DEBUG BƯỚC 1: Bấm nút phát là in ra xem State đang cầm cái gì
+    console.log('====== THÔNG TIN THANH TOÁN ======');
+    console.log('1. Phương thức đã chọn:', selectedPaymentMethod);
+    console.log('2. Địa chỉ đã chọn:', selectedAddress);
+
     if (selectedPaymentMethod && selectedAddress) {
-      //Tạm giữ hàng ở đây
-      const { order } = await createOrder({
-        paymentMethod: selectedPaymentMethod,
-        shippingAddressId: selectedAddress.id,
-        cartItemIds: selectedItems.map((item) => item.id),
-      });
-
-      if (!order?.id) throw new Error('Không tạo được đơn hàng');
-
-      if (selectedPaymentMethod === 'VNPay') {
-        await createPayment({
-          orderId: order?.id,
+      try {
+        // Cập nhật Toast để biết đang chạy luồng nào
+        toast.loading(`Đang tạo đơn hàng với ${selectedPaymentMethod}...`, {
+          id: 'payment',
         });
-      } else if (selectedPaymentMethod === 'MOMO') {
-        await createMoMoPayment({
-          orderId: order?.id,
+
+        const { order } = await createOrder({
+          paymentMethod: selectedPaymentMethod,
+          shippingAddressId: selectedAddress.id,
+          cartItemIds: selectedItems.map((item) => item.id),
         });
+
+        console.log('3. Đã tạo Order trên DB thành công:', order);
+
+        if (!order?.id) throw new Error('Không tạo được đơn hàng');
+
+        // 📸 DEBUG BƯỚC 2: Kiểm tra nhánh rẽ
+        if (selectedPaymentMethod === 'VNPay') {
+          console.log('👉 RẼ NHÁNH: Đang gọi Hook createPayment (VNPay)...');
+          toast.success('Đang gọi API VNPay...', { id: 'payment' });
+
+          await createPayment({ orderId: order?.id });
+        } else if (selectedPaymentMethod === 'MOMO') {
+          console.log('👉 RẼ NHÁNH: Đang gọi Hook createMoMoPayment (MOMO)...');
+          toast.success('Đang gọi API MoMo...', { id: 'payment' });
+
+          await createMoMoPayment({ orderId: order?.id });
+        } else {
+          // Xử lý cho ATM, COD...
+          toast.success(`Đã đặt hàng qua ${selectedPaymentMethod}`, {
+            id: 'payment',
+          });
+        }
+      } catch (error) {
+        console.error('🔥 LỖI:', error);
+        toast.error('Có lỗi khi tạo đơn hàng', { id: 'payment' });
       }
     } else {
-      toast.error('Chưa có địa chỉ hoặc là lỗi phương thức');
+      toast.error('Chưa có địa chỉ hoặc chưa chọn phương thức thanh toán');
     }
   };
 
