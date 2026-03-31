@@ -24,7 +24,7 @@ export default function DashboardOverview() {
       </header>
       <section>
         <div className="grid gap-6 p-6 md:grid-cols-2 lg:grid-cols-4">
-          <div className="bg-shop_bg flex items-center justify-between rounded-2xl p-4">
+          <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Tổng doanh thu</span>
               <span className="text-shop_dark_blue text-3xl font-bold">
@@ -44,7 +44,7 @@ export default function DashboardOverview() {
             </div>
             <span className="text-4xl">💰</span>
           </div>
-          <div className="bg-shop_bg flex items-center justify-between rounded-2xl p-4">
+          <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Đơn hàng</span>
               <span className="text-3xl font-bold text-green-700">
@@ -56,7 +56,7 @@ export default function DashboardOverview() {
             </div>
             <span className="text-4xl">📦</span>
           </div>
-          <div className="bg-shop_bg flex items-center justify-between rounded-2xl p-4">
+          <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Sản phẩm</span>
               <span className="text-3xl font-bold text-purple-500">
@@ -68,7 +68,7 @@ export default function DashboardOverview() {
             </div>
             <span className="text-4xl">🛍️</span>
           </div>
-          <div className="bg-shop_bg flex items-center justify-between rounded-2xl p-4">
+          <div className="flex items-center justify-between rounded-2xl bg-white p-4">
             <div className="flex flex-col gap-y-2">
               <span className="text-gray-600">Số người dùng</span>
               <span className="text-3xl font-bold text-orange-500">

@@ -66,8 +66,7 @@ const CartSummary = ({ selectedItems }: { selectedItems: CartItem[] }) => {
 
       if (!order?.id) throw new Error('Không tạo được đơn hàng');
 
-      if (selectedPaymentMethod.includes('VNPay')) {
-        //Goi hook payment
+      if (selectedPaymentMethod === 'VNPay') {
         await createPayment({
           orderId: order?.id,
         });
