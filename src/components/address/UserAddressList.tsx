@@ -6,9 +6,11 @@ import { useAddresses } from '@/hook/address/useAddresses';
 import { Address } from '@/models/User';
 import AddAddressForm from '../user/AddAddressForm';
 import { X } from 'lucide-react';
+import { useDeleteAddress } from '@/hook/address/useDeleteAddress';
 
 const UserAddressModel = () => {
   const { addresses } = useAddresses();
+  const { deleteAddress } = useDeleteAddress();
   const [isOpen, setIsOpen] = useState(false);
   const [view, setView] = useState<'add' | 'edit'>('add');
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
@@ -23,6 +25,11 @@ const UserAddressModel = () => {
     handleOpenForm();
   };
 
+  const handleDelete = (addressId: string) => {
+    if (window.confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')) {
+      deleteAddress(addressId);
+    }
+  };
   const handleClose = () => {
     handleOpenForm();
     setEditingAddress(null);
@@ -56,6 +63,12 @@ const UserAddressModel = () => {
                         className="text-blue-600"
                       >
                         Sửa
+                      </button>
+                      <button
+                        onClick={() => handleDelete(address.id)}
+                        className="text-red-600"
+                      >
+                        Xóa
                       </button>
                     </div>
                     <p>
